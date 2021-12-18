@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Mega;
 using Newtonsoft.Json;
-using SuperScrollView;
-using UI.UIHall;
 
 public class UIHallModel : BaseViewModel
 {
@@ -16,6 +14,8 @@ public class UIHallModel : BaseViewModel
     public override void Init(Action onFinish)
     {
         InitData();
+        
+        itemTotalCount = 0;
         CountItemCount(1, itemDataTree);
 
         Debuger.Log($"itemTotalCount: {itemTotalCount}");
@@ -62,6 +62,7 @@ public class UIHallModel : BaseViewModel
     {
         for (int i = 0; i < itemData.Count; i++)
         {
+            itemData[i].Index    = itemTotalCount;
             itemData[i].Level    = level;
             itemData[i].IsExpand = false;
             itemDataList.Add(itemData[i]);

@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 1703519979600829555}
   - component: {fileID: 1703519979600829552}
   - component: {fileID: 1703519979600829554}
-  - component: {fileID: 1703519979600829553}
+  - component: {fileID: 1059662125}
   m_Layer: 5
   m_Name: List3
   m_TagString: Untagged
@@ -463,7 +463,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703519979600829516}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -517,7 +517,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1703519979600829553
+--- !u!114 &1059662125
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -526,7 +526,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1703519979600829516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e190d043ef387ee4fad4acea6146931e, type: 3}
+  m_Script: {fileID: 11500000, guid: bc562ae066354beea5b6394127a136f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mItemPrefabDataList:
@@ -534,12 +534,8 @@ MonoBehaviour:
     mPadding: 0
     mInitCreateCount: 0
     mStartPosOffset: 0
-  - mItemPrefab: {fileID: 470533825716448690, guid: 858e17de57eed274d9fe2347cab8495b, type: 3}
-    mPadding: 0
-    mInitCreateCount: 0
-    mStartPosOffset: 0
   mArrangeType: 0
-  mSupportScrollBar: 0
+  mSupportScrollBar: 1
   mItemSnapEnable: 0
   mViewPortSnapPivot: {x: 0, y: 0}
   mItemSnapPivot: {x: 0, y: 0}
