@@ -49,7 +49,7 @@ namespace Mega
 
                     if (hasInit)
                     {
-                        uiObject.GetComponent<UIBase>().OnResume();
+                        uiObject.GetComponent<BaseView>().OnResume();
                     }
                     UiObject.transform.SetAsLastSibling();
                     hasInit = true;
@@ -59,7 +59,7 @@ namespace Mega
                     uiObject.GetComponent<CanvasGroup>().alpha          = 0;
                     uiObject.GetComponent<CanvasGroup>().interactable   = false;
                     uiObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
-                    uiObject.GetComponent<UIBase>().OnHide();
+                    uiObject.GetComponent<BaseView>().OnHide();
                 }
             }
         }
