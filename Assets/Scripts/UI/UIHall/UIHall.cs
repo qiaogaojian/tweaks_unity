@@ -4,13 +4,13 @@ using UI.UIHall;
 
 public class UIHall : BaseView
 {
-    private LoopListView2 listMenu;
-    private UIHallModel   model;
+    private TreeListView listMenu;
+    private UIHallModel  model;
 
     public override void InitView()
     {
         base.InitView();
-        listMenu = transform.Find("listMenu").GetComponent<LoopListView2>();
+        listMenu = transform.Find("listMenu").GetComponent<TreeListView>();
 
         viewModel = new UIHallModel();
         model     = (UIHallModel) viewModel;
@@ -20,7 +20,7 @@ public class UIHall : BaseView
         });
     }
 
-    LoopListViewItem2 OnGetItemByIndex(LoopListView2 listView, int index)
+    TreeListViewItem2 OnGetItemByIndex(TreeListView listView, int index)
     {
         if (index < 0)
         {
@@ -34,7 +34,7 @@ public class UIHall : BaseView
         }
 
         //get a new TreeItem
-        LoopListViewItem2 item       = listView.NewListViewItem("ItemPrefab1");
+        TreeListViewItem2 item       = listView.NewListViewItem("ItemPrefab1");
         ListItem12        itemScript = item.GetComponent<ListItem12>();
         if (item.IsInitHandlerCalled == false)
         {
