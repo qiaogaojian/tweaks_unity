@@ -26,8 +26,8 @@ public class UIHall : BaseView
             return null;
         }
 
-        ItemTreeViewModel countData = model.GetTreeItemByTotalIndex(index);
-        if (countData == null)
+        ItemTreeViewModel menuData = model.GetTreeItemByTotalIndex(index);
+        if (menuData == null)
         {
             return null;
         }
@@ -38,18 +38,30 @@ public class UIHall : BaseView
         if (item.IsInitHandlerCalled == false)
         {
             item.IsInitHandlerCalled = true;
-            itemScript.SetClickCallBack(this.OnExpandClicked);
+            itemScript.SetClickCallBack(OnMenuClicked);
         }
 
         //update the TreeItem's content
-        itemScript.SetItemData(countData);
+        itemScript.SetItemData(menuData);
         return item;
     }
 
-    public void OnExpandClicked(int index)
+    public void OnMenuClicked(ItemTreeViewModel menuData)
     {
-        model.ToggleItemExpand(index);
-        listMenu.SetListItemCount(model.GetItemTotalCount(), false);
-        listMenu.RefreshAllShownItem();
+        if (menuData.IsTree())
+        {
+            model.ToggleItemExpand(menuData.Index);
+            listMenu.SetListItemCount(model.GetItemTotalCount(), false);
+            listMenu.RefreshAllShownItem();
+        }
+        else
+        {
+            switch (menuData.Name)
+            {
+                case "UGUI适配":
+
+                    break;
+            }
+        }
     }
 }

@@ -15,8 +15,7 @@ public class UIHallModel : BaseViewModel
     {
         InitData();
 
-        itemTotalCount = 0;
-        CountItemCount(0, itemDataTree);
+        GetItemCount(itemDataTree);
 
         Debuger.Log($"itemTotalCount: {itemTotalCount}");
         onFinish.Invoke();
@@ -27,7 +26,7 @@ public class UIHallModel : BaseViewModel
         // UI
         ItemTreeViewModel itemMenuUI     = new ItemTreeViewModel("UI");
         ItemTreeViewModel itemMenuUI_1   = new ItemTreeViewModel("UGUI");
-        ItemTreeViewModel itemMenuUI_1_1 = new ItemTreeViewModel("UI适配");
+        ItemTreeViewModel itemMenuUI_1_1 = new ItemTreeViewModel("UGUI适配");
         ItemTreeViewModel itemMenuUI_2   = new ItemTreeViewModel("NGUI");
         ItemTreeViewModel itemMenuUI_3   = new ItemTreeViewModel("FGUI");
 
@@ -58,6 +57,13 @@ public class UIHallModel : BaseViewModel
         return itemTotalCount;
     }
 
+    public int GetItemCount(List<ItemTreeViewModel> itemDataTree)
+    {
+        itemTotalCount = 0;
+        CountItemCount(0, itemDataTree);
+        return itemTotalCount;
+    }
+
     private void CountItemCount(int level, List<ItemTreeViewModel> itemData)
     {
         for (int i = 0; i < itemData.Count; i++)
@@ -66,12 +72,13 @@ public class UIHallModel : BaseViewModel
             itemData[i].Level    = level;
             itemData[i].IsExpand = false;
             itemDataList.Add(itemData[i]);
-            Debuger.Log("Index: " + itemTotalCount + String.Concat(Enumerable.Repeat("\t", level)) + itemData[i].Name);
             itemTotalCount++;
             if (itemData[i].children?.Count != 0)
             {
                 CountItemCount(level + 1, itemData[i].children);
             }
+
+            Debuger.Log("Index: " + itemData[i].Index + String.Concat(Enumerable.Repeat("\t", level)) + itemData[i].Name);
         }
     }
 

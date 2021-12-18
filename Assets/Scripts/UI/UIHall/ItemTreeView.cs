@@ -13,8 +13,8 @@ public class ItemTreeView : MonoBehaviour
     private Image           expandFlag;
 
     public ItemTreeViewModel Model { get; set; }
-    private Action<int> onClickMenu;
-    private int         indentOffset = 30;
+    private Action<ItemTreeViewModel> onClickMenu;
+    private int                       indentOffset = 30;
 
     private void Awake()
     {
@@ -27,14 +27,14 @@ public class ItemTreeView : MonoBehaviour
         btnMenu.onClick.AddListener(OnExpandFlagClicked);
     }
 
-    public void SetClickCallBack(Action<int> clickHandler)
+    public void SetClickCallBack(Action<ItemTreeViewModel> clickHandler)
     {
         this.onClickMenu = clickHandler;
     }
 
     private void OnExpandFlagClicked()
     {
-        this.onClickMenu?.Invoke(this.Model.Index);
+        this.onClickMenu?.Invoke(this.Model);
     }
 
     public void SetExpand(bool expand)
@@ -64,7 +64,7 @@ public class ItemTreeView : MonoBehaviour
 
         tvName.text = this.Model.Name;
         SetExpand(this.Model.IsExpand);
-        RectTransformExtensions.SetLeft(rt,indentOffset*this.Model.Level);
+        RectTransformExtensions.SetLeft(rt, indentOffset * this.Model.Level);
         switch (this.Model.Level)
         {
             case 0:
