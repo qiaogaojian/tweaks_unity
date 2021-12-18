@@ -657,6 +657,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1265798083}
     m_Modifications:
+    - target: {fileID: 1390573982078703419, guid: 3cc00ec424e482241aa45d0a44e369d7, type: 3}
+      propertyPath: mItemPrefabDataList.Array.data[0].mItemPrefab
+      value: 
+      objectReference: {fileID: 3748373847217490522, guid: 043024bf0a629bc4299bf7551d9f9d78, type: 3}
     - target: {fileID: 9067267960539148824, guid: 3cc00ec424e482241aa45d0a44e369d7, type: 3}
       propertyPath: m_Name
       value: UIHall
@@ -776,7 +780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1703519979600829555, guid: 155187c7c9d72ce4f908ae639d950bba, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1703519979600829555, guid: 155187c7c9d72ce4f908ae639d950bba, type: 3}
       propertyPath: m_AnchorMax.x

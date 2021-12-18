@@ -38,6 +38,6 @@ public class ItemTreeViewModel
 
     public bool IsTree()
     {
-        return Level < 3;
+        return Level < 2;
     }
 }

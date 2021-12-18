@@ -14,9 +14,9 @@ public class UIHallModel : BaseViewModel
     public override void Init(Action onFinish)
     {
         InitData();
-        
+
         itemTotalCount = 0;
-        CountItemCount(1, itemDataTree);
+        CountItemCount(0, itemDataTree);
 
         Debuger.Log($"itemTotalCount: {itemTotalCount}");
         onFinish.Invoke();
