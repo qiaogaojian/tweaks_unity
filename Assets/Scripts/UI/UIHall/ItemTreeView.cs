@@ -1,13 +1,14 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemTreeView : MonoBehaviour
 {
-    private Button btnMenu;
-    private Image  ivBg;
-    private Text   tvName;
-    private Image  expandFlag;
+    private Button          btnMenu;
+    private Image           ivBg;
+    private TextMeshProUGUI tvName;
+    private Image           expandFlag;
 
     public ItemTreeViewModel Model { get; set; }
     private Action<int> onClickMenu;
@@ -16,8 +17,8 @@ public class ItemTreeView : MonoBehaviour
     {
         btnMenu    = GetComponent<Button>();
         ivBg       = GetComponent<Image>();
-        tvName     = transform.Find("TextName").GetComponent<Text>();
-        expandFlag = transform.Find("expandFlag").GetComponent<Image>();
+        tvName     = transform.Find("tvName").GetComponent<TextMeshProUGUI>();
+        expandFlag = transform.Find("ivExpandFlag").GetComponent<Image>();
 
         btnMenu.onClick.AddListener(OnExpandFlagClicked);
     }
@@ -36,7 +37,7 @@ public class ItemTreeView : MonoBehaviour
     {
         if (expand)
         {
-            this.expandFlag.transform.localEulerAngles = new Vector3(0, 0, -90);
+            this.expandFlag.transform.localEulerAngles = new Vector3(0, 0, 0);
         }
         else
         {
@@ -47,6 +48,7 @@ public class ItemTreeView : MonoBehaviour
     public void SetItemData(ItemTreeViewModel data)
     {
         Model = data;
+        RefreshView();
     }
 
     public void RefreshView()

@@ -34,7 +34,7 @@ public class UIHall : BaseView
 
         //get a new TreeItem
         TreeListViewItem2 item       = listView.NewListViewItem("Menu1");
-        ItemTreeView        itemScript = item.GetComponent<ItemTreeView>();
+        ItemTreeView      itemScript = item.GetComponent<ItemTreeView>();
         if (item.IsInitHandlerCalled == false)
         {
             item.IsInitHandlerCalled = true;
