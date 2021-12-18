@@ -11,8 +11,9 @@
     /// </summary>
     public enum ViewID : int
     {
-        UIMenu,
+        UIHall,
 
+        UIMenu,
         UITestDebuger,
         UITestSound,
         UITestSpine,
