@@ -1,7 +1,7 @@
 ﻿using Mega;
 using UnityEngine.UI;
 
-public class UITestDebuger : UIBase
+public class TestDebuger : BaseView
 {
     private Button btnTestLog;
     private Button btnTestLogWarning;

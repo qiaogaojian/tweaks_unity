@@ -31,7 +31,7 @@ using UnityEngine.UI;
  * TestRuntimeUpdate
  * TestTilemap
  */
-public class UIMenu : UIBase
+public class Menu : BaseView
 {
     private Button btnTestDebuger;
     private Button btnTestSound;

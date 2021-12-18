@@ -10,6 +10,6 @@ public class StartGame : MonoBehaviour
 
     void OnLoadFramework(LoadEvent loadEvent)
     {
-        Framework.Scene.Load(SceneType.Hall, () => { Framework.UI.Show(ViewID.UIMenu); });
+        Framework.Scene.Load(SceneType.Hall, () => { Framework.UI.Show(ViewID.UIHall); });
     }
 }

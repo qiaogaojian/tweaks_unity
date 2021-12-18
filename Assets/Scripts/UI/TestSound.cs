@@ -3,7 +3,7 @@ using Mega;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UITestSound : UIBase
+public class TestSound : BaseView
 {
     private Button btnReturn;
     private Slider sliderGlobal;
