@@ -20,13 +20,15 @@ var server = net.createServer(function (socket) {
     var cmd = String(data);
 
     if (cmd == "left\r\n") {
-        role.x--;
+      role.x--;
     } else if (cmd == "right\r\n") {
-        role.x++;
+      role.x++;
     } else if (cmd == "up\r\n") {
-        role.y++;
+      role.y++;
     } else if (cmd == "down\r\n") {
-        role.y--;
+      role.y--;
+    } else {
+      chatSocket.write(data);
     }
 
     for (let s of roles.keys()) {
@@ -44,3 +46,10 @@ var server = net.createServer(function (socket) {
 });
 
 server.listen(8001);
+
+var chatSocket = net.connect({ port: 8002 }, function () {});
+chatSocket.on("data", function (data) {
+  for (let s of roles.keys()) {
+    s.write(data);
+  }
+});
