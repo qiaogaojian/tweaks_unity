@@ -32,9 +32,8 @@ public class UIHall : BaseView
             return null;
         }
 
-        //get a new TreeItem
-        TreeListViewItem2 item       = listView.NewListViewItem("Menu1");
-        ItemTreeView      itemScript = item.GetComponent<ItemTreeView>();
+        TreeListViewItem2 item       = listView.NewListViewItem("Menu1"); // 从内存池获取或新建菜单预制体
+        ItemTreeView      itemScript = item.transform.GetComponent<ItemTreeView>();
         if (item.IsInitHandlerCalled == false)
         {
             item.IsInitHandlerCalled = true;
@@ -54,12 +53,7 @@ public class UIHall : BaseView
         }
         else
         {
-            switch (menuData.Name)
-            {
-                case "UGUI适配":
-                    Debuger.Log($"Click Menu {menuData.Name}");
-                    break;
-            }
+            OnMenuButtonClicked(menuData.Name);
         }
     }
 
@@ -68,5 +62,16 @@ public class UIHall : BaseView
         model.ToggleItemExpand(index);
         listMenu.SetListItemCount(model.GetItemTotalCount(), false);
         listMenu.RefreshAllShownItem();
+    }
+
+    public void OnMenuButtonClicked(string buttonName)
+    {
+        Debuger.Log($"OnClick Menu: {buttonName}");
+
+        switch (buttonName)
+        {
+            case "UGUI适配":
+                break;
+        }
     }
 }

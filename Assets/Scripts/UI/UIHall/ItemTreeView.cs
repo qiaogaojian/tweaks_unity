@@ -65,29 +65,47 @@ public class ItemTreeView : MonoBehaviour
         tvName.text = this.Model.Name;
         SetExpand(this.Model.IsExpand);
         rt.offsetMin = new Vector2(20 + indentOffset * this.Model.Level, rt.offsetMin.y);
-        switch (this.Model.Level)
+
+
+        Color color = Color.clear;
+        if (this.Model.IsTree())
         {
-            case 0:
-                Color color1 = Color.clear;
-                ColorUtility.TryParseHtmlString("#65D9EF", out color1);
-                ivBg.color = color1;
+            switch (this.Model.Level)
+            {
+                case 0:
+                    ColorUtility.TryParseHtmlString("#F92671", out color);
+                    break;
+                case 1:
+                    ColorUtility.TryParseHtmlString("#FA961E", out color);
+                    break;
+                case 2:
+                    ColorUtility.TryParseHtmlString("#E7DA73", out color);
+                    break;
+                case 3:
+                    ColorUtility.TryParseHtmlString("#A0DA2D", out color);
+                    break;
+                case 4:
+                    ColorUtility.TryParseHtmlString("#2DE2A6", out color);
+                    break;
+                case 5:
+                    ColorUtility.TryParseHtmlString("#65D9EF", out color);
+                    break;
+                case 6:
+                    ColorUtility.TryParseHtmlString("#AE81FF", out color);
+                    break;
+                default:
+                    ColorUtility.TryParseHtmlString("#F5DEB3", out color);
+                    break;
+            }
 
-                expandFlag.gameObject.SetActive(true);
-                break;
-            case 1:
-                Color color2 = Color.clear;
-                ColorUtility.TryParseHtmlString("#F5DEB3", out color2);
-                ivBg.color = color2;
-
-                expandFlag.gameObject.SetActive(true);
-                break;
-            case 2:
-                Color color3 = Color.clear;
-                ColorUtility.TryParseHtmlString("#ECECEC", out color3);
-                ivBg.color = color3;
-
-                expandFlag.gameObject.SetActive(false);
-                break;
+            expandFlag.gameObject.SetActive(true);
         }
+        else
+        {
+            expandFlag.gameObject.SetActive(false);
+            ColorUtility.TryParseHtmlString("#ECECEC", out color);
+        }
+
+        ivBg.color = color;
     }
 }

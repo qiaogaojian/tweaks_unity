@@ -6,7 +6,6 @@ public class ItemTreeViewModel
     public int Index { get; set; }
     public string Name { get; }
     public int Level { get; set; }
-
     public bool IsExpand { get; set; }
 
     public List<ItemTreeViewModel> children = new List<ItemTreeViewModel>();
@@ -38,6 +37,6 @@ public class ItemTreeViewModel
 
     public bool IsTree()
     {
-        return Level < 2;
+        return HasChild();
     }
 }
