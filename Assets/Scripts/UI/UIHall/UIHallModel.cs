@@ -24,24 +24,31 @@ public class UIHallModel : BaseViewModel
     private void InitData()
     {
         // UI
-        ItemTreeViewModel itemMenuUI     = new ItemTreeViewModel("UI");
-        ItemTreeViewModel itemMenuUI_1   = new ItemTreeViewModel("UGUI");
-        ItemTreeViewModel itemMenuUI_1_1 = new ItemTreeViewModel("UGUI适配");
-        ItemTreeViewModel itemMenuUI_2   = new ItemTreeViewModel("NGUI");
-        ItemTreeViewModel itemMenuUI_3   = new ItemTreeViewModel("FGUI");
+        ItemTreeViewModel itemMenuUI = new ItemTreeViewModel("UI");
+        {
+            ItemTreeViewModel itemMenuUI_1 = new ItemTreeViewModel("UGUI");
+            {
+                ItemTreeViewModel itemMenuUI_1_1 = new ItemTreeViewModel("UGUI适配");
+                itemMenuUI_1.AddChild(itemMenuUI_1_1);
+            }
+            ItemTreeViewModel itemMenuUI_2 = new ItemTreeViewModel("NGUI");
+            ItemTreeViewModel itemMenuUI_3 = new ItemTreeViewModel("FGUI");
 
-        itemDataTree.Add(itemMenuUI);
-        itemMenuUI.AddChild(itemMenuUI_1);
-        itemMenuUI_1.AddChild(itemMenuUI_1_1);
-        itemMenuUI.AddChild(itemMenuUI_2);
-        itemMenuUI.AddChild(itemMenuUI_3);
+            itemDataTree.Add(itemMenuUI);
+            itemMenuUI.AddChild(itemMenuUI_1);
+            itemMenuUI.AddChild(itemMenuUI_2);
+            itemMenuUI.AddChild(itemMenuUI_3);
+        }
+
 
         // CG
-        ItemTreeViewModel itemMenuCG   = new ItemTreeViewModel("CG");
-        ItemTreeViewModel itemMenuCG_1 = new ItemTreeViewModel("Shader");
+        ItemTreeViewModel itemMenuCG = new ItemTreeViewModel("CG");
+        {
+            ItemTreeViewModel itemMenuCG_1 = new ItemTreeViewModel("Shader");
 
-        itemDataTree.Add(itemMenuCG);
-        itemMenuCG.AddChild(itemMenuCG_1);
+            itemDataTree.Add(itemMenuCG);
+            itemMenuCG.AddChild(itemMenuCG_1);
+        }
 
         string json = JsonConvert.SerializeObject(itemDataTree, Formatting.Indented);
         Debuger.Log(json);
