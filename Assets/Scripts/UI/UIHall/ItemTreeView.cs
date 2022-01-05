@@ -64,18 +64,22 @@ public class ItemTreeView : MonoBehaviour
 
         tvName.text = this.Model.Name;
         SetExpand(this.Model.IsExpand);
-        RectTransformExtensions.SetLeft(rt, indentOffset * this.Model.Level);
+        rt.offsetMin = new Vector2(20 + indentOffset * this.Model.Level, rt.offsetMin.y);
         switch (this.Model.Level)
         {
             case 0:
                 Color color1 = Color.clear;
                 ColorUtility.TryParseHtmlString("#65D9EF", out color1);
                 ivBg.color = color1;
+
+                expandFlag.gameObject.SetActive(true);
                 break;
             case 1:
                 Color color2 = Color.clear;
                 ColorUtility.TryParseHtmlString("#F5DEB3", out color2);
                 ivBg.color = color2;
+
+                expandFlag.gameObject.SetActive(true);
                 break;
             case 2:
                 Color color3 = Color.clear;

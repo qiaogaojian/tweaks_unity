@@ -4,19 +4,21 @@ using System.Linq;
 using Mega;
 using Newtonsoft.Json;
 
+/// <summary>
+/// 树形结构储存所有Menu信息
+/// 如果分类为合并状态 下方所有子分类和按钮都不显示 数量也不计算
+/// </summary>
 public class UIHallModel : BaseViewModel
 {
     private List<ItemTreeViewModel> itemDataTree   = new List<ItemTreeViewModel>();
     private List<ItemTreeViewModel> itemDataList   = new List<ItemTreeViewModel>();
     private int                     itemTotalCount = 0;
     private bool                    mIsDirty       = true;
+    private bool                    mIsFirst       = true;
 
     public override void Init(Action onFinish)
     {
         InitData();
-
-        GetItemCount(itemDataTree);
-
         Debuger.Log($"itemTotalCount: {itemTotalCount}");
         onFinish.Invoke();
     }
@@ -61,13 +63,15 @@ public class UIHallModel : BaseViewModel
 
     public int GetItemTotalCount()
     {
-        return itemTotalCount;
+        return GetItemCount(itemDataTree);
     }
 
     public int GetItemCount(List<ItemTreeViewModel> itemDataTree)
     {
         itemTotalCount = 0;
+        itemDataList.Clear();
         CountItemCount(0, itemDataTree);
+        mIsFirst = false;
         return itemTotalCount;
     }
 
@@ -77,10 +81,13 @@ public class UIHallModel : BaseViewModel
         {
             itemData[i].Index    = itemTotalCount;
             itemData[i].Level    = level;
-            itemData[i].IsExpand = false;
+            if (mIsFirst)
+            {
+                itemData[i].IsExpand = false;
+            }
             itemDataList.Add(itemData[i]);
             itemTotalCount++;
-            if (itemData[i].children?.Count != 0)
+            if (itemData[i].children?.Count != 0 && itemData[i].IsExpand)
             {
                 CountItemCount(level + 1, itemData[i].children);
             }

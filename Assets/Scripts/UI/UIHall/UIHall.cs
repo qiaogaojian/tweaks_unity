@@ -50,18 +50,23 @@ public class UIHall : BaseView
     {
         if (menuData.IsTree())
         {
-            model.ToggleItemExpand(menuData.Index);
-            listMenu.SetListItemCount(model.GetItemTotalCount(), false);
-            listMenu.RefreshAllShownItem();
+            OnExpandClicked(menuData.Index);
         }
         else
         {
             switch (menuData.Name)
             {
                 case "UGUI适配":
-
+                    Debuger.Log($"Click Menu {menuData.Name}");
                     break;
             }
         }
+    }
+
+    public void OnExpandClicked(int index)
+    {
+        model.ToggleItemExpand(index);
+        listMenu.SetListItemCount(model.GetItemTotalCount(), false);
+        listMenu.RefreshAllShownItem();
     }
 }

@@ -4,6 +4,9 @@ namespace Mega
 {
     public static class RectTransformExtensions
     {
+        /**
+         * left值会无限叠加
+         */
         public static void SetLeft(this RectTransform rt, float left)
         {
             rt.offsetMin = new Vector2(rt.offsetMin.x + left, rt.offsetMin.y);

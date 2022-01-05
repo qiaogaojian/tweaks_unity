@@ -158,7 +158,11 @@ namespace SuperScrollView
         {
             get
             {
-                ListItemArrangeType arrageType = ParentListView.ArrangeType;
+                ListItemArrangeType arrageType = ListItemArrangeType.TopToBottom;
+                if (ParentListView != null)
+                {
+                    arrageType = ParentListView.ArrangeType;
+                }
                 if (arrageType == ListItemArrangeType.TopToBottom)
                 {
                     return CachedRectTransform.anchoredPosition3D.y;
@@ -175,7 +179,11 @@ namespace SuperScrollView
         {
             get
             {
-                ListItemArrangeType arrageType = ParentListView.ArrangeType;
+                ListItemArrangeType arrageType = ListItemArrangeType.TopToBottom;
+                if (ParentListView != null)
+                {
+                    arrageType = ParentListView.ArrangeType;
+                }
                 if (arrageType == ListItemArrangeType.TopToBottom)
                 {
                     return CachedRectTransform.anchoredPosition3D.y - CachedRectTransform.rect.height;
@@ -193,7 +201,11 @@ namespace SuperScrollView
         {
             get
             {
-                ListItemArrangeType arrageType = ParentListView.ArrangeType;
+                ListItemArrangeType arrageType = ListItemArrangeType.TopToBottom;
+                if (ParentListView != null)
+                {
+                    arrageType = ParentListView.ArrangeType;
+                }
                 if (arrageType == ListItemArrangeType.LeftToRight)
                 {
                     return CachedRectTransform.anchoredPosition3D.x;
@@ -210,7 +222,11 @@ namespace SuperScrollView
         {
             get
             {
-                ListItemArrangeType arrageType = ParentListView.ArrangeType;
+                ListItemArrangeType arrageType = ListItemArrangeType.TopToBottom;
+                if (ParentListView != null)
+                {
+                    arrageType = ParentListView.ArrangeType;
+                }
                 if (arrageType == ListItemArrangeType.LeftToRight)
                 {
                     return CachedRectTransform.anchoredPosition3D.x + CachedRectTransform.rect.width;
