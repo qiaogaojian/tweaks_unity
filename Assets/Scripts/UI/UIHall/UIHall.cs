@@ -1,5 +1,4 @@
 using Mega;
-using SuperScrollView;
 
 public class UIHall : BaseView
 {
