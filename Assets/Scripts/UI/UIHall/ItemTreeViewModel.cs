@@ -8,6 +8,7 @@ public class ItemTreeViewModel
     public int Level { get; set; }
     public bool IsExpand { get; set; }
 
+    public ItemTreeViewModel       parent   = null;
     public List<ItemTreeViewModel> children = new List<ItemTreeViewModel>();
 
     public ItemTreeViewModel(string name)

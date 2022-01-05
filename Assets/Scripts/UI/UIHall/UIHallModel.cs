@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Mega;
 using Newtonsoft.Json;
+using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 树形结构储存所有Menu信息
@@ -22,6 +25,62 @@ public class UIHallModel : BaseViewModel
     }
 
     private void InitData()
+    {
+        // BuildData();
+        ReadData();
+
+        // string json = JsonConvert.SerializeObject(itemDataTree, Formatting.Indented);
+        // Debuger.Log(json);
+    }
+
+    private void ReadData()
+    {
+        string   path = Application.dataPath + "/../Readme.md";
+        string[] strs = File.ReadAllLines(path);
+        CreateTree(strs);
+    }
+
+    private void CreateTree(string[] lines)
+    {
+        ItemTreeViewModel root    = new ItemTreeViewModel("Root");
+        ItemTreeViewModel curNode = root;
+        foreach (string curLine in lines)
+        {
+            int curLevel = curLine.Count(c => c == '#');
+            if (curLevel >= 2)
+            {
+                string title = curLine.Substring(curLevel);
+                if (curLevel > curNode.Level)
+                {
+                    ItemTreeViewModel temNode = new ItemTreeViewModel(title);
+                    temNode.parent = curNode;
+                    temNode.Level  = curLevel;
+                    curNode        = temNode;
+                    curNode.parent.children.Add(temNode);
+                }
+                else
+                {
+                    while (curLevel < curNode.Level)
+                    {
+                        curNode = curNode.parent;
+                    }
+
+                    ItemTreeViewModel temNode = new ItemTreeViewModel(title);
+                    temNode.parent = curNode.parent;
+                    temNode.Level  = curNode.Level;
+                    curNode        = temNode;
+                    curNode.parent.children.Add(temNode);
+                }
+            }
+        }
+
+        foreach (ItemTreeViewModel node in root.children)
+        {
+            itemDataTree.Add(node);
+        }
+    }
+
+    private void BuildData()
     {
         // UI
         ItemTreeViewModel itemMenuUI = new ItemTreeViewModel("UI");
@@ -70,7 +129,6 @@ public class UIHallModel : BaseViewModel
             itemMenuUI.AddChild(itemMenuUI_3);
         }
 
-
         // CG
         ItemTreeViewModel itemMenuCG = new ItemTreeViewModel("CG");
         {
@@ -79,9 +137,6 @@ public class UIHallModel : BaseViewModel
             itemDataTree.Add(itemMenuCG);
             itemMenuCG.AddChild(itemMenuCG_1);
         }
-
-        string json = JsonConvert.SerializeObject(itemDataTree, Formatting.Indented);
-        Debuger.Log(json);
     }
 
     public int GetItemTotalCount()
