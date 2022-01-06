@@ -183,7 +183,50 @@ namespace Mega
         #endregion
 
         #region 同步读取文件
+        /// <summary>
+        /// 读取文件获得Bytes
+        /// </summary>
+        /// <param name="pathMode"></param>
+        /// <param name="relativePath"></param>
+        /// <returns></returns>
+        public static string LoadFile(string relativePath, PathMode pathMode)
+        {
+            string realPath = relativePath;
+            return LoadFile(realPath);
+        }
+        
+        /// <summary>
+        /// 读取文件获得Bytes
+        /// </summary>
+        /// <param name="realPath"></param>
+        /// <returns></returns>
+        public static string LoadFile(string realPath)
+        {
+            Debuger.Log("加载文件realPath:" + realPath);
+            try
+            {
+                //www加载方式，适用于android
+                if (realPath.Contains("://"))
+                {
+                    WWW www = new WWW(realPath);
+                    while (!www.isDone)
+                    {
+                    }
 
+                    return www.text;
+                }
+                else
+                {
+                    return File.ReadAllText(realPath);
+                }
+            }
+            catch (Exception e)
+            {
+                Debuger.Log(e.ToString());
+                return "";
+            }
+        }
+        
         /// <summary>
         /// 读取文件获得Bytes
         /// </summary>
