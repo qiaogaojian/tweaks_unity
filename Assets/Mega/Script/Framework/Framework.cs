@@ -11,6 +11,9 @@ namespace Mega
         public static SoundManager Sound { get; private set; }
         public static EventManager Event { get; private set; }
         public static SceneLoadManager Scene { get; private set; }
+        public static PoolManager Pool { get; private set; }
+        public static DataManager Data { get; private set; }
+        public static FightManager Fight { get; private set; }
 
         private static bool              hasInit = false;
         private static Action<LoadEvent> loadEvent;
@@ -21,6 +24,7 @@ namespace Mega
             {
                 return;
             }
+
             hasInit = true;
 
             loadEvent = onLoad;
@@ -45,6 +49,9 @@ namespace Mega
             Sound    = ComponentManager.GetComponent<SoundManager>();
             Event    = ComponentManager.GetComponent<EventManager>();
             Scene    = ComponentManager.GetComponent<SceneLoadManager>();
+            Pool     = ComponentManager.GetComponent<PoolManager>();
+            Data     = ComponentManager.GetComponent<DataManager>();
+            Fight    = ComponentManager.GetComponent<FightManager>();
 
             yield return new WaitForEndOfFrame();
             if (loadEvent != null)

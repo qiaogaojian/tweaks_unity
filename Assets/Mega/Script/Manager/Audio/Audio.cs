@@ -372,6 +372,11 @@ namespace Mega
         /// </summary>
         private void CreateAudiosource()
         {
+            if (SourceTransform == null)
+            {
+                sourceTransform = Framework.Sound.Gameobject.transform;
+            }
+
             AudioSource               = SourceTransform.gameObject.AddComponent<AudioSource>() as AudioSource;
             AudioSource.clip          = Clip;
             AudioSource.loop          = Loop;
@@ -563,8 +568,8 @@ namespace Mega
                     AudioSource.volume = Volume * Framework.Sound.GlobalBgmVolume * Framework.Sound.GlobalVolume;
                     break;
                 }
+                  
             }
-
             // Completely stop audio if it finished the process of stopping
             if (Volume == 0f && Stopping)
             {
