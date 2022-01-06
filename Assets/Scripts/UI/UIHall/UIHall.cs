@@ -31,7 +31,7 @@ public class UIHall : BaseView
             return null;
         }
 
-        TreeListViewItem2 item       = listView.NewListViewItem("Menu1"); // 从内存池获取或新建菜单预制体
+        TreeListViewItem2 item       = listView.NewListViewItem("ItemMenu"); // 从内存池获取或新建菜单预制体
         ItemTreeView      itemScript = item.transform.GetComponent<ItemTreeView>();
         if (item.IsInitHandlerCalled == false)
         {

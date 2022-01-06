@@ -14,7 +14,7 @@ public class BaseView : MonoBehaviour
         set { isShow = value; }
     }
 
-    protected virtual void Awake()
+    protected virtual void Start()
     {
         InitView();
     }
