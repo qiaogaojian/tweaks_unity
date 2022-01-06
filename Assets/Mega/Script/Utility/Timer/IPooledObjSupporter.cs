@@ -1,8 +1,9 @@
 using System;
-
-public interface IPooledObjSupporter : IDisposable
+namespace Mega
 {
-	void Reset ();
+	public interface IPooledObjSupporter : IDisposable
+	{
+		void Reset();
+	}
 }
-
 

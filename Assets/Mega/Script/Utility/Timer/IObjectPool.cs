@@ -1,25 +1,29 @@
 using System;
 
-public delegate void CallBackObjPool();
-
-public interface IObjectPool
+namespace Mega
 {
-    event CallBackObjPool PoolShrinked;
-    event CallBackObjPool MemoryUseOut;
 
-    int MinObjCount { get; }
+    public delegate void CallBackObjPool();
 
-    int MaxObjCount { get; }
+    public interface IObjectPool
+    {
+        event CallBackObjPool PoolShrinked;
+        event CallBackObjPool MemoryUseOut;
 
-    int CurObjCount { get; }
+        int MinObjCount { get; }
 
-    int IdleObjCount { get; }
+        int MaxObjCount { get; }
 
-    bool Initialize(Type objType, object[] cArgs, int minNum, int maxNum);
+        int CurObjCount { get; }
 
-    object RentObject();
+        int IdleObjCount { get; }
 
-    void GiveBackObject(int objHashCode);
+        bool Initialize(Type objType, object[] cArgs, int minNum, int maxNum);
 
-    void Dispose();
+        object RentObject();
+
+        void GiveBackObject(int objHashCode);
+
+        void Dispose();
+    }
 }
