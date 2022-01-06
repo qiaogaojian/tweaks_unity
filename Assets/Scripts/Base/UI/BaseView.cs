@@ -7,7 +7,7 @@ namespace Mega
     {
         protected BaseViewModel viewModel;
 
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             InitView();
         }
