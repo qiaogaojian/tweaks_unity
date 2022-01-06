@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,28 +18,50 @@ public class UIHallModel : BaseViewModel
     private List<ItemTreeViewModel> itemDataList   = new List<ItemTreeViewModel>();
     private int                     itemTotalCount = 0;
     private bool                    mIsFirst       = true;
+    private Action                  finishLoadData;
 
     public override void Init(Action onFinish)
     {
+        this.finishLoadData = onFinish;
         InitData();
-        onFinish.Invoke();
     }
 
     private void InitData()
     {
         // BuildData();
-        ReadData();
+        Framework.UI.StartCoroutine(ReadData());
 
         // string json = JsonConvert.SerializeObject(itemDataTree, Formatting.Indented);
         // Debuger.Log(json);
     }
 
-    private void ReadData()
+    private IEnumerator ReadData()
     {
-        string   path = Application.dataPath + "/../Readme.md";
-        string[] strs = File.ReadAllLines(path);
-        CreateTree(strs);
+        string[] lines;
+#if UNITY_EDITOR
+        string path = FileUtils.GetRealPath("/../Readme.md", PathMode.Data);
+        lines = File.ReadAllLines(path);
+#else
+        string filePath = FileUtils.GetRealPath("Readme.md", PathMode.Streaming);
+        string menuMD;
+        if (filePath.Contains("://") || filePath.Contains(":///"))
+        {
+            WWW www = new WWW(filePath);
+            yield return www;
+            menuMD = www.text;
+        }
+        else
+        {
+            menuMD = File.ReadAllText(filePath);
+        }
+
+        lines = menuMD.Split('\n');
+#endif
+        CreateTree(lines);
+        yield return null;
+        finishLoadData.Invoke();
     }
+
 
     private void CreateTree(string[] lines)
     {
