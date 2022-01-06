@@ -7,7 +7,7 @@ namespace Mega
         private ViewID     viewId;
         private GameObject uiObject;
         private ViewType   viewType;
-        private UIBase     uiBase;
+        private BaseView   baseView;
         private bool       hasInit = false;
 
         public ViewID ViewId
@@ -21,17 +21,17 @@ namespace Mega
             set => uiObject = value;
         }
 
-        
+
         public ViewType ViewType
         {
             get => viewType;
             set => viewType = value;
         }
 
-        public UIBase UIBase
+        public BaseView BaseView
         {
-            get => uiBase;
-            set => uiBase = value;
+            get => baseView;
+            set => baseView = value;
         }
 
 
@@ -47,7 +47,7 @@ namespace Mega
 
         public void Show()
         {
-            uiBase.IsShow = true;
+            baseView.IsShow = true;
 
             uiObject.GetComponent<CanvasGroup>().alpha        = 1;
             uiObject.GetComponent<CanvasGroup>().interactable = true;
@@ -62,7 +62,7 @@ namespace Mega
 
             if (hasInit)
             {
-                uiBase.OnResume();
+                baseView.OnResume();
             }
 
             UiObject.transform.SetAsLastSibling();
@@ -72,12 +72,12 @@ namespace Mega
 
         public void Hide()
         {
-            uiBase.Hide();
+            baseView.Hide();
         }
 
         public void Destroy()
         {
-            uiBase.Destroy();
+            baseView.Destroy();
         }
     }
 }

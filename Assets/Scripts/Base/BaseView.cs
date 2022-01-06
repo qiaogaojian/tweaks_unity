@@ -2,7 +2,7 @@
 using Mega;
 using UnityEngine;
 
-public class UIBase : MonoBehaviour
+public class BaseView : MonoBehaviour
 {
     protected BaseViewModel viewModel;
 

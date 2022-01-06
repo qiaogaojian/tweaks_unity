@@ -381,7 +381,7 @@ namespace Mega
         {
             if (isLoaded(id))
             {
-                return views[id].UIBase.IsShow;
+                return views[id].BaseView.IsShow;
             }
 
             return false;
@@ -399,7 +399,7 @@ namespace Mega
             view.UiObject = CreateUI(Framework.Resource.GetUIPrefab(path), getViewRoot(type));
             view.UiObject.AddComponent<CanvasGroup>(); // https://blog.csdn.net/LLLLL__/article/details/103385952
             view.ViewType = type;
-            view.UIBase   = view.UiObject.GetComponent<UIBase>();
+            view.BaseView   = view.UiObject.GetComponent<BaseView>();
             view.Show();
             views.Add(id, view);
             

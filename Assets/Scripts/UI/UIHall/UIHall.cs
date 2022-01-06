@@ -1,6 +1,6 @@
 using Mega;
 
-public class UIHall : UIBase
+public class UIHall : BaseView
 {
     private TreeListView listMenu;
     private UIHallModel  model;
