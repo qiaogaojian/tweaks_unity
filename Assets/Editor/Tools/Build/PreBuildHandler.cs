@@ -13,13 +13,13 @@ public class PreBuildHandler : IPreprocessBuildWithReport, IPostprocessBuildWith
 
     public void OnPreprocessBuild(BuildReport report)
     {
-        Debug.Log("OnPreprocessBuild");
-        copyMd();
+        Debug.Log("Before Build");
+        CopyMD2SteamingAssets();
     }
 
     public void OnPostprocessBuild(BuildReport report)
     {
-        Debug.Log("OnPostprocessBuild");
+        Debug.Log("After Build");
     }
 
     public void OnProcessScene(Scene scene, BuildReport report)
@@ -29,7 +29,10 @@ public class PreBuildHandler : IPreprocessBuildWithReport, IPostprocessBuildWith
         GameObject.CreatePrimitive(scene.buildIndex == 0 ? PrimitiveType.Cube : PrimitiveType.Cylinder);
     }
 
-    public void copyMd()
+    /**
+     * 所有平台统一使用markdown来显示菜单
+     */
+    private void CopyMD2SteamingAssets()
     {
         string sourcePath = Application.dataPath + "/../Readme.md";
         string targetPath = Application.dataPath + "/StreamingAssets";

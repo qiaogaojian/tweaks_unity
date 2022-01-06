@@ -17,7 +17,7 @@ public class PostBuildHandler : MonoBehaviour
         {
             string sourcePath = Application.dataPath + "/../Readme.md";
             string targetPath = GetStreamingAssetsPathInBuild(target, pathToBuiltProject);
-            Debug.Log($"target:{target} \tpathToBuildProject:{pathToBuiltProject} \t sourcePath:{sourcePath} \t targetPath:{targetPath}");
+            Debug.Log($"target:\t{target} \npathToBuildProject:\t{pathToBuiltProject}  \nsourcePath:\t{sourcePath}  \ntargetPath:\t{targetPath}");
 
             // if (!Directory.Exists(targetPath))
             // {
