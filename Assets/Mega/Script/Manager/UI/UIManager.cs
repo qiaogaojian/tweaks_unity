@@ -389,7 +389,7 @@ namespace Mega
 
         private View Load(ViewID id, ViewType type = ViewType.Normal)
         {
-            string path = string.Format("Prefabs/UI/{0}", id.ToString());
+            string path = string.Format("Prefabs/UI/Panel/{0}", id.ToString());
             if (uiRoot == null || uiCamera == null)
             {
                 Init();
