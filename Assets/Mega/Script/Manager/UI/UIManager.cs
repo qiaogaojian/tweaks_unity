@@ -34,20 +34,24 @@ namespace Mega
 
         private void Init()
         {
-            uiRoot        = new GameObject("UIRoot");
-            uiCamera      = new GameObject("UICamera");
-            eventSystem   = new GameObject("EventSystem");
-            normalRoot    = new GameObject("NormalRoot");
-            dialogRoot    = new GameObject("PopupRoot");
-            hintRoot      = new GameObject("HintRoot");
-            toppestRoot   = new GameObject("ToppestRoot");
-            effectRoot    = new GameObject("EffectRoot");
+            uiRoot      = new GameObject("UIRoot");
+            uiCamera    = new GameObject("UICamera");
+            eventSystem = new GameObject("EventSystem");
+            normalRoot  = new GameObject("NormalRoot");
+            dialogRoot  = new GameObject("PopupRoot");
+            hintRoot    = new GameObject("HintRoot");
+            toppestRoot = new GameObject("ToppestRoot");
+            effectRoot  = new GameObject("EffectRoot");
+
+#if UNITY_WEBGL
             webglRoot     = new GameObject("WebglRoot");
             webglLeftFB   = new GameObject("webglLeftFB");
             webglRightFB  = new GameObject("webglRightFB");
             webglTopFB    = new GameObject("webglTopFB");
             webglBottomFB = new GameObject("webglBottomFB");
+#endif
 
+            
             uiRoot.transform.SetParent(transform);
             uiCamera.transform.SetParent(uiRoot.transform);
             eventSystem.transform.SetParent(uiRoot.transform);
@@ -56,24 +60,29 @@ namespace Mega
             hintRoot.transform.SetParent(uiRoot.transform);
             toppestRoot.transform.SetParent(uiRoot.transform);
             effectRoot.transform.SetParent(uiRoot.transform);
+#if UNITY_WEBGL
             webglRoot.transform.SetParent(uiRoot.transform);
             webglLeftFB.transform.SetParent(webglRoot.transform);
             webglRightFB.transform.SetParent(webglRoot.transform);
             webglTopFB.transform.SetParent(webglRoot.transform);
             webglBottomFB.transform.SetParent(webglRoot.transform);
+#endif
 
-            uiRoot.layer        = LayerMask.NameToLayer("UI");
-            uiCamera.layer      = LayerMask.NameToLayer("UI");
-            normalRoot.layer    = LayerMask.NameToLayer("UI");
-            dialogRoot.layer    = LayerMask.NameToLayer("UI");
-            hintRoot.layer      = LayerMask.NameToLayer("UI");
-            toppestRoot.layer   = LayerMask.NameToLayer("UI");
-            effectRoot.layer    = LayerMask.NameToLayer("UI");
+            uiRoot.layer      = LayerMask.NameToLayer("UI");
+            uiCamera.layer    = LayerMask.NameToLayer("UI");
+            normalRoot.layer  = LayerMask.NameToLayer("UI");
+            dialogRoot.layer  = LayerMask.NameToLayer("UI");
+            hintRoot.layer    = LayerMask.NameToLayer("UI");
+            toppestRoot.layer = LayerMask.NameToLayer("UI");
+            effectRoot.layer  = LayerMask.NameToLayer("UI");
+
+#if UNITY_WEBGL
             webglRoot.layer     = LayerMask.NameToLayer("UI");
             webglLeftFB.layer   = LayerMask.NameToLayer("UI");
             webglRightFB.layer  = LayerMask.NameToLayer("UI");
             webglTopFB.layer    = LayerMask.NameToLayer("UI");
             webglBottomFB.layer = LayerMask.NameToLayer("UI");
+#endif
 
             //初始化画布组件
             Camera camera = uiCamera.AddComponent<Camera>();
@@ -87,16 +96,20 @@ namespace Mega
             CanvasScaler canvasScaler = uiRoot.AddComponent<CanvasScaler>();
             canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 
-            // UI适配
-            // if (Display.main.systemWidth > Display.main.systemHeight)
-            // {
-            //     canvasScaler.referenceResolution = new Vector2(DesignWidth, DesignHeight);
-            // }
-            // else
-            // {
-            //     canvasScaler.referenceResolution = new Vector2(DesignHeight, DesignWidth);
-            // }
+#if UNITY_WEBGL
+
             canvasScaler.referenceResolution = new Vector2(DesignHeight, DesignWidth);
+#else
+  // UI适配
+            if (Display.main.systemWidth > Display.main.systemHeight)
+            {
+                canvasScaler.referenceResolution = new Vector2(DesignWidth, DesignHeight);
+            }
+            else
+            {
+                canvasScaler.referenceResolution = new Vector2(DesignHeight, DesignWidth);
+            }
+#endif
 
             canvasScaler.screenMatchMode        = CanvasScaler.ScreenMatchMode.Expand;
             canvasScaler.referencePixelsPerUnit = 100;
@@ -111,72 +124,113 @@ namespace Mega
             camera.farClipPlane     = 50;
             camera.depth            = 10;
             uiCamera.AddComponent<AudioListener>();
-
+            
             //正常层级
-            canvas = normalRoot.AddComponent<Canvas>();
+            canvas = normalRoot.AddComponent<Canvas>(); 
             RectTransform rectTransform = canvas.transform as RectTransform;
+#if UNITY_WEBGL
+
+#else
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
+#endif
+         
             rectTransform.pivot     = new Vector2(0.5f, 0.5f);
             rectTransform.offsetMax = Vector2.zero;
             rectTransform.offsetMin = Vector2.zero;
             canvas.overrideSorting  = true;
             canvas.pixelPerfect     = true;
             canvas.sortingOrder     = (int) ViewType.Normal;
+#if UNITY_WEBGL
+            rectTransform.sizeDelta = new Vector2( DesignHeight, DesignWidth);
+#endif
             normalRoot.AddComponent<GraphicRaycaster>();
 
             //弹窗口层级
             canvas                  = dialogRoot.AddComponent<Canvas>();
             rectTransform           = canvas.transform as RectTransform;
+#if UNITY_WEBGL
+
+#else
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
+#endif
             rectTransform.pivot     = new Vector2(0.5f, 0.5f);
             rectTransform.offsetMax = Vector2.zero;
             rectTransform.offsetMin = Vector2.zero;
             canvas.overrideSorting  = true;
             canvas.pixelPerfect     = true;
             canvas.sortingOrder     = (int) ViewType.Dialog;
+#if UNITY_WEBGL
+            rectTransform.sizeDelta = new Vector2( DesignHeight, DesignWidth);
+#endif
             dialogRoot.AddComponent<GraphicRaycaster>();
 
             //提示层级
             canvas                  = hintRoot.AddComponent<Canvas>();
             rectTransform           = canvas.transform as RectTransform;
+#if UNITY_WEBGL
+
+#else
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
+#endif
             rectTransform.pivot     = new Vector2(0.5f, 0.5f);
             rectTransform.offsetMax = Vector2.zero;
             rectTransform.offsetMin = Vector2.zero;
             canvas.overrideSorting  = true;
             canvas.pixelPerfect     = true;
             canvas.sortingOrder     = (int) ViewType.Hint;
+#if UNITY_WEBGL
+            rectTransform.sizeDelta = new Vector2( DesignHeight, DesignWidth);
+#endif
             hintRoot.AddComponent<GraphicRaycaster>();
 
             //最高层级
             canvas                  = toppestRoot.AddComponent<Canvas>();
             rectTransform           = canvas.transform as RectTransform;
+#if UNITY_WEBGL
+
+#else
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
+#endif
             rectTransform.pivot     = new Vector2(0.5f, 0.5f);
             rectTransform.offsetMax = Vector2.zero;
             rectTransform.offsetMin = Vector2.zero;
             canvas.overrideSorting  = true;
             canvas.pixelPerfect     = true;
             canvas.sortingOrder     = (int) ViewType.Top;
+#if UNITY_WEBGL
+            rectTransform.sizeDelta = new Vector2( DesignHeight, DesignWidth);
+#endif
             toppestRoot.AddComponent<GraphicRaycaster>();
 
             //2D特效层级
             canvas                  = effectRoot.AddComponent<Canvas>();
             rectTransform           = canvas.transform as RectTransform;
+#if UNITY_WEBGL
+
+#else
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
+#endif
             rectTransform.pivot     = new Vector2(0.5f, 0.5f);
             rectTransform.offsetMax = Vector2.zero;
             rectTransform.offsetMin = Vector2.zero;
             canvas.overrideSorting  = true;
             canvas.pixelPerfect     = true;
             canvas.sortingOrder     = (int) ViewType.Effect;
+#if UNITY_WEBGL
+            rectTransform.sizeDelta = new Vector2( DesignHeight, DesignWidth);
+#endif
             effectRoot.AddComponent<GraphicRaycaster>();
 
+#if UNITY_WEBGL
+
+
+       
+            
             // Webgl适配层
             canvas                  = webglRoot.AddComponent<Canvas>();
             rectTransform           = canvas.transform as RectTransform;
@@ -231,6 +285,7 @@ namespace Mega
 
             webglRoot.AddComponent<GraphicRaycaster>();
             webglRoot.AddComponent<WebMargin>();
+#endif
 
             // EventSystem
             eventSystem.AddComponent<EventSystem>();
@@ -240,9 +295,9 @@ namespace Mega
         public View Show(ViewID id, ViewType type = ViewType.Normal)
         {
             viewStack.Push(id);
-            if (isLoaded(id))
+            if (isLoaded(id)) 
             {
-                views[id].IsShow = true;
+                views[id].Show();
                 return views[id];
             }
 
@@ -253,44 +308,42 @@ namespace Mega
         {
             if (isLoaded(id))
             {
-                views[id].IsShow = false;
+                views[id].Hide();
+                viewStack.Remove(id);
             }
-
-            viewStack.Remove(id);
         }
 
         public void HideCurrent()
         {
             if (isLoaded(viewStack.Peek()))
             {
-                views[viewStack.Peek()].IsShow = false;
-            }
+                ViewID id = viewStack.Peek();
 
-            viewStack.Pop();
+                views[id].Hide();
+                viewStack.Pop();
+            }
         }
 
         public void Destroy(ViewID id)
         {
             if (isLoaded(id))
             {
-                UnityEngine.Object.Destroy(views[id].UiObject);
-                views[id].IsShow = false;
+                views[id].Destroy();
                 views.Remove(id);
+                viewStack.Remove(id);
             }
-
-            viewStack.Remove(id);
         }
 
         public void DestroyCurrent()
         {
             if (isLoaded(viewStack.Peek()))
             {
-                UnityEngine.Object.Destroy(views[viewStack.Peek()].UiObject);
-                views[viewStack.Peek()].IsShow = false;
-                views.Remove(viewStack.Peek());
-            }
+                ViewID id = viewStack.Peek();
 
-            viewStack.Pop();
+                views[id].Destroy();
+                views.Remove(id);
+                viewStack.Pop();
+            }
         }
 
         public bool HaveComponent<T>(ViewID id) where T : Component
@@ -328,7 +381,7 @@ namespace Mega
         {
             if (isLoaded(id))
             {
-                return views[id].IsShow;
+                return views[id].UIBase.IsShow;
             }
 
             return false;
@@ -336,7 +389,7 @@ namespace Mega
 
         private View Load(ViewID id, ViewType type = ViewType.Normal)
         {
-            string path = string.Format("Prefabs/UI/Panel/{0}", id.ToString());
+            string path = string.Format("Prefabs/UI/{0}", id.ToString());
             if (uiRoot == null || uiCamera == null)
             {
                 Init();
@@ -346,9 +399,10 @@ namespace Mega
             view.UiObject = CreateUI(Framework.Resource.GetUIPrefab(path), getViewRoot(type));
             view.UiObject.AddComponent<CanvasGroup>(); // https://blog.csdn.net/LLLLL__/article/details/103385952
             view.ViewType = type;
-            view.IsShow   = true;
+            view.UIBase   = view.UiObject.GetComponent<UIBase>();
+            view.Show();
             views.Add(id, view);
-
+            
             return view;
         }
 

@@ -7,7 +7,7 @@ namespace Mega
         private ViewID     viewId;
         private GameObject uiObject;
         private ViewType   viewType;
-        private bool       isShow  = false;
+        private UIBase     uiBase;
         private bool       hasInit = false;
 
         public ViewID ViewId
@@ -21,48 +21,19 @@ namespace Mega
             set => uiObject = value;
         }
 
+        
         public ViewType ViewType
         {
             get => viewType;
             set => viewType = value;
         }
 
-        public bool IsShow
+        public UIBase UIBase
         {
-            get => isShow;
-            set
-            {
-                isShow = value;
-                // uiObject.SetActive(isShow);
-                if (isShow)
-                {
-                    uiObject.GetComponent<CanvasGroup>().alpha        = 1;
-                    uiObject.GetComponent<CanvasGroup>().interactable = true;
-                    if (viewType == ViewType.Normal)
-                    {
-                        uiObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
-                    }
-                    else
-                    {
-                        uiObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
-                    }
-
-                    if (hasInit)
-                    {
-                        uiObject.GetComponent<BaseView>().OnResume();
-                    }
-                    UiObject.transform.SetAsLastSibling();
-                    hasInit = true;
-                }
-                else
-                {
-                    uiObject.GetComponent<CanvasGroup>().alpha          = 0;
-                    uiObject.GetComponent<CanvasGroup>().interactable   = false;
-                    uiObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
-                    uiObject.GetComponent<BaseView>().OnHide();
-                }
-            }
+            get => uiBase;
+            set => uiBase = value;
         }
+
 
         public View(ViewID id)
         {
@@ -74,18 +45,39 @@ namespace Mega
             Debuger.Log(string.Format("WindowId:{0}已销毁！", ViewId));
         }
 
-        private void Show()
+        public void Show()
         {
-            IsShow = true;
+            uiBase.IsShow = true;
+
+            uiObject.GetComponent<CanvasGroup>().alpha        = 1;
+            uiObject.GetComponent<CanvasGroup>().interactable = true;
+            if (viewType == ViewType.Normal)
+            {
+                uiObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            }
+            else
+            {
+                uiObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            }
+
+            if (hasInit)
+            {
+                uiBase.OnResume();
+            }
+
+            UiObject.transform.SetAsLastSibling();
+            uiObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
+            hasInit                                              = true;
         }
 
-        private void Hide()
+        public void Hide()
         {
-            IsShow = false;
+            uiBase.Hide();
         }
 
         public void Destroy()
         {
+            uiBase.Destroy();
         }
     }
 }
