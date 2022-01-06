@@ -25,6 +25,8 @@
 //
 //**********************************************************************
 
+using System;
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
@@ -57,6 +59,18 @@ namespace Mega
         /// 单个音频是否允许多个声音
         /// </summary>
         public bool OnlyOneUISounds { get; set; }
+
+
+        /// <summary>
+        /// 当前音乐ID
+        /// </summary>
+        public MusicType CurMusicType
+        {
+            get { return curMusicType; }
+            set { curMusicType = value; }
+        }
+
+        private MusicType curMusicType = MusicType.Max;
 
         /// <summary>
         /// 全局音量
@@ -122,14 +136,9 @@ namespace Mega
         }
 
         /// <summary>
-        /// 音乐资源缓存
-        /// </summary>
-        private Dictionary<MusicType, AudioClip> AudioMusicDic = new Dictionary<MusicType, AudioClip>();
-
-        /// <summary>
         /// 音效资源缓存
         /// </summary>
-        private Dictionary<SoundType, AudioClip> AudioSoundDic = new Dictionary<SoundType, AudioClip>();
+        private Dictionary<string, AudioClip> AudioDic = new Dictionary<string, AudioClip>();
 
         /// <summary>
         /// 音乐声音缓存
@@ -179,6 +188,57 @@ namespace Mega
                 OnlyOneUISounds = false;
 
                 initialized = true;
+            }
+        }
+
+        private  Action OnloadFinish;
+        private int allCount;
+        private int curCount = 2; // 两个无效枚举 Max
+
+        public void LoadAllAudio(Action onLoadFinish)
+        {
+            this.OnloadFinish = onLoadFinish;
+            allCount = Enum.GetValues(typeof(SoundType)).Length + Enum.GetValues(typeof(MusicType)).Length;
+            
+            foreach (SoundType sound in Enum.GetValues(typeof(SoundType)))
+            {
+                if (sound != SoundType.Max)
+                {
+                    StartCoroutine(LoadAudioClip("Effect/", sound.ToString()));
+                }
+            }
+
+            foreach (MusicType sound in Enum.GetValues(typeof(MusicType)))
+            {
+                if (sound != MusicType.Max)
+                {
+                    StartCoroutine(LoadAudioClip("Bgm/", sound.ToString()));
+                }
+            }
+        }
+
+        IEnumerator LoadAudioClip(string prePath, string clipName)
+        {
+            string path = FileUtils.GetRealUri("Sounds/" + prePath + clipName + ".OGG", PathMode.Streaming);
+
+            using (UnityWebRequest webRequest = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.AUDIOQUEUE))
+            {
+                yield return webRequest.SendWebRequest();
+                curCount++;
+                if (curCount>=allCount)
+                {
+                    OnloadFinish.Invoke();
+                }
+                if (webRequest.isNetworkError || webRequest.isHttpError)
+                {
+                    Debug.Log(webRequest.error);
+                }
+                else
+                {
+                    AudioClip clip = DownloadHandlerAudioClip.GetContent(webRequest);
+                    AudioDic[clipName] = clip;
+                    Debug.Log("set audio clip" + clipName);
+                }
             }
         }
 
@@ -507,13 +567,13 @@ namespace Mega
         /// <param name="soundType">Sound type.</param>
         public AudioClip GetSoundAudioClip(SoundType soundType)
         {
-            if (AudioSoundDic.ContainsKey(soundType))
+            if (AudioDic.ContainsKey(soundType.ToString()))
             {
-                return AudioSoundDic[soundType];
+                return AudioDic[soundType.ToString()];
             }
 
 
-            string filePath = FileUtils.GetRealUri("Sounds/Effect/" + soundType + ".ogg", PathMode.Streaming);
+            string filePath = FileUtils.GetRealUri("Sounds/Effect/" + soundType + ".OGG", PathMode.Streaming);
 
             using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(filePath, AudioType.OGGVORBIS))
             {
@@ -530,7 +590,7 @@ namespace Mega
                 }
 
                 AudioClip clip = DownloadHandlerAudioClip.GetContent(request);
-                AudioSoundDic[soundType] = clip;
+                AudioDic[soundType.ToString()] = clip;
                 return clip;
             }
         }
@@ -553,9 +613,10 @@ namespace Mega
         /// <param name="soundType">Sound type.</param>
         public AudioClip GetMusicAudioClip(MusicType musicType)
         {
-            if (AudioMusicDic.ContainsKey(musicType))
+
+            if (AudioDic.ContainsKey(musicType.ToString()))
             {
-                return AudioMusicDic[musicType];
+                return AudioDic[musicType.ToString()];
             }
 
             string filePath = FileUtils.GetRealUri("Sounds/Bgm/" + musicType + ".OGG", PathMode.Streaming);
@@ -575,7 +636,7 @@ namespace Mega
                 }
 
                 AudioClip clip = DownloadHandlerAudioClip.GetContent(request);
-                AudioMusicDic[musicType] = clip;
+                AudioDic[musicType.ToString()] = clip;
                 return clip;
             }
         }
@@ -774,7 +835,7 @@ namespace Mega
         /// </summary>
         /// <param name="clip">The audio clip to play</param>
         /// <returns>The ID of the created Audio object</returns>
-        public int PlayMusic(MusicType clip,Transform transform)
+        public int PlayMusic(MusicType clip, Transform transform)
         {
             return PlayMusic(Audio.AudioType.Music, clip, 1f, false, false, 1f, 1f, -1f, transform);
         }
@@ -797,7 +858,7 @@ namespace Mega
         /// </summary>
         /// <param name="clip">The audio clip to play</param>
         /// <returns>The ID of the created Audio object</returns>
-        public int PlayMusicOne(MusicType clip,Transform transform)
+        public int PlayMusicOne(MusicType clip, Transform transform)
         {
             OnlyOneMusic = true;
             int audioId = PlayMusic(Audio.AudioType.Music, clip, 1f, false, false, 1f, 1f, -1f, transform);
@@ -980,7 +1041,7 @@ namespace Mega
         /// </summary>
         /// <param name="clip">The audio clip to play</param>
         /// <returns>The ID of the created Audio object</returns>
-        public int PlayBgm(MusicType clip,Transform transform)
+        public int PlayBgm(MusicType clip, Transform transform)
         {
             StopAllBgm();
             return PlayMusic(Audio.AudioType.BGM, clip, 1f, true, true, 1f, 1f, -1f, transform);
