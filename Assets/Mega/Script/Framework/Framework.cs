@@ -35,23 +35,19 @@ namespace Mega
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
-        }
-
-        private void Start()
-        {
             StartCoroutine(InitFramework());
         }
 
         private IEnumerator InitFramework()
         {
-            UI       = ComponentManager.GetComponent<UIManager>();
-            Resource = ComponentManager.GetComponent<ResourceManager>();
-            Sound    = ComponentManager.GetComponent<SoundManager>();
-            Event    = ComponentManager.GetComponent<EventManager>();
-            Scene    = ComponentManager.GetComponent<SceneLoadManager>();
-            Pool     = ComponentManager.GetComponent<PoolManager>();
-            Data     = ComponentManager.GetComponent<DataManager>();
-            Fight    = ComponentManager.GetComponent<FightManager>();
+            UI       = transform.Find("UI").GetComponent<UIManager>();
+            Resource = transform.Find("Resource").GetComponent<ResourceManager>();
+            Sound    = transform.Find("Sound").GetComponent<SoundManager>();
+            Event    = transform.Find("Event").GetComponent<EventManager>();
+            Scene    = transform.Find("Scene").GetComponent<SceneLoadManager>();
+            Pool     = transform.Find("Pool").GetComponent<PoolManager>();
+            Data     = transform.Find("DataTable").GetComponent<DataManager>();
+            Fight    = transform.Find("Fight").GetComponent<FightManager>();
 
             yield return new WaitForEndOfFrame();
             if (loadEvent != null)
