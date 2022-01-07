@@ -27,7 +27,6 @@ public class UIHallModel : BaseViewModel
 
     private void InitData()
     {
-        // BuildData();
         Framework.UI.StartCoroutine(ReadData());
     }
 
@@ -104,65 +103,6 @@ public class UIHallModel : BaseViewModel
         }
     }
 
-    private void BuildData()
-    {
-        // UI
-        ItemTreeViewModel itemMenuUI = new ItemTreeViewModel("UI");
-        {
-            ItemTreeViewModel itemMenuUI_1 = new ItemTreeViewModel("UGUI");
-            {
-                ItemTreeViewModel itemMenuUI_1_1 = new ItemTreeViewModel("多级菜单Level_1");
-                {
-                    ItemTreeViewModel itemMenuUI_1_1_1 = new ItemTreeViewModel("多级菜单Level_2");
-                    {
-                        ItemTreeViewModel itemMenuUI_1_1_1_1 = new ItemTreeViewModel("多级菜单Level_3");
-                        {
-                            ItemTreeViewModel itemMenuUI_1_1_1_1_1 = new ItemTreeViewModel("多级菜单Level_4");
-                            {
-                                ItemTreeViewModel itemMenuUI_1_1_1_1_1_1 = new ItemTreeViewModel("多级菜单Level_5");
-                                {
-                                    ItemTreeViewModel itemMenuUI_1_1_1_1_1_1_1 = new ItemTreeViewModel("多级菜单Level_6");
-                                    {
-                                        ItemTreeViewModel itemMenuUI_1_1_1_1_1_1_1_1 = new ItemTreeViewModel("多级菜单Level_7");
-                                        {
-                                            itemMenuUI_1_1_1_1_1_1_1_1.AddChild(new ItemTreeViewModel("多级菜单Button"));
-                                        }
-                                        itemMenuUI_1_1_1_1_1_1_1.AddChild(itemMenuUI_1_1_1_1_1_1_1_1);
-                                    }
-                                    itemMenuUI_1_1_1_1_1_1.AddChild(itemMenuUI_1_1_1_1_1_1_1);
-                                }
-                                itemMenuUI_1_1_1_1_1.AddChild(itemMenuUI_1_1_1_1_1_1);
-                            }
-                            itemMenuUI_1_1_1_1.AddChild(itemMenuUI_1_1_1_1_1);
-                        }
-                        itemMenuUI_1_1_1.AddChild(itemMenuUI_1_1_1_1);
-                    }
-                    itemMenuUI_1_1.AddChild(itemMenuUI_1_1_1);
-                }
-
-                ItemTreeViewModel itemMenuUI_1_2 = new ItemTreeViewModel("UGUI适配");
-                itemMenuUI_1.AddChild(itemMenuUI_1_1);
-                itemMenuUI_1.AddChild(itemMenuUI_1_2);
-            }
-            ItemTreeViewModel itemMenuUI_2 = new ItemTreeViewModel("NGUI");
-            ItemTreeViewModel itemMenuUI_3 = new ItemTreeViewModel("FGUI");
-
-            itemDataTree.Add(itemMenuUI);
-            itemMenuUI.AddChild(itemMenuUI_1);
-            itemMenuUI.AddChild(itemMenuUI_2);
-            itemMenuUI.AddChild(itemMenuUI_3);
-        }
-
-        // CG
-        ItemTreeViewModel itemMenuCG = new ItemTreeViewModel("CG");
-        {
-            ItemTreeViewModel itemMenuCG_1 = new ItemTreeViewModel("Shader");
-
-            itemDataTree.Add(itemMenuCG);
-            itemMenuCG.AddChild(itemMenuCG_1);
-        }
-    }
-
     public int GetItemTotalCount()
     {
         return GetItemCount(itemDataTree);
@@ -212,14 +152,14 @@ public class UIHallModel : BaseViewModel
         return itemDataList[pos];
     }
 
-    public void ToggleItemExpand(int treeIndex)
+    public void ToggleItemExpand(int pos)
     {
-        if (treeIndex < 0 || treeIndex >= itemDataList.Count)
+        if (pos < 0 || pos >= itemDataList.Count)
         {
             return;
         }
 
-        ItemTreeViewModel data = itemDataList[treeIndex];
+        ItemTreeViewModel data = itemDataList[pos];
         data.IsExpand = !data.IsExpand;
     }
 
