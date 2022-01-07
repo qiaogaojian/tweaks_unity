@@ -1,19 +1,23 @@
 using Mega;
+using TMPro;
 
 public class UIHall : BaseView
 {
-    private TreeListView listMenu;
-    private UIHallModel  model;
+    private TextMeshProUGUI tvTitle;
+    private TreeListView    listMenu;
+    private UIHallModel     model;
 
     public override void InitView()
     {
         base.InitView();
         listMenu = transform.Find("listMenu").GetComponent<TreeListView>();
+        tvTitle  = transform.Find("tvTitle").GetComponent<TextMeshProUGUI>();
 
         viewModel = new UIHallModel();
         model     = (UIHallModel) viewModel;
         model.Init(() =>
         {
+            tvTitle.text = model.Title;
             listMenu.InitListView(model.GetItemTotalCount(), OnGetItemByIndex);
         });
     }

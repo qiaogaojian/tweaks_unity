@@ -20,6 +20,8 @@ public class UIHallModel : BaseViewModel
     private bool                    mIsFirst       = true;
     private Action                  finishLoadData;
 
+    public string Title { get; set; }
+
     public override void Init(Action onFinish)
     {
         this.finishLoadData = onFinish;
@@ -70,12 +72,17 @@ public class UIHallModel : BaseViewModel
         foreach (string curLine in lines)
         {
             int curLevel = curLine.Count(c => c == '#');
+            if (curLevel == 1)
+            {
+                Title = curLine.Substring(curLevel);
+            }
+
             if (curLevel >= 2)
             {
-                string title = curLine.Substring(curLevel);
+                string subTitle = curLine.Substring(curLevel);
                 if (curLevel > curNode.Level)
                 {
-                    ItemTreeViewModel temNode = new ItemTreeViewModel(title);
+                    ItemTreeViewModel temNode = new ItemTreeViewModel(subTitle);
                     temNode.parent = curNode;
                     temNode.Level  = curLevel;
                     curNode        = temNode;
@@ -88,7 +95,7 @@ public class UIHallModel : BaseViewModel
                         curNode = curNode.parent;
                     }
 
-                    ItemTreeViewModel temNode = new ItemTreeViewModel(title);
+                    ItemTreeViewModel temNode = new ItemTreeViewModel(subTitle);
                     temNode.parent = curNode.parent;
                     temNode.Level  = curNode.Level;
                     curNode        = temNode;
