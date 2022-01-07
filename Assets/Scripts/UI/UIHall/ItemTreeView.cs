@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemTreeView : TreeListViewItem2
+public class ItemTreeView : TreeListViewItem
 {
     private RectTransform   rt;
     private Button          btnMenu;

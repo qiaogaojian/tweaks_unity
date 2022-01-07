@@ -72,7 +72,7 @@ namespace Mega
             set { mArrangeType = value; }
         }
 
-        List<TreeListViewItem2>                           mItemList = new List<TreeListViewItem2>();
+        List<TreeListViewItem>                           mItemList = new List<TreeListViewItem>();
         RectTransform                                     mContainerTrans;
         ScrollRect                                        mScrollRect                 = null;
         RectTransform                                     mScrollRectTransform        = null;
@@ -80,7 +80,7 @@ namespace Mega
         float                                             mItemDefaultWithPaddingSize = 20;
         int                                               mItemTotalCount             = 0;
         bool                                              mIsVertList                 = false;
-        System.Func<TreeListView, int, TreeListViewItem2> mOnGetItemByIndex;
+        System.Func<TreeListView, int, TreeListViewItem> mOnGetItemByIndex;
         Vector3[]                                         mItemWorldCorners         = new Vector3[4];
         Vector3[]                                         mViewPortRectLocalCorners = new Vector3[4];
         int                                               mCurReadyMinItemIndex     = 0;
@@ -114,8 +114,8 @@ namespace Mega
 
 
         Vector3                                               mLastFrameContainerPos   = Vector3.zero;
-        public System.Action<TreeListView, TreeListViewItem2> mOnSnapItemFinished      = null;
-        public System.Action<TreeListView, TreeListViewItem2> mOnSnapNearestChanged    = null;
+        public System.Action<TreeListView, TreeListViewItem> mOnSnapItemFinished      = null;
+        public System.Action<TreeListView, TreeListViewItem> mOnSnapNearestChanged    = null;
         int                                                   mCurSnapNearestItemIndex = -1;
         Vector2                                               mAdjustedVec;
         bool                                                  mNeedAdjustVec            = false;
@@ -138,7 +138,7 @@ namespace Mega
             get { return mItemPrefabDataList; }
         }
 
-        public List<TreeListViewItem2> ItemList
+        public List<TreeListViewItem> ItemList
         {
             get { return mItemList; }
         }
@@ -243,7 +243,7 @@ namespace Mega
         onGetItemByIndex: when a item is getting in the scrollrect viewport, and this Action will be called with the item’ index as a parameter, to let you create the item and update its content.
         */
         public void InitListView(int                          itemTotalCount,
-            System.Func<TreeListView, int, TreeListViewItem2> onGetItemByIndex,
+            System.Func<TreeListView, int, TreeListViewItem> onGetItemByIndex,
             LoopListViewInitParam                             initParam = null)
         {
             if (initParam != null)
@@ -458,7 +458,7 @@ namespace Mega
         }
 
         //To get the visible item by itemIndex. If the item is not visible, then this method return null.
-        public TreeListViewItem2 GetShownItemByItemIndex(int itemIndex)
+        public TreeListViewItem GetShownItemByItemIndex(int itemIndex)
         {
             int count = mItemList.Count;
             if (count == 0)
@@ -476,7 +476,7 @@ namespace Mega
         }
 
 
-        public TreeListViewItem2 GetShownItemNearestItemIndex(int itemIndex)
+        public TreeListViewItem GetShownItemNearestItemIndex(int itemIndex)
         {
             int count = mItemList.Count;
             if (count == 0)
@@ -533,7 +533,7 @@ namespace Mega
          All visible items is stored in a List<LoopListViewItem2> , which is named mItemList;
          this method is to get the visible item by the index in visible items list. The parameter index is from 0 to mItemList.Count.
         */
-        public TreeListViewItem2 GetShownItemByIndex(int index)
+        public TreeListViewItem GetShownItemByIndex(int index)
         {
             int count = mItemList.Count;
             if (index < 0 || index >= count)
@@ -544,12 +544,12 @@ namespace Mega
             return mItemList[index];
         }
 
-        public TreeListViewItem2 GetShownItemByIndexWithoutCheck(int index)
+        public TreeListViewItem GetShownItemByIndexWithoutCheck(int index)
         {
             return mItemList[index];
         }
 
-        public int GetIndexInShownItemList(TreeListViewItem2 item)
+        public int GetIndexInShownItemList(TreeListViewItem item)
         {
             if (item == null)
             {
@@ -574,7 +574,7 @@ namespace Mega
         }
 
 
-        public void DoActionForEachShownItem(System.Action<TreeListViewItem2, object> action, object param)
+        public void DoActionForEachShownItem(System.Action<TreeListViewItem, object> action, object param)
         {
             if (action == null)
             {
@@ -594,7 +594,7 @@ namespace Mega
         }
 
 
-        public TreeListViewItem2 getItemView(string itemPrefabName)
+        public TreeListViewItem getItemView(string itemPrefabName)
         {
             ItemPool pool = null;
             if (mItemPoolDict.TryGetValue(itemPrefabName, out pool) == false)
@@ -602,7 +602,7 @@ namespace Mega
                 return null;
             }
 
-            TreeListViewItem2 item = (TreeListViewItem2) pool.GetItem();
+            TreeListViewItem item = (TreeListViewItem) pool.GetItem();
             RectTransform     rf   = item.GetComponent<RectTransform>();
             rf.SetParent(mContainerTrans);
             rf.localScale         = Vector3.one;
@@ -618,7 +618,7 @@ namespace Mega
         */
         public void OnItemSizeChanged(int itemIndex)
         {
-            TreeListViewItem2 item = GetShownItemByItemIndex(itemIndex);
+            TreeListViewItem item = GetShownItemByItemIndex(itemIndex);
             if (item == null)
             {
                 return;
@@ -660,10 +660,10 @@ namespace Mega
 
             int               firstItemIndex = mItemList[0].ItemIndex;
             int               i              = itemIndex - firstItemIndex;
-            TreeListViewItem2 curItem        = mItemList[i];
+            TreeListViewItem curItem        = mItemList[i];
             Vector3           pos            = curItem.CachedRectTransform.anchoredPosition3D;
             RecycleItemTmp(curItem);
-            TreeListViewItem2 newItem = GetNewItemByIndex(itemIndex);
+            TreeListViewItem newItem = GetNewItemByIndex(itemIndex);
             if (newItem == null)
             {
                 RefreshAllShownItemWithFirstIndex(firstItemIndex);
@@ -768,7 +768,7 @@ namespace Mega
             }
 
             RecycleAllItem();
-            TreeListViewItem2 newItem = GetNewItemByIndex(itemIndex);
+            TreeListViewItem newItem = GetNewItemByIndex(itemIndex);
             if (newItem == null)
             {
                 ClearAllTmpRecycledItem();
@@ -827,13 +827,13 @@ namespace Mega
                 return;
             }
 
-            TreeListViewItem2 firstItem = mItemList[0];
+            TreeListViewItem firstItem = mItemList[0];
             Vector3           pos       = firstItem.CachedRectTransform.anchoredPosition3D;
             RecycleAllItem();
             for (int i = 0; i < count; ++i)
             {
                 int               curIndex = firstItemIndex + i;
-                TreeListViewItem2 newItem  = GetNewItemByIndex(curIndex);
+                TreeListViewItem newItem  = GetNewItemByIndex(curIndex);
                 if (newItem == null)
                 {
                     break;
@@ -873,7 +873,7 @@ namespace Mega
         public void RefreshAllShownItemWithFirstIndexAndPos(int firstItemIndex, Vector3 pos)
         {
             RecycleAllItem();
-            TreeListViewItem2 newItem = GetNewItemByIndex(firstItemIndex);
+            TreeListViewItem newItem = GetNewItemByIndex(firstItemIndex);
             if (newItem == null)
             {
                 return;
@@ -909,7 +909,7 @@ namespace Mega
         }
 
 
-        void RecycleItemTmp(TreeListViewItem2 item)
+        void RecycleItemTmp(TreeListViewItem item)
         {
             if (item == null)
             {
@@ -943,7 +943,7 @@ namespace Mega
 
         void RecycleAllItem()
         {
-            foreach (TreeListViewItem2 item in mItemList)
+            foreach (TreeListViewItem item in mItemList)
             {
                 RecycleItemTmp(item);
             }
@@ -1085,10 +1085,10 @@ namespace Mega
 
                 AdjustAnchor(rtf);
                 AdjustPivot(rtf);
-                TreeListViewItem2 tItem = data.mItemPrefab.GetComponent<TreeListViewItem2>();
+                TreeListViewItem tItem = data.mItemPrefab.GetComponent<TreeListViewItem>();
                 if (tItem == null)
                 {
-                    data.mItemPrefab.AddComponent<TreeListViewItem2>();
+                    data.mItemPrefab.AddComponent<TreeListViewItem>();
                 }
 
                 ItemPool pool = new ItemPool();
@@ -1159,7 +1159,7 @@ namespace Mega
             mPointerEventData.pointerCurrentRaycast = eventData.pointerCurrentRaycast;
         }
 
-        TreeListViewItem2 GetNewItemByIndex(int index)
+        TreeListViewItem GetNewItemByIndex(int index)
         {
             if (mSupportScrollBar && index < 0)
             {
@@ -1171,7 +1171,7 @@ namespace Mega
                 return null;
             }
 
-            TreeListViewItem2 newItem = mOnGetItemByIndex(this, index);
+            TreeListViewItem newItem = mOnGetItemByIndex(this, index);
             if (newItem == null)
             {
                 return null;
@@ -1205,7 +1205,7 @@ namespace Mega
         }
 
 
-        public Vector3 GetItemCornerPosInViewPort(TreeListViewItem2 item, ItemCornerEnum corner = ItemCornerEnum.LeftBottom)
+        public Vector3 GetItemCornerPosInViewPort(TreeListViewItem item, ItemCornerEnum corner = ItemCornerEnum.LeftBottom)
         {
             item.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
             return mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[(int) corner]);
@@ -1235,7 +1235,7 @@ namespace Mega
                     return;
                 }
 
-                TreeListViewItem2 tViewItem0 = mItemList[0];
+                TreeListViewItem tViewItem0 = mItemList[0];
                 tViewItem0.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 topPos0 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 if (topPos0.y < mViewPortRectLocalCorners[1].y)
@@ -1248,7 +1248,7 @@ namespace Mega
                     return;
                 }
 
-                TreeListViewItem2 tViewItem1 = mItemList[mItemList.Count - 1];
+                TreeListViewItem tViewItem1 = mItemList[mItemList.Count - 1];
                 tViewItem1.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 downPos1 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[0]);
                 float   d        = downPos1.y - mViewPortRectLocalCorners[0].y;
@@ -1273,7 +1273,7 @@ namespace Mega
                     return;
                 }
 
-                TreeListViewItem2 tViewItem0 = mItemList[0];
+                TreeListViewItem tViewItem0 = mItemList[0];
                 tViewItem0.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 downPos0 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[0]);
                 if (downPos0.y > mViewPortRectLocalCorners[0].y)
@@ -1286,7 +1286,7 @@ namespace Mega
                     return;
                 }
 
-                TreeListViewItem2 tViewItem1 = mItemList[mItemList.Count - 1];
+                TreeListViewItem tViewItem1 = mItemList[mItemList.Count - 1];
                 tViewItem1.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 topPos1 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 float   d       = mViewPortRectLocalCorners[1].y - topPos1.y;
@@ -1311,7 +1311,7 @@ namespace Mega
                     return;
                 }
 
-                TreeListViewItem2 tViewItem0 = mItemList[0];
+                TreeListViewItem tViewItem0 = mItemList[0];
                 tViewItem0.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 leftPos0 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 if (leftPos0.x > mViewPortRectLocalCorners[1].x)
@@ -1324,7 +1324,7 @@ namespace Mega
                     return;
                 }
 
-                TreeListViewItem2 tViewItem1 = mItemList[mItemList.Count - 1];
+                TreeListViewItem tViewItem1 = mItemList[mItemList.Count - 1];
                 tViewItem1.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 rightPos1 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[2]);
                 float   d         = mViewPortRectLocalCorners[2].x - rightPos1.x;
@@ -1349,7 +1349,7 @@ namespace Mega
                     return;
                 }
 
-                TreeListViewItem2 tViewItem0 = mItemList[0];
+                TreeListViewItem tViewItem0 = mItemList[0];
                 tViewItem0.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 rightPos0 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[2]);
                 if (rightPos0.x < mViewPortRectLocalCorners[2].x)
@@ -1362,7 +1362,7 @@ namespace Mega
                     return;
                 }
 
-                TreeListViewItem2 tViewItem1 = mItemList[mItemList.Count - 1];
+                TreeListViewItem tViewItem1 = mItemList[mItemList.Count - 1];
                 tViewItem1.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 leftPos1 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 float   d        = leftPos1.x - mViewPortRectLocalCorners[1].x;
@@ -1448,7 +1448,7 @@ namespace Mega
             }
 
             Vector3           pos        = mContainerTrans.anchoredPosition3D;
-            TreeListViewItem2 tViewItem0 = mItemList[0];
+            TreeListViewItem tViewItem0 = mItemList[0];
             tViewItem0.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
             float start          = 0;
             float end            = 0;
@@ -1556,7 +1556,7 @@ namespace Mega
 
             if (needCheck)
             {
-                TreeListViewItem2 tViewItem0 = mItemList[0];
+                TreeListViewItem tViewItem0 = mItemList[0];
                 tViewItem0.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 int   curIndex       = -1;
                 float start          = 0;
@@ -1691,7 +1691,7 @@ namespace Mega
                 mCurSnapData.mSnapStatus = SnapStatus.SnapMoveFinish;
                 if (mOnSnapItemFinished != null)
                 {
-                    TreeListViewItem2 targetItem = GetShownItemByItemIndex(mCurSnapNearestItemIndex);
+                    TreeListViewItem targetItem = GetShownItemByItemIndex(mCurSnapNearestItemIndex);
                     if (targetItem != null)
                     {
                         mOnSnapItemFinished(this, targetItem);
@@ -1742,7 +1742,7 @@ namespace Mega
                 {
                     if (mCurSnapData.mIsTempTarget == true)
                     {
-                        TreeListViewItem2 targetItem = GetShownItemNearestItemIndex(mCurSnapData.mSnapTargetIndex);
+                        TreeListViewItem targetItem = GetShownItemNearestItemIndex(mCurSnapData.mSnapTargetIndex);
                         if (targetItem == null)
                         {
                             mCurSnapData.Clear();
@@ -1784,7 +1784,7 @@ namespace Mega
 
             if (mCurSnapData.mSnapStatus == SnapStatus.NoTargetSet)
             {
-                TreeListViewItem2 nearestItem = GetShownItemByItemIndex(mCurSnapNearestItemIndex);
+                TreeListViewItem nearestItem = GetShownItemByItemIndex(mCurSnapNearestItemIndex);
                 if (nearestItem == null)
                 {
                     return;
@@ -1797,7 +1797,7 @@ namespace Mega
 
             if (mCurSnapData.mSnapStatus == SnapStatus.TargetHasSet)
             {
-                TreeListViewItem2 targetItem = GetShownItemNearestItemIndex(mCurSnapData.mSnapTargetIndex);
+                TreeListViewItem targetItem = GetShownItemNearestItemIndex(mCurSnapData.mSnapTargetIndex);
                 if (targetItem == null)
                 {
                     mCurSnapData.Clear();
@@ -1894,7 +1894,7 @@ namespace Mega
 
             if (needCheck)
             {
-                TreeListViewItem2 tViewItem0 = mItemList[0];
+                TreeListViewItem tViewItem0 = mItemList[0];
                 tViewItem0.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 int   curIndex       = -1;
                 float start          = 0;
@@ -2030,7 +2030,7 @@ namespace Mega
                 mCurSnapData.mSnapStatus = SnapStatus.SnapMoveFinish;
                 if (mOnSnapItemFinished != null)
                 {
-                    TreeListViewItem2 targetItem = GetShownItemByItemIndex(mCurSnapNearestItemIndex);
+                    TreeListViewItem targetItem = GetShownItemByItemIndex(mCurSnapNearestItemIndex);
                     if (targetItem != null)
                     {
                         mOnSnapItemFinished(this, targetItem);
@@ -2215,7 +2215,7 @@ namespace Mega
                         pos = -pos;
                     }
 
-                    TreeListViewItem2 newItem = GetNewItemByIndex(index);
+                    TreeListViewItem newItem = GetNewItemByIndex(index);
                     if (newItem == null)
                     {
                         return false;
@@ -2232,7 +2232,7 @@ namespace Mega
                     return true;
                 }
 
-                TreeListViewItem2 tViewItem0 = mItemList[0];
+                TreeListViewItem tViewItem0 = mItemList[0];
                 tViewItem0.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 topPos0  = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 Vector3 downPos0 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[0]);
@@ -2251,7 +2251,7 @@ namespace Mega
                     return true;
                 }
 
-                TreeListViewItem2 tViewItem1 = mItemList[mItemList.Count - 1];
+                TreeListViewItem tViewItem1 = mItemList[mItemList.Count - 1];
                 tViewItem1.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 topPos1  = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 Vector3 downPos1 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[0]);
@@ -2281,7 +2281,7 @@ namespace Mega
                     int nIndex = tViewItem1.ItemIndex + 1;
                     if (nIndex <= mCurReadyMaxItemIndex || mNeedCheckNextMaxItem)
                     {
-                        TreeListViewItem2 newItem = GetNewItemByIndex(nIndex);
+                        TreeListViewItem newItem = GetNewItemByIndex(nIndex);
                         if (newItem == null)
                         {
                             mCurReadyMaxItemIndex = tViewItem1.ItemIndex;
@@ -2322,7 +2322,7 @@ namespace Mega
                     int nIndex = tViewItem0.ItemIndex - 1;
                     if (nIndex >= mCurReadyMinItemIndex || mNeedCheckNextMinItem)
                     {
-                        TreeListViewItem2 newItem = GetNewItemByIndex(nIndex);
+                        TreeListViewItem newItem = GetNewItemByIndex(nIndex);
                         if (newItem == null)
                         {
                             mCurReadyMinItemIndex = tViewItem0.ItemIndex;
@@ -2370,7 +2370,7 @@ namespace Mega
                         }
                     }
 
-                    TreeListViewItem2 newItem = GetNewItemByIndex(index);
+                    TreeListViewItem newItem = GetNewItemByIndex(index);
                     if (newItem == null)
                     {
                         return false;
@@ -2387,7 +2387,7 @@ namespace Mega
                     return true;
                 }
 
-                TreeListViewItem2 tViewItem0 = mItemList[0];
+                TreeListViewItem tViewItem0 = mItemList[0];
                 tViewItem0.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 topPos0  = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 Vector3 downPos0 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[0]);
@@ -2406,7 +2406,7 @@ namespace Mega
                     return true;
                 }
 
-                TreeListViewItem2 tViewItem1 = mItemList[mItemList.Count - 1];
+                TreeListViewItem tViewItem1 = mItemList[mItemList.Count - 1];
                 tViewItem1.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 topPos1  = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 Vector3 downPos1 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[0]);
@@ -2435,7 +2435,7 @@ namespace Mega
                     int nIndex = tViewItem1.ItemIndex + 1;
                     if (nIndex <= mCurReadyMaxItemIndex || mNeedCheckNextMaxItem)
                     {
-                        TreeListViewItem2 newItem = GetNewItemByIndex(nIndex);
+                        TreeListViewItem newItem = GetNewItemByIndex(nIndex);
                         if (newItem == null)
                         {
                             mNeedCheckNextMaxItem = false;
@@ -2475,7 +2475,7 @@ namespace Mega
                     int nIndex = tViewItem0.ItemIndex - 1;
                     if (nIndex >= mCurReadyMinItemIndex || mNeedCheckNextMinItem)
                     {
-                        TreeListViewItem2 newItem = GetNewItemByIndex(nIndex);
+                        TreeListViewItem newItem = GetNewItemByIndex(nIndex);
                         if (newItem == null)
                         {
                             mNeedCheckNextMinItem = false;
@@ -2540,7 +2540,7 @@ namespace Mega
                         }
                     }
 
-                    TreeListViewItem2 newItem = GetNewItemByIndex(index);
+                    TreeListViewItem newItem = GetNewItemByIndex(index);
                     if (newItem == null)
                     {
                         return false;
@@ -2557,7 +2557,7 @@ namespace Mega
                     return true;
                 }
 
-                TreeListViewItem2 tViewItem0 = mItemList[0];
+                TreeListViewItem tViewItem0 = mItemList[0];
                 tViewItem0.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 leftPos0  = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 Vector3 rightPos0 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[2]);
@@ -2576,7 +2576,7 @@ namespace Mega
                     return true;
                 }
 
-                TreeListViewItem2 tViewItem1 = mItemList[mItemList.Count - 1];
+                TreeListViewItem tViewItem1 = mItemList[mItemList.Count - 1];
                 tViewItem1.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 leftPos1  = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 Vector3 rightPos1 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[2]);
@@ -2606,7 +2606,7 @@ namespace Mega
                     int nIndex = tViewItem1.ItemIndex + 1;
                     if (nIndex <= mCurReadyMaxItemIndex || mNeedCheckNextMaxItem)
                     {
-                        TreeListViewItem2 newItem = GetNewItemByIndex(nIndex);
+                        TreeListViewItem newItem = GetNewItemByIndex(nIndex);
                         if (newItem == null)
                         {
                             mCurReadyMaxItemIndex = tViewItem1.ItemIndex;
@@ -2647,7 +2647,7 @@ namespace Mega
                     int nIndex = tViewItem0.ItemIndex - 1;
                     if (nIndex >= mCurReadyMinItemIndex || mNeedCheckNextMinItem)
                     {
-                        TreeListViewItem2 newItem = GetNewItemByIndex(nIndex);
+                        TreeListViewItem newItem = GetNewItemByIndex(nIndex);
                         if (newItem == null)
                         {
                             mCurReadyMinItemIndex = tViewItem0.ItemIndex;
@@ -2697,7 +2697,7 @@ namespace Mega
                         pos = -pos;
                     }
 
-                    TreeListViewItem2 newItem = GetNewItemByIndex(index);
+                    TreeListViewItem newItem = GetNewItemByIndex(index);
                     if (newItem == null)
                     {
                         return false;
@@ -2714,7 +2714,7 @@ namespace Mega
                     return true;
                 }
 
-                TreeListViewItem2 tViewItem0 = mItemList[0];
+                TreeListViewItem tViewItem0 = mItemList[0];
                 tViewItem0.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 leftPos0  = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 Vector3 rightPos0 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[2]);
@@ -2733,7 +2733,7 @@ namespace Mega
                     return true;
                 }
 
-                TreeListViewItem2 tViewItem1 = mItemList[mItemList.Count - 1];
+                TreeListViewItem tViewItem1 = mItemList[mItemList.Count - 1];
                 tViewItem1.CachedRectTransform.GetWorldCorners(mItemWorldCorners);
                 Vector3 leftPos1  = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[1]);
                 Vector3 rightPos1 = mViewPortRectTransform.InverseTransformPoint(mItemWorldCorners[2]);
@@ -2763,7 +2763,7 @@ namespace Mega
                     int nIndex = tViewItem1.ItemIndex + 1;
                     if (nIndex <= mCurReadyMaxItemIndex || mNeedCheckNextMaxItem)
                     {
-                        TreeListViewItem2 newItem = GetNewItemByIndex(nIndex);
+                        TreeListViewItem newItem = GetNewItemByIndex(nIndex);
                         if (newItem == null)
                         {
                             mCurReadyMaxItemIndex = tViewItem1.ItemIndex;
@@ -2804,7 +2804,7 @@ namespace Mega
                     int nIndex = tViewItem0.ItemIndex - 1;
                     if (nIndex >= mCurReadyMinItemIndex || mNeedCheckNextMinItem)
                     {
-                        TreeListViewItem2 newItem = GetNewItemByIndex(nIndex);
+                        TreeListViewItem newItem = GetNewItemByIndex(nIndex);
                         if (newItem == null)
                         {
                             mCurReadyMinItemIndex = tViewItem0.ItemIndex;
@@ -2887,8 +2887,8 @@ namespace Mega
 
             if (mArrangeType == ListItemArrangeType.TopToBottom)
             {
-                TreeListViewItem2 firstItem = mItemList[0];
-                TreeListViewItem2 lastItem  = mItemList[mItemList.Count - 1];
+                TreeListViewItem firstItem = mItemList[0];
+                TreeListViewItem lastItem  = mItemList[mItemList.Count - 1];
                 float             viewMaxY  = GetContentPanelSize();
                 if (firstItem.TopY > 0 || (firstItem.ItemIndex == mCurReadyMinItemIndex && firstItem.TopY != 0))
                 {
@@ -2904,8 +2904,8 @@ namespace Mega
             }
             else if (mArrangeType == ListItemArrangeType.BottomToTop)
             {
-                TreeListViewItem2 firstItem = mItemList[0];
-                TreeListViewItem2 lastItem  = mItemList[mItemList.Count - 1];
+                TreeListViewItem firstItem = mItemList[0];
+                TreeListViewItem lastItem  = mItemList[mItemList.Count - 1];
                 float             viewMaxY  = GetContentPanelSize();
                 if (firstItem.BottomY < 0 || (firstItem.ItemIndex == mCurReadyMinItemIndex && firstItem.BottomY != 0))
                 {
@@ -2921,8 +2921,8 @@ namespace Mega
             }
             else if (mArrangeType == ListItemArrangeType.LeftToRight)
             {
-                TreeListViewItem2 firstItem = mItemList[0];
-                TreeListViewItem2 lastItem  = mItemList[mItemList.Count - 1];
+                TreeListViewItem firstItem = mItemList[0];
+                TreeListViewItem lastItem  = mItemList[mItemList.Count - 1];
                 float             viewMaxX  = GetContentPanelSize();
                 if (firstItem.LeftX < 0 || (firstItem.ItemIndex == mCurReadyMinItemIndex && firstItem.LeftX != 0))
                 {
@@ -2938,8 +2938,8 @@ namespace Mega
             }
             else if (mArrangeType == ListItemArrangeType.RightToLeft)
             {
-                TreeListViewItem2 firstItem = mItemList[0];
-                TreeListViewItem2 lastItem  = mItemList[mItemList.Count - 1];
+                TreeListViewItem firstItem = mItemList[0];
+                TreeListViewItem lastItem  = mItemList[mItemList.Count - 1];
                 float             viewMaxX  = GetContentPanelSize();
                 if (firstItem.RightX > 0 || (firstItem.ItemIndex == mCurReadyMinItemIndex && firstItem.RightX != 0))
                 {
@@ -2979,7 +2979,7 @@ namespace Mega
                 float curY = pos;
                 for (int i = 0; i < count; ++i)
                 {
-                    TreeListViewItem2 item = mItemList[i];
+                    TreeListViewItem item = mItemList[i];
                     item.CachedRectTransform.anchoredPosition3D = new Vector3(item.StartPosOffset, curY, 0);
                     curY                                        = curY - item.CachedRectTransform.rect.height - item.Padding;
                 }
@@ -3004,7 +3004,7 @@ namespace Mega
                 float curY = pos;
                 for (int i = 0; i < count; ++i)
                 {
-                    TreeListViewItem2 item = mItemList[i];
+                    TreeListViewItem item = mItemList[i];
                     item.CachedRectTransform.anchoredPosition3D = new Vector3(item.StartPosOffset, curY, 0);
                     curY                                        = curY + item.CachedRectTransform.rect.height + item.Padding;
                 }
@@ -3029,7 +3029,7 @@ namespace Mega
                 float curX = pos;
                 for (int i = 0; i < count; ++i)
                 {
-                    TreeListViewItem2 item = mItemList[i];
+                    TreeListViewItem item = mItemList[i];
                     item.CachedRectTransform.anchoredPosition3D = new Vector3(curX, item.StartPosOffset, 0);
                     curX                                        = curX + item.CachedRectTransform.rect.width + item.Padding;
                 }
@@ -3054,7 +3054,7 @@ namespace Mega
                 float curX = pos;
                 for (int i = 0; i < count; ++i)
                 {
-                    TreeListViewItem2 item = mItemList[i];
+                    TreeListViewItem item = mItemList[i];
                     item.CachedRectTransform.anchoredPosition3D = new Vector3(curX, item.StartPosOffset, 0);
                     curX                                        = curX - item.CachedRectTransform.rect.width - item.Padding;
                 }

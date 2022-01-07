@@ -21,7 +21,7 @@ public class UIHall : BaseView
         });
     }
 
-    TreeListViewItem2 OnGetItemByIndex(TreeListView listView, int pos)
+    TreeListViewItem OnGetItemByIndex(TreeListView listView, int pos)
     {
         if (pos < 0)
         {

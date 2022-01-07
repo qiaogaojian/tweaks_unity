@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Mega;
-using Newtonsoft.Json;
-using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// 树形结构储存所有Menu信息
@@ -32,9 +29,6 @@ public class UIHallModel : BaseViewModel
     {
         // BuildData();
         Framework.UI.StartCoroutine(ReadData());
-
-        // string json = JsonConvert.SerializeObject(itemDataTree, Formatting.Indented);
-        // Debuger.Log(json);
     }
 
     private IEnumerator ReadData()
