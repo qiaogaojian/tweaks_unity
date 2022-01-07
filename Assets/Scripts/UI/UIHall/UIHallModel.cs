@@ -25,6 +25,8 @@ public class UIHallModel : BaseViewModel
         InitData();
     }
 
+    #region 初始化数据
+
     private void InitData()
     {
         Framework.UI.StartCoroutine(ReadData());
@@ -103,6 +105,10 @@ public class UIHallModel : BaseViewModel
         }
     }
 
+    #endregion
+
+    #region 查找数据
+
     public int GetItemTotalCount()
     {
         return GetItemCount(itemDataTree);
@@ -152,19 +158,20 @@ public class UIHallModel : BaseViewModel
         return itemDataList[pos];
     }
 
+    #endregion
+
+    #region 修改数据
+
     public void ToggleItemExpand(int pos)
     {
-        if (pos < 0 || pos >= itemDataList.Count)
-        {
-            return;
-        }
-
-        ItemTreeViewModel data = itemDataList[pos];
+        ItemTreeViewModel data = GetItemData(pos);
         data.IsExpand = !data.IsExpand;
     }
 
+    #endregion
+
     public override void Destroy()
     {
-        Debuger.Log("UIHallModel Destroy");
+        Debuger.Log("UIHallModel OnDestroy");
     }
 }
