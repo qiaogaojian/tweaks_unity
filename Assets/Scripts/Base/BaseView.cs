@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BaseView : MonoBehaviour
 {
-    protected BaseViewModel viewModel;
-
     private bool isShow = false;
 
     public bool IsShow

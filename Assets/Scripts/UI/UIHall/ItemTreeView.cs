@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemTreeView : MonoBehaviour
+public class ItemTreeView : TreeListViewItem2
 {
     private RectTransform   rt;
     private Button          btnMenu;
@@ -12,9 +12,9 @@ public class ItemTreeView : MonoBehaviour
     private TextMeshProUGUI tvName;
     private Image           expandFlag;
 
-    public ItemTreeViewModel Model { get; set; }
-    private Action<ItemTreeViewModel> onClickMenu;
-    private int                       indentOffset = 30;
+    private bool hasInit    = false;
+    private int  indent     = 30;
+    private int  marginLeft = 20;
 
     private void Awake()
     {
@@ -23,54 +23,74 @@ public class ItemTreeView : MonoBehaviour
         ivBg       = transform.Find("ivBg").GetComponent<Image>();
         tvName     = transform.Find("ivBg/tvName").GetComponent<TextMeshProUGUI>();
         expandFlag = transform.Find("ivBg/ivExpandFlag").GetComponent<Image>();
-
-        btnMenu.onClick.AddListener(OnExpandFlagClicked);
     }
 
-    public void SetClickCallBack(Action<ItemTreeViewModel> clickHandler)
-    {
-        this.onClickMenu = clickHandler;
-    }
+    #region 初始化ItemView
 
-    private void OnExpandFlagClicked()
+    public void Init(TreeListView listMenu, UIHallModel model, ItemTreeViewModel menuData, int pos)
     {
-        this.onClickMenu?.Invoke(this.Model);
-    }
-
-    public void SetExpand(bool expand)
-    {
-        if (expand)
-        {
-            this.expandFlag.transform.localEulerAngles = new Vector3(0, 0, 0);
-        }
-        else
-        {
-            this.expandFlag.transform.localEulerAngles = new Vector3(0, 0, 90);
-        }
-    }
-
-    public void SetItemData(ItemTreeViewModel data)
-    {
-        Model = data;
-        RefreshView();
-    }
-
-    public void RefreshView()
-    {
-        if (this.Model == null)
+        if (hasInit)
         {
             return;
         }
 
-        tvName.text = this.Model.Name;
-        SetExpand(this.Model.IsExpand);
-        rt.offsetMin = new Vector2(20 + indentOffset * this.Model.Level, rt.offsetMin.y);
+        hasInit = true;
+        btnMenu.onClick.AddListener(() => { OnClickItem(listMenu, model, menuData, pos); });
+    }
 
-
-        Color color = Color.clear;
-        if (this.Model.IsTree())
+    public void OnClickItem(TreeListView listMenu, UIHallModel model, ItemTreeViewModel menuData, int pos)
+    {
+        if (menuData.IsTree())
         {
-            switch (this.Model.Level)
+            OnExpandClicked(listMenu, model, pos);
+        }
+        else
+        {
+            OnMenuButtonClicked(menuData);
+        }
+    }
+
+    public void OnExpandClicked(TreeListView listMenu, UIHallModel model, int pos)
+    {
+        model.ToggleItemExpand(pos);
+        listMenu.SetListItemCount(model.GetItemTotalCount(), false);
+        listMenu.RefreshAllShownItem();
+    }
+
+    public void OnMenuButtonClicked(ItemTreeViewModel menuData)
+    {
+        Debuger.Log($"OnClick Menu: {menuData.Name}");
+
+        switch (menuData.Name)
+        {
+            case "UGUI适配":
+                break;
+        }
+    }
+
+    #endregion
+
+    #region 刷新ItemView
+
+    public void Refresh(ItemTreeViewModel Model)
+    {
+        if (Model == null)
+        {
+            return;
+        }
+
+        tvName.text  = Model.Name;
+        rt.offsetMin = new Vector2(marginLeft + indent * Model.Level, rt.offsetMin.y);
+        ivBg.color   = GetItemColor(Model.IsTree(), Model.Level);
+        SetExpandTag(Model.IsExpand);
+    }
+
+    private Color GetItemColor(bool isTree, int level)
+    {
+        Color color = Color.clear;
+        if (isTree)
+        {
+            switch (level)
             {
                 case 0:
                     ColorUtility.TryParseHtmlString("#F92671", out color);
@@ -106,6 +126,20 @@ public class ItemTreeView : MonoBehaviour
             ColorUtility.TryParseHtmlString("#ECECEC", out color);
         }
 
-        ivBg.color = color;
+        return color;
     }
+
+    public void SetExpandTag(bool expand)
+    {
+        if (expand)
+        {
+            this.expandFlag.transform.localEulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            this.expandFlag.transform.localEulerAngles = new Vector3(0, 0, 90);
+        }
+    }
+
+    #endregion
 }

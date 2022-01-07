@@ -594,7 +594,7 @@ namespace Mega
         }
 
 
-        public TreeListViewItem2 NewListViewItem(string itemPrefabName)
+        public TreeListViewItem2 getItemView(string itemPrefabName)
         {
             ItemPool pool = null;
             if (mItemPoolDict.TryGetValue(itemPrefabName, out pool) == false)

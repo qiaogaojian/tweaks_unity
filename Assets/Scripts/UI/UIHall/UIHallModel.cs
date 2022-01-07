@@ -203,9 +203,9 @@ public class UIHallModel : BaseViewModel
         }
     }
 
-    public ItemTreeViewModel GetTreeItemByTotalIndex(int totalIndex)
+    public ItemTreeViewModel GetItemData(int pos)
     {
-        if (totalIndex < 0 || totalIndex >= itemTotalCount)
+        if (pos < 0 || pos >= itemTotalCount)
         {
             return null;
         }
@@ -215,7 +215,7 @@ public class UIHallModel : BaseViewModel
             return null;
         }
 
-        return itemDataList[totalIndex];
+        return itemDataList[pos];
     }
 
     public void ToggleItemExpand(int treeIndex)

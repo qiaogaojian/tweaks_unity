@@ -1061,14 +1061,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1265798083}
     m_Modifications:
-    - target: {fileID: 3247566322515964412, guid: 3cc00ec424e482241aa45d0a44e369d7, type: 3}
-      propertyPath: m_fontSize
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 3247566322515964412, guid: 3cc00ec424e482241aa45d0a44e369d7, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5528509858603296883, guid: 3cc00ec424e482241aa45d0a44e369d7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1152,10 +1144,6 @@ PrefabInstance:
     - target: {fileID: 5528509858603296883, guid: 3cc00ec424e482241aa45d0a44e369d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6664364887532744652, guid: 3cc00ec424e482241aa45d0a44e369d7, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 6872694790993299990, guid: 3cc00ec424e482241aa45d0a44e369d7, type: 3}
       propertyPath: m_Name
