@@ -26,7 +26,9 @@ This project contains different assets from different publishers meshed up toget
 
 ### Shader
 
-### Effect
+### Particle
+
+### Lighting
 
 ## UI
 
@@ -76,6 +78,60 @@ This project contains different assets from different publishers meshed up toget
 
 ### ETA
 
+#### Manager
+
+##### AssetBundle
+
+##### Audio
+
+##### DataLoader
+
+##### Event
+
+##### Fight
+
+##### FSM
+
+##### Localizaiton
+
+##### Pool
+
+##### Scene
+
+##### Singleton
+
+##### UI
+
+##### HotUpdate
+
+###### XLua
+
+###### ToLua
+
+###### ILRuntime
+
+##### AssetManager
+
+#### Utility
+
+##### AStar
+
+##### DoTween
+
+##### EasyTouch
+
+##### JsonDotnet
+
+##### Timer
+
+##### Debuger
+
+##### FileUtils
+
+##### TimeStamp
+
+## Physics
+
 ## Platform
 
 ### Input
@@ -121,12 +177,6 @@ This project contains different assets from different publishers meshed up toget
 ### Webgl
 
 ### Android / IOS
-
-## HotUpdate
-
-### Asset
-
-### AssetBundle
 
 ## Algorithm
 
