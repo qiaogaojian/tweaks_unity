@@ -28,15 +28,49 @@ public class UIHall : BaseView
             return null;
         }
 
-        ItemTreeViewModel menuData = model.GetItemData(pos);
-        if (menuData == null)
+        ItemTreeViewModel itemData = model.GetItemData(pos);
+        if (itemData == null)
         {
             return null;
         }
 
-        ItemTreeView item = (ItemTreeView) listView.getItemView("ItemMenu"); // 从内存池获取或新建菜单预制体
-        item.Init(listMenu, model, menuData, pos);
-        item.Refresh(menuData);
+        ItemTreeView item;
+        if (itemData.IsTree())
+        {
+            item = (ItemTreeView) listView.getItemView("ItemMenuTree"); // 从内存池获取或新建菜单预制体
+            item.onClickItem = () =>
+            {
+                OnClickTree(pos);
+            };
+        }
+        else
+        {
+            item = (ItemTreeView) listView.getItemView("ItemMenuButton"); // 从内存池获取或新建菜单预制体
+            item.onClickItem = () =>
+            {
+                OnClickButton(itemData);
+            };
+        }
+
+        item.Refresh(itemData);
         return item;
+    }
+
+    private void OnClickTree(int pos)
+    {
+        model.ToggleItemExpand(pos);
+        listMenu.SetListItemCount(model.GetItemTotalCount(), false);
+        listMenu.RefreshAllShownItem();
+    }
+
+    private void OnClickButton(ItemTreeViewModel menuData)
+    {
+        Debuger.Log($"OnClick Menu: {menuData.Name}");
+
+        switch (menuData.Name)
+        {
+            case "UGUI适配":
+                break;
+        }
     }
 }

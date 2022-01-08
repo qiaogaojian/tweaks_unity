@@ -12,9 +12,11 @@ public class ItemTreeView : TreeListViewItem
     private TextMeshProUGUI tvName;
     private Image           expandFlag;
 
-    private bool hasInit    = false;
-    private int  indent     = 30;
-    private int  marginLeft = 20;
+    private bool hasInit = false;
+    private int  indent  = 30;
+    private int  margin  = 20;
+
+    public Action onClickItem { get; set; }
 
     private void Awake()
     {
@@ -23,57 +25,17 @@ public class ItemTreeView : TreeListViewItem
         ivBg       = transform.Find("ivBg").GetComponent<Image>();
         tvName     = transform.Find("ivBg/tvName").GetComponent<TextMeshProUGUI>();
         expandFlag = transform.Find("ivBg/ivExpandFlag").GetComponent<Image>();
+
+        btnMenu.onClick.AddListener(OnClickItem);
     }
 
     #region 初始化ItemView
 
-    private TreeListView      listMenu;
-    private UIHallModel       model;
-    private ItemTreeViewModel menuData;
-    private int               pos;
-    public void Init(TreeListView listMenu, UIHallModel model, ItemTreeViewModel menuData, int pos)
+    private void OnClickItem()
     {
-        this.listMenu = listMenu;
-        this.model    = model;
-        this.menuData = menuData;
-        this.pos      = pos;
-
-        if (hasInit)
+        if (onClickItem != null)
         {
-            return;
-        }
-
-        hasInit       = true;
-        btnMenu.onClick.AddListener(OnClickItem);
-    }
-
-    public void OnClickItem()
-    {
-        if (menuData.IsTree())
-        {
-            OnExpandClicked(listMenu, model, pos);
-        }
-        else
-        {
-            OnMenuButtonClicked(menuData);
-        }
-    }
-
-    public void OnExpandClicked(TreeListView listMenu, UIHallModel model, int pos)
-    {
-        model.ToggleItemExpand(pos);
-        listMenu.SetListItemCount(model.GetItemTotalCount(), false);
-        listMenu.RefreshAllShownItem();
-    }
-
-    public void OnMenuButtonClicked(ItemTreeViewModel menuData)
-    {
-        Debuger.Log($"OnClick Menu: {menuData.Name}");
-
-        switch (menuData.Name)
-        {
-            case "UGUI适配":
-                break;
+            onClickItem.Invoke();
         }
     }
 
@@ -81,17 +43,12 @@ public class ItemTreeView : TreeListViewItem
 
     #region 刷新ItemView
 
-    public void Refresh(ItemTreeViewModel Model)
+    public void Refresh(ItemTreeViewModel itemModel)
     {
-        if (Model == null)
-        {
-            return;
-        }
-
-        tvName.text  = Model.Name;
-        rt.offsetMin = new Vector2(marginLeft + indent * Model.Level, rt.offsetMin.y);
-        ivBg.color   = GetItemColor(Model.IsTree(), Model.Level);
-        SetExpandTag(Model.IsExpand);
+        tvName.text  = itemModel.Name;
+        rt.offsetMin = new Vector2(margin + indent * itemModel.Level, rt.offsetMin.y);
+        ivBg.color   = GetItemColor(itemModel.IsTree(), itemModel.Level);
+        SetExpandTag(itemModel.IsExpand);
     }
 
     private Color GetItemColor(bool isTree, int level)
@@ -99,6 +56,8 @@ public class ItemTreeView : TreeListViewItem
         Color color = Color.clear;
         if (isTree)
         {
+            expandFlag.gameObject.SetActive(true);
+            btnMenu.transition = Selectable.Transition.None;
             switch (level)
             {
                 case 0:
@@ -126,12 +85,11 @@ public class ItemTreeView : TreeListViewItem
                     ColorUtility.TryParseHtmlString("#F5DEB3", out color);
                     break;
             }
-
-            expandFlag.gameObject.SetActive(true);
         }
         else
         {
             expandFlag.gameObject.SetActive(false);
+            btnMenu.transition = Selectable.Transition.ColorTint;
             ColorUtility.TryParseHtmlString("#ECECEC", out color);
         }
 

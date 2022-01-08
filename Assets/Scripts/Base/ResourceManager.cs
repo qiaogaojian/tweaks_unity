@@ -90,7 +90,7 @@ namespace Mega
 
         #region 卸载资源
         
-        public void UnLoadRes(SceneType type)
+        public void UnLoadRes(SceneType scene)
         {
             dicUI.Clear();
 
