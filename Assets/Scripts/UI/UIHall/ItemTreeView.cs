@@ -27,18 +27,27 @@ public class ItemTreeView : TreeListViewItem
 
     #region 初始化ItemView
 
+    private TreeListView      listMenu;
+    private UIHallModel       model;
+    private ItemTreeViewModel menuData;
+    private int               pos;
     public void Init(TreeListView listMenu, UIHallModel model, ItemTreeViewModel menuData, int pos)
     {
+        this.listMenu = listMenu;
+        this.model    = model;
+        this.menuData = menuData;
+        this.pos      = pos;
+
         if (hasInit)
         {
             return;
         }
 
-        hasInit = true;
-        btnMenu.onClick.AddListener(() => { OnClickItem(listMenu, model, menuData, pos); });
+        hasInit       = true;
+        btnMenu.onClick.AddListener(OnClickItem);
     }
 
-    public void OnClickItem(TreeListView listMenu, UIHallModel model, ItemTreeViewModel menuData, int pos)
+    public void OnClickItem()
     {
         if (menuData.IsTree())
         {
