@@ -1,14 +1,7 @@
 ﻿namespace Mega
 {
-    public enum LoadEvent
-    {
-        SUCCESS,
-        ERROR
-    }
+    #region UI
 
-    /// <summary>
-    /// 这里的ViewID要和UI预制体的名字保持一致
-    /// </summary>
     public enum ViewID : int
     {
         UIHall,
@@ -31,6 +24,35 @@
         Effect = 400
     }
 
+    #endregion
+
+    #region Scene
+
+    public enum SceneType
+    {
+        Start,
+        Login,
+        Hall,
+        Game,
+
+        Sound,
+    }
+
+    #endregion
+
+    #region Event
+
+    public enum EventId
+    {
+        TEST_EventNormal,
+        TEST_EventParamInt,
+        TEST_EventParamObject,
+    }
+
+    #endregion
+
+    #region Audio
+
     public enum SoundType
     {
         Tick,
@@ -48,21 +70,12 @@
         Max,
     }
 
-    public enum SceneType
-    {
-        Start,
-        Login,
-        Hall,
-        Game,
+    #endregion
 
-        Sound,
-    }
-
-    public enum EventId
+    public enum LoadEvent
     {
-        TEST_EventNormal,
-        TEST_EventParamInt,
-        TEST_EventParamObject,
+        SUCCESS,
+        ERROR
     }
 
     public enum GamePlayType
