@@ -2,28 +2,128 @@
 
 This project contains different assets from different publishers meshed up together to experiment some of Unity's functionality, testing assets, testing some sample codes, and for other intents and purposes which is for the sake of experimentation testing and learning.
 
+## AI
+
+### A*
+
+### FSM
+
+### BehaviorTree
+
+## ML
+
+### ML-Agents
+
+## XR
+
+### AR
+
+### VR
+
+### MR
+
+## TA
+
+### Shader
+
+### Effect
+
 ## UI
 
 ### UGUI
 
-#### 多级菜单Level_1
+#### Level_1
 
-##### 多级菜单Level_2
+##### Level_2
 
-###### 多级菜单Level_3
+###### Level_3
 
-####### 多级菜单Level_4
+####### Level_4
 
-######## 多级菜单Level_5
+######## Level_5
 
-######### 多级菜单Level_6
+######### Level_6
 
-########## 多级菜单Level_7
+########## Level_7
 
-########### 多级菜单Button
+########### Button
 
 #### UGUI适配
 
-## CG
+### NGUI
 
-### Shader
+### FGUI
+
+## ECS
+
+### DTO
+
+## Net
+
+### Http
+
+### Socket
+
+## UGC
+
+### Mod
+
+## Frame
+
+### GF
+
+### ET
+
+### ETA
+
+## Platform
+
+### Input
+
+## Animator
+
+### Spine
+
+## GamePlay
+
+### Fight
+
+#### FPS
+
+#### RPG
+
+#### Card
+
+#### Match3
+
+#### TurnBase
+
+### Feature
+
+#### Pet
+
+#### Build
+
+#### Forge
+
+#### Reinforce
+
+## Optimize
+
+### CPU
+
+### GPU
+
+### RAM
+
+## Blockchain
+
+### Webgl
+
+### Android / IOS
+
+## HotUpdate
+
+### Asset
+
+### AssetBundle
