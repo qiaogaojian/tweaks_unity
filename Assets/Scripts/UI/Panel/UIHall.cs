@@ -69,7 +69,8 @@ public class UIHall : BaseView
 
         switch (btnName)
         {
-            case "UGUI适配":
+            case " UGUI Fit":
+                Framework.UI.Show(ViewID.UIFit);
                 break;
         }
     }

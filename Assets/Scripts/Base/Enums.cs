@@ -5,6 +5,7 @@
     public enum ViewID : int
     {
         UIHall,
+        UIFit,
 
         UIMenu,
         UITestDebuger,
