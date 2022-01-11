@@ -1,7 +1,7 @@
 ﻿using Mega;
 using UnityEngine;
 
-public class StartGame : MonoBehaviour
+public class Start : MonoBehaviour
 {
     private void Awake()
     {
