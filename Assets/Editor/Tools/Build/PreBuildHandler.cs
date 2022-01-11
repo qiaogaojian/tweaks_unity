@@ -26,7 +26,7 @@ public class PreBuildHandler : IPreprocessBuildWithReport, IPostprocessBuildWith
     {
         Debug.Log("OnProcessScene: " + scene.name);
         // 能在场景中添加游戏物体
-        GameObject.CreatePrimitive(scene.buildIndex == 0 ? PrimitiveType.Cube : PrimitiveType.Cylinder);
+        // GameObject.CreatePrimitive(scene.buildIndex == 0 ? PrimitiveType.Cube : PrimitiveType.Cylinder);
     }
 
     /**
