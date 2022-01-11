@@ -81,9 +81,13 @@ public class UIHall : BaseView
                 {
                     Framework.UI.Show(ViewID.UIIntro);
                 }
+
                 break;
             case "UGUI Fit":
                 Framework.UI.Show(ViewID.UIFit);
+                break;
+            case "UI LayoutGroup":
+                Framework.UI.Show(ViewID.UILayoutGroup);
                 break;
         }
     }

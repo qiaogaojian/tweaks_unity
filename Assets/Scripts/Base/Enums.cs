@@ -7,6 +7,8 @@
         UIHall,
         UIFit,
         UIIntro,
+        UILayoutGroup,
+
 
         UIMenu,
         UITestDebuger,
