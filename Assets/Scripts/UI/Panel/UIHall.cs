@@ -9,7 +9,6 @@ public class UIHall : BaseView
 
     public override void InitView()
     {
-        base.InitView();
         listMenu = transform.Find("listMenu").GetComponent<TreeListView>();
         tvTitle  = transform.Find("tvTitle").GetComponent<TextMeshProUGUI>();
 
@@ -19,6 +18,14 @@ public class UIHall : BaseView
             tvTitle.text = model.Title;
             listMenu.InitListView(model.GetItemTotalCount(), OnGetItemByIndex);
         });
+    }
+
+    protected override void AddEvent()
+    {
+    }
+
+    protected override void RemoveEvent()
+    {
     }
 
     TreeListViewItem OnGetItemByIndex(TreeListView listView, int pos)
