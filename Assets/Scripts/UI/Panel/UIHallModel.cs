@@ -75,7 +75,7 @@ public class UIHallModel : BaseViewModel
 
             if (curLevel >= 2)
             {
-                string subTitle = curLine.Substring(curLevel);
+                string subTitle = curLine.Substring(curLevel + 1); // 不算#后面的空格
                 if (curLevel > curNode.Level)
                 {
                     ItemTreeViewModel temNode = new ItemTreeViewModel(subTitle);
