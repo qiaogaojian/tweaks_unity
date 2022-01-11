@@ -61,5 +61,5 @@ MonoBehaviour:
   _consoleAlignment: 0
   _triggerPosition: 3
   _maximumConsoleEntries: 1500
-  _enableEventSystemCreation: 1
+  _enableEventSystemCreation: 0
   _automaticShowCursor: 1
