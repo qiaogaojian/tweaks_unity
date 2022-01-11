@@ -6,6 +6,7 @@ public class NestScrollView : ScrollRect
 {
     //Parent CustomScrollRect object
     private NestScrollView m_Parent;
+    private bool           firstReachEnd = true;
 
     public enum Direction
     {
@@ -39,11 +40,15 @@ public class NestScrollView : ScrollRect
         if (m_Parent)
         {
             m_BeginDragDirection = Mathf.Abs(eventData.delta.x) > Mathf.Abs(eventData.delta.y) ? Direction.Horizontal : Direction.Vertical;
-            if (m_BeginDragDirection != m_Direction ||
-                this.verticalNormalizedPosition <= 0.05f && eventData.delta.y > 0 ||
+            if (m_BeginDragDirection != m_Direction)
+            {
+                ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.beginDragHandler);
+                return;
+            }
+
+            if (this.verticalNormalizedPosition <= 0.05f && eventData.delta.y > 0 ||
                 this.verticalNormalizedPosition >= 0.95f && eventData.delta.y < 0)
             {
-                //The current operation direction is not equal to the sliding direction. Pass the event to the parent object
                 ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.beginDragHandler);
                 return;
             }
@@ -58,7 +63,6 @@ public class NestScrollView : ScrollRect
         {
             if (m_BeginDragDirection != m_Direction)
             {
-                //The current operation direction is not equal to the sliding direction. Pass the event to the parent object
                 ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.dragHandler);
                 return;
             }
@@ -66,13 +70,17 @@ public class NestScrollView : ScrollRect
             if (this.verticalNormalizedPosition < 0.05f && eventData.delta.y > 0 ||
                 this.verticalNormalizedPosition > 0.95f && eventData.delta.y < 0)
             {
-                eventData.pressPosition = eventData.position;
+                if (firstReachEnd)
+                {
+                    ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.beginDragHandler);
+                    firstReachEnd = false;
+                }
 
-                //The current operation direction is not equal to the sliding direction. Pass the event to the parent object
-                Debuger.Log($"eventData {eventData.delta}");
                 ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.dragHandler);
                 return;
             }
+
+            firstReachEnd = true;
         }
 
         base.OnDrag(eventData);
@@ -82,11 +90,15 @@ public class NestScrollView : ScrollRect
     {
         if (m_Parent)
         {
-            if (m_BeginDragDirection != m_Direction ||
-                this.verticalNormalizedPosition <= 0.05f && eventData.delta.y > 0 ||
+            if (m_BeginDragDirection != m_Direction)
+            {
+                ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.endDragHandler);
+                return;
+            }
+
+            if (this.verticalNormalizedPosition <= 0.05f && eventData.delta.y > 0 ||
                 this.verticalNormalizedPosition >= 0.95f && eventData.delta.y < 0)
             {
-                //The current operation direction is not equal to the sliding direction. Pass the event to the parent object
                 ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.endDragHandler);
                 return;
             }
