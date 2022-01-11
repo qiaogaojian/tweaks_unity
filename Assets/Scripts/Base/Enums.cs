@@ -6,6 +6,7 @@
     {
         UIHall,
         UIFit,
+        UIIntro,
 
         UIMenu,
         UITestDebuger,

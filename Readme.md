@@ -208,27 +208,27 @@ This project contains different assets from different publishers meshed up toget
 
 #### Manager
 
-##### AssetBundle
+##### UI
 
-##### Audio
+###### UI Intro
 
-##### DataLoader
+##### FSM
+
+##### Pool
 
 ##### Event
 
 ##### Fight
 
-##### FSM
-
-##### Localizaiton
-
-##### Pool
+##### Audio
 
 ##### Scene
 
 ##### Singleton
 
-##### UI
+##### DataLoader
+
+##### Localizaiton
 
 ##### HotUpdate
 
@@ -237,6 +237,8 @@ This project contains different assets from different publishers meshed up toget
 ###### ToLua
 
 ###### ILRuntime
+
+##### AssetBundle
 
 ##### AssetManager
 
