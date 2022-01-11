@@ -2,7 +2,7 @@
 using Mega;
 using UnityEngine;
 
-public class BaseView : MonoBehaviour
+public abstract class BaseView : MonoBehaviour
 {
     private bool isShow = false;
 
@@ -12,7 +12,7 @@ public class BaseView : MonoBehaviour
         set { isShow = value; }
     }
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         InitView();
     }
@@ -28,17 +28,11 @@ public class BaseView : MonoBehaviour
         RemoveEvent();
     }
 
-    public virtual void InitView()
-    {
-    }
+    public abstract void InitView();
 
-    protected virtual void AddEvent()
-    {
-    }
+    protected abstract void AddEvent();
 
-    protected virtual void RemoveEvent()
-    {
-    }
+    protected abstract void RemoveEvent();
 
     public virtual void OnResume()
     {
