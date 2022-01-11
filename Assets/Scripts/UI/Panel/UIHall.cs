@@ -55,7 +55,7 @@ public class UIHall : BaseView
             item = (ItemTreeView) listView.getItemView("ItemMenuButton"); // 从内存池获取或新建菜单预制体
             item.onClickItem = () =>
             {
-                OnClickButton(itemData.Name);
+                OnClickButton(itemData);
             };
         }
 
@@ -70,13 +70,19 @@ public class UIHall : BaseView
         listMenu.RefreshAllShownItem();
     }
 
-    private void OnClickButton(string btnName)
+    private void OnClickButton(ItemTreeViewModel btnModel)
     {
-        Debuger.Log($"OnClick Menu: {btnName}");
+        Debuger.Log($"OnClick Menu: {btnModel.Name}");
 
-        switch (btnName)
+        switch (btnModel.Name)
         {
-            case " UGUI Fit":
+            case "UI Intro":
+                if (btnModel.parent.parent.parent.Name == "ETA") // Button命名重复的处理方法
+                {
+                    Framework.UI.Show(ViewID.UIIntro);
+                }
+                break;
+            case "UGUI Fit":
                 Framework.UI.Show(ViewID.UIFit);
                 break;
         }
