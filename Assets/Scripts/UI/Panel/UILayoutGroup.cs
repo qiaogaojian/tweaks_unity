@@ -7,7 +7,7 @@ public class UILayoutGroup : BaseView
 
     public override void InitView()
     {
-        btnReturn = transform.Find("btnTransform").GetComponent<Button>();
+        btnReturn = transform.Find("btnReturn").GetComponent<Button>();
     }
 
     protected override void AddEvent()
@@ -22,6 +22,6 @@ public class UILayoutGroup : BaseView
 
     private void OnClickBtnReturn()
     {
-        Framework.UI.Hide(ViewID.UILayoutGroup);
+        Framework.UI.HideCurrent();
     }
 }

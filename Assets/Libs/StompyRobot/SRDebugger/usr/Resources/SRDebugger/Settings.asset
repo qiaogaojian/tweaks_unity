@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isEnabled: 1
   _autoLoad: 1
-  _defaultTab: 0
+  _defaultTab: 2
   _triggerEnableMode: 0
   _triggerBehaviour: 0
   _enableKeyboardShortcuts: 1
@@ -57,9 +57,9 @@ MonoBehaviour:
   _enableBugReporter: 0
   _disabledTabs: 
   _profilerAlignment: 2
-  _optionsAlignment: 3
+  _optionsAlignment: 0
   _consoleAlignment: 0
-  _triggerPosition: 0
+  _triggerPosition: 3
   _maximumConsoleEntries: 1500
   _enableEventSystemCreation: 1
   _automaticShowCursor: 1
