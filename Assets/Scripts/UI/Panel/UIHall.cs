@@ -89,6 +89,9 @@ public class UIHall : BaseView
             case "UI LayoutGroup":
                 Framework.UI.Show(ViewID.UILayoutGroup);
                 break;
+            case "Debuger":
+                Framework.UI.Show(ViewID.UIDebuger);
+                break;
         }
     }
 }

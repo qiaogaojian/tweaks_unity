@@ -8,6 +8,7 @@
         UIFit,
         UIIntro,
         UILayoutGroup,
+        UIDebuger,
 
 
         UIMenu,
