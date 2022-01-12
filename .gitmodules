@@ -1,0 +1,3 @@
+[submodule "Assets/Mega"]
+	path = Assets/Mega
+	url = git@gitee.com:qiaogaojian/mega.git
