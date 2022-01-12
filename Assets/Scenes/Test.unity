@@ -2428,10 +2428,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIDebuger
       objectReference: {fileID: 0}
-    - target: {fileID: 4868082707848295347, guid: e80ad2c58c00d124f9c93368dad1678e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e80ad2c58c00d124f9c93368dad1678e, type: 3}
 --- !u!1001 &4001289620766692523
