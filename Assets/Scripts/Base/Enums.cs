@@ -9,7 +9,7 @@
         UIIntro,
         UILayoutGroup,
         UIDebuger,
-
+        UISound,
 
         UIMenu,
         UITestDebuger,

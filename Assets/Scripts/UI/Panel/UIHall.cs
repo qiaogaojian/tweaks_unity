@@ -92,6 +92,9 @@ public class UIHall : BaseView
             case "Debuger":
                 Framework.UI.Show(ViewID.UIDebuger);
                 break;
+            case "Sound":
+                Framework.UI.Show(ViewID.UISound);
+                break;
         }
     }
 }
