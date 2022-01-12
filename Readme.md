@@ -174,11 +174,11 @@ This project contains different assets from different publishers meshed up toget
 
 #### Mod
 
-### SDK
+### Plugins
 
-#### Share
+#### NativeShare
 
-#### Toast
+#### Odin Inspector
 
 ### GamePlay
 
@@ -254,7 +254,15 @@ This project contains different assets from different publishers meshed up toget
 
 ##### AssetManager
 
-#### Utility
+#### Libs
+
+##### EGamePlay
+
+##### SRDebugger
+
+##### SuperScrollView
+
+##### TextMesh Pro
 
 ##### AStar
 
@@ -266,27 +274,13 @@ This project contains different assets from different publishers meshed up toget
 
 ##### Timer
 
+#### Utility
+
 ##### Debuger
 
 ##### FileUtils
 
-##### TimeStamp
-
-#### Libs
-
-##### EGamePlay
-
-##### SRDebugger
-
-##### SuperScrollView
-
-##### TextMesh Pro
-
-#### Plugins
-
-##### NativeShare
-
-##### Odin Inspector
+##### Tools
 
 ## Tutorial
 
