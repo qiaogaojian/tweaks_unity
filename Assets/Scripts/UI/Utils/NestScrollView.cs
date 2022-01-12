@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class NestScrollView : ScrollRect
 {
-    //Parent CustomScrollRect object
     private NestScrollView m_Parent;
     private bool           firstReachEnd = true;
 
@@ -14,24 +13,23 @@ public class NestScrollView : ScrollRect
         Vertical
     }
 
-    //Sliding direction
-    private Direction m_Direction = Direction.Horizontal;
-
-    //Current operation direction
+    private Direction m_Direction          = Direction.Horizontal;
     private Direction m_BeginDragDirection = Direction.Horizontal;
 
     protected override void Awake()
     {
         base.Awake();
-        //Parent object found
         Transform parent = transform.parent;
         if (parent)
         {
-            // Returns the component of Type type in the GameObject or any of its parents
-            m_Parent = parent.GetComponentInParent<NestScrollView>();
+            m_Parent = parent.GetComponentInParent<NestScrollView>(); // 从下往上所有的父级中找到一个即返回
         }
 
         m_Direction = this.horizontal ? Direction.Horizontal : Direction.Vertical;
+        if (m_Parent)
+        {
+            m_Parent.m_Direction = this.horizontal ? Direction.Horizontal : Direction.Vertical;
+        }
     }
 
 
@@ -49,8 +47,11 @@ public class NestScrollView : ScrollRect
             if (this.verticalNormalizedPosition <= 0.05f && eventData.delta.y > 0 ||
                 this.verticalNormalizedPosition >= 0.95f && eventData.delta.y < 0)
             {
-                ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.beginDragHandler);
-                return;
+                if (m_Parent.m_Direction == m_Direction) // 子ScrollView和父ScrollView同一个方向时
+                {
+                    ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.beginDragHandler);
+                    return;
+                }
             }
         }
 
@@ -70,14 +71,17 @@ public class NestScrollView : ScrollRect
             if (this.verticalNormalizedPosition < 0.05f && eventData.delta.y > 0 ||
                 this.verticalNormalizedPosition > 0.95f && eventData.delta.y < 0)
             {
-                if (firstReachEnd)
+                if (m_Parent.m_Direction == m_Direction)
                 {
-                    ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.beginDragHandler);
-                    firstReachEnd = false;
-                }
+                    if (firstReachEnd)
+                    {
+                        ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.beginDragHandler);
+                        firstReachEnd = false;
+                    }
 
-                ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.dragHandler);
-                return;
+                    ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.dragHandler);
+                    return;
+                }
             }
 
             firstReachEnd = true;
@@ -99,8 +103,11 @@ public class NestScrollView : ScrollRect
             if (this.verticalNormalizedPosition <= 0.05f && eventData.delta.y > 0 ||
                 this.verticalNormalizedPosition >= 0.95f && eventData.delta.y < 0)
             {
-                ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.endDragHandler);
-                return;
+                if (m_Parent.m_Direction == m_Direction)
+                {
+                    ExecuteEvents.Execute(m_Parent.gameObject, eventData, ExecuteEvents.endDragHandler);
+                    return;
+                }
             }
         }
 
@@ -113,7 +120,6 @@ public class NestScrollView : ScrollRect
         {
             if (m_BeginDragDirection != m_Direction)
             {
-                //The current operation direction is not equal to the sliding direction. Pass the event to the parent object
                 ExecuteEvents.Execute(m_Parent.gameObject, data, ExecuteEvents.scrollHandler);
                 return;
             }
