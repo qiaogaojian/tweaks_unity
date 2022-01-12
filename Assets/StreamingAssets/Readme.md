@@ -118,6 +118,8 @@ This project contains different assets from different publishers meshed up toget
 
 #### FGUI
 
+#### UIToolkit
+
 ### ECS
 
 #### DTO
@@ -200,6 +202,8 @@ This project contains different assets from different publishers meshed up toget
 
 ##### TurnBase
 
+#### VirtualHuman
+
 ### Blockchain
 
 #### Webgl
@@ -267,6 +271,22 @@ This project contains different assets from different publishers meshed up toget
 ##### FileUtils
 
 ##### TimeStamp
+
+#### Libs
+
+##### EGamePlay
+
+##### SRDebugger
+
+##### SuperScrollView
+
+##### TextMesh Pro
+
+#### Plugins
+
+##### NativeShare
+
+##### Odin Inspector
 
 ## Tutorial
 

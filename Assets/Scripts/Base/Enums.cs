@@ -77,12 +77,6 @@
 
     #endregion
 
-    public enum LoadEvent
-    {
-        SUCCESS,
-        ERROR
-    }
-
     public enum GamePlayType
     {
         None,
