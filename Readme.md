@@ -118,6 +118,8 @@ This project contains different assets from different publishers meshed up toget
 
 #### FGUI
 
+#### UIToolkit
+
 ### ECS
 
 #### DTO
@@ -172,6 +174,12 @@ This project contains different assets from different publishers meshed up toget
 
 #### Mod
 
+### SDK
+
+#### Share
+
+#### Toast
+
 ### GamePlay
 
 #### Pet
@@ -194,6 +202,8 @@ This project contains different assets from different publishers meshed up toget
 
 ##### TurnBase
 
+#### VirtualHuman
+
 ### Blockchain
 
 #### Webgl
@@ -206,7 +216,7 @@ This project contains different assets from different publishers meshed up toget
 
 ### ET
 
-### ETA
+### Mega
 
 #### Manager
 
@@ -222,7 +232,7 @@ This project contains different assets from different publishers meshed up toget
 
 ##### Fight
 
-##### Audio
+##### Sound
 
 ##### Scene
 
@@ -261,6 +271,22 @@ This project contains different assets from different publishers meshed up toget
 ##### FileUtils
 
 ##### TimeStamp
+
+#### Libs
+
+##### EGamePlay
+
+##### SRDebugger
+
+##### SuperScrollView
+
+##### TextMesh Pro
+
+#### Plugins
+
+##### NativeShare
+
+##### Odin Inspector
 
 ## Tutorial
 
