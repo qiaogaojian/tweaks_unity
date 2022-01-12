@@ -10,6 +10,6 @@ public class Start : MonoBehaviour
 
     void OnLoadFramework(LoadEvent loadEvent)
     {
-        Framework.Scene.Load(SceneType.Hall, () => { Framework.UI.Show(ViewID.UIHall); });
+        Framework.Scene.Load(SceneType.Hall, () => { Framework.UI.Show<UIHall>(); });
     }
 }

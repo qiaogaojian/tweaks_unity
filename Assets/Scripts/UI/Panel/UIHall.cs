@@ -79,21 +79,21 @@ public class UIHall : BaseView
             case "UI Intro":
                 if (btnModel.parent.parent.parent.Name == "ETA") // Button命名重复的处理方法
                 {
-                    Framework.UI.Show(ViewID.UIIntro);
+                    Framework.UI.Show<UIIntro>();
                 }
 
                 break;
             case "UGUI Fit":
-                Framework.UI.Show(ViewID.UIFit);
+                Framework.UI.Show<UIFit>();
                 break;
             case "UI LayoutGroup":
-                Framework.UI.Show(ViewID.UILayoutGroup);
+                Framework.UI.Show<UILayoutGroup>();
                 break;
             case "Debuger":
-                Framework.UI.Show(ViewID.UIDebuger);
+                Framework.UI.Show<UIDebuger>();
                 break;
             case "Sound":
-                Framework.UI.Show(ViewID.UISound);
+                Framework.UI.Show<UISound>();
                 break;
         }
     }

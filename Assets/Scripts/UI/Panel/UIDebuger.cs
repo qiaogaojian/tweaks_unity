@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using Mega;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class UIDebuger : BaseView
