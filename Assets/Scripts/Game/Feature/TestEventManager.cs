@@ -6,12 +6,8 @@
 *功能：测试事件管理器
 */
 
-using System.Collections;
-using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
-using Mega;
 
 
 public class TestEventManager : MonoBehaviour

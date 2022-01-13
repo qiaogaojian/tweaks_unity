@@ -1,7 +1,7 @@
 ﻿namespace Mega
 {
     #region UI
-    
+
     public enum ViewType
     {
         Normal = 0,
@@ -44,7 +44,7 @@
     {
         Tick,
         Tock,
-        Max,
+        Max
     }
 
     public enum MusicType
@@ -54,7 +54,7 @@
         TheLastGoodbye,
         TimeIsRunningOut,
         TunedToLive,
-        Max,
+        Max
     }
 
     #endregion
