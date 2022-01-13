@@ -77,7 +77,7 @@ public class UIHall : BaseView
         switch (btnModel.Name)
         {
             case "UI Intro":
-                if (btnModel.parent.parent.parent.Name == "ETA") // Button命名重复的处理方法
+                if (btnModel.parent.parent.parent.Name == "Mega") // Button命名重复的处理方法
                 {
                     Framework.UI.Show<UIIntro>();
                 }
