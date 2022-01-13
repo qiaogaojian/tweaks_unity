@@ -20,11 +20,11 @@ public class UIFit : BaseView
 
     protected override void RemoveEvent()
     {
-        btnReturn.onClick.AddListener(OnClickBtnReturn);
+        btnReturn.onClick.RemoveListener(OnClickBtnReturn);
     }
 
-    void OnClickBtnReturn()
+    private void OnClickBtnReturn()
     {
-        Framework.UI.Hide(ViewID.UIFit);
+        Framework.UI.HideCurrent();
     }
 }

@@ -1,25 +1,7 @@
 ﻿namespace Mega
 {
     #region UI
-
-    public enum ViewID : int
-    {
-        UIHall,
-        UIFit,
-        UIIntro,
-        UILayoutGroup,
-        UIDebuger,
-        UISound,
-
-        UIMenu,
-        UITestDebuger,
-        UITestSound,
-        UITestSpine,
-        UITestFight,
-        UIFight,
-        UITestTextEffect,
-    }
-
+    
     public enum ViewType
     {
         Normal = 0,
