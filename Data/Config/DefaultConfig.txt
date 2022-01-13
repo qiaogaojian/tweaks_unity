@@ -1,0 +1,5 @@
+﻿#	默认配置		
+#	配置项	策划备注	配置值
+	Game.Id	游戏id	Unity Test
+	Scene.GameStart	开始场景id	1
+	Scene.Menu	菜单场景id	2
