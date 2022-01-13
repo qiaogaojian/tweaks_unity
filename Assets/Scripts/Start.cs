@@ -1,15 +1,18 @@
 ﻿using Mega;
 using UnityEngine;
 
-public class Start : MonoBehaviour
+namespace Game
 {
-    private void Awake()
+    public class Start : MonoBehaviour
     {
-        Framework.Init(OnLoadFramework);
-    }
+        private void Awake()
+        {
+            Framework.Init(OnLoadFramework);
+        }
 
-    void OnLoadFramework(LoadEvent loadEvent)
-    {
-        Framework.Scene.Load(SceneType.Hall, () => { Framework.UI.Show<UIHall>(); });
+        void OnLoadFramework(LoadEvent loadEvent)
+        {
+            Framework.Scene.Load(SceneType.Hall, () => { Framework.UI.Show<UIHall>(); });
+        }
     }
 }

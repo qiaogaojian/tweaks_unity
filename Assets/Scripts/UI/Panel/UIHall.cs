@@ -101,6 +101,9 @@ public class UIHall : BaseView
             case "Sound":
                 Framework.UI.Show<UISound>();
                 break;
+            case "JsonDotnet":
+                Framework.UI.Show<UIJsonDotnet>();
+                break;
         }
     }
 }
