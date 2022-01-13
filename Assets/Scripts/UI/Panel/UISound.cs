@@ -123,7 +123,7 @@ public class UISound : BaseView
 
     private void OnClickBtnReturn()
     {
-        Framework.UI.Hide(ViewID.UITestSound);
+        Framework.UI.HideCurrent();
     }
 
     private void OnGlobalValueChanged(float value)

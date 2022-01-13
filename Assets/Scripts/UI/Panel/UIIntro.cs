@@ -25,6 +25,6 @@ public class UIIntro : BaseView
 
     private void OnClickBtnReturn()
     {
-        Framework.UI.Hide(ViewID.UIIntro);
+        Framework.UI.HideCurrent();
     }
 }
