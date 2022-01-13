@@ -63,6 +63,12 @@ public class UIHall : BaseView
         return item;
     }
 
+    public override void Destroy()
+    {
+        base.Destroy();
+        model.Destroy();
+    }
+
     private void OnClickTree(int pos)
     {
         model.ToggleItemExpand(pos);
