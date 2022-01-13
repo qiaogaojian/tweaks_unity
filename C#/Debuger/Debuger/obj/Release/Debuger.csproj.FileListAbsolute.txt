@@ -1,0 +1,7 @@
+D:\Unity\UnityTest\C#\Debuger\Debuger\bin\Release\Debuger.dll
+D:\Unity\UnityTest\C#\Debuger\Debuger\bin\Release\Debuger.pdb
+D:\Unity\UnityTest\C#\Debuger\Debuger\bin\Release\UnityEngine.dll
+D:\Unity\UnityTest\C#\Debuger\Debuger\bin\Release\UnityEngine.xml
+D:\Unity\UnityTest\C#\Debuger\Debuger\obj\Release\Debuger.csprojResolveAssemblyReference.cache
+D:\Unity\UnityTest\C#\Debuger\Debuger\obj\Release\Debuger.dll
+D:\Unity\UnityTest\C#\Debuger\Debuger\obj\Release\Debuger.pdb
