@@ -116,12 +116,7 @@ public class UIJsonDotnet : BaseView
     /// </summary>
     private void OnClickBtnSerializeObject2()
     {
-        Student student = new Student();
-        student.name   = "Michael";
-        student.age    = 20;
-        student.gender = "Man";
-
-        string json = JsonConvert.SerializeObject(student, Formatting.Indented); //序列化对象
+        string json = JsonConvert.SerializeObject(dataModel.student, Formatting.Indented); //格式化输出
         Debuger.Log("序列化对象2 JsonObject:" + json);
     }
 
@@ -189,6 +184,7 @@ public class UIJsonDotnet : BaseView
             obj.Name = "NO." + i;
             jsonArray.Add(obj);
         }
+
         Debuger.Log("反序列化数组方法2 JsonArray:" + JsonConvert.SerializeObject(jsonArray));
     }
 
