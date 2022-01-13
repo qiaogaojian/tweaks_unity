@@ -121,9 +121,18 @@ public class UISound : BaseView
         btnPlayMusic2.onClick.RemoveListener(OnClickBtnPlayMusic2);
     }
 
+    public override void Destroy()
+    {
+        base.Destroy();
+
+        Destroy(soundLeft.gameObject);
+        Destroy(soundRight.gameObject);
+        Destroy(soundCircle.gameObject);
+    }
+
     private void OnClickBtnReturn()
     {
-        Framework.UI.HideCurrent();
+        Framework.UI.DestroyCurrent();
     }
 
     private void OnGlobalValueChanged(float value)
