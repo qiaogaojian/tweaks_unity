@@ -167,8 +167,13 @@ public class UIJsonDotnet : BaseView
     /// <typeparam name="T"></typeparam>
     private void SerializeObjectToFile<T>(string path, T obj)
     {
-        string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
-        File.WriteAllText(path, json);
+        using (FileStream fs = new FileStream(path, FileMode.CreateNew))
+        using (StreamWriter sw = new StreamWriter(fs))
+        {
+            string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
+            sw.Write(json);
+        }
+
         Debuger.Log("写入Json文件成功");
     }
 
