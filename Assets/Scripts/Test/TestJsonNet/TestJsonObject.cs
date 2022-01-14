@@ -17,3 +17,8 @@ public class TestJsonObject
         this.Name = name;
     }
 }
+
+public class TestJsonObjects
+{
+    public List<TestJsonObject> jsonArray = new List<TestJsonObject>();
+}

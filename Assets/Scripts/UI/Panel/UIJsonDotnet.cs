@@ -19,12 +19,14 @@ public class UIJsonDotnet : BaseView
     private Button          btnSerialize4;
     private Button          btnSerialize5;
     private Button          btnSerialize6;
+    private Button          btnSerialize7;
     private Button          btnDeserialize1;
     private Button          btnDeserialize2;
     private Button          btnDeserialize3;
     private Button          btnDeserialize4;
     private Button          btnDeserialize5;
     private Button          btnDeserialize6;
+    private Button          btnDeserialize7;
     private TextMeshProUGUI tvTime;
 
     private UIJsonNetModel dataModel;
@@ -41,12 +43,14 @@ public class UIJsonDotnet : BaseView
         btnSerialize4   = transform.Find("ivBg/btnSerialize4").GetComponent<Button>();
         btnSerialize5   = transform.Find("ivBg/btnSerialize5").GetComponent<Button>();
         btnSerialize6   = transform.Find("ivBg/btnSerialize6").GetComponent<Button>();
+        btnSerialize7   = transform.Find("ivBg/btnSerialize7").GetComponent<Button>();
         btnDeserialize1 = transform.Find("ivBg/btnDeserialize1").GetComponent<Button>();
         btnDeserialize2 = transform.Find("ivBg/btnDeserialize2").GetComponent<Button>();
         btnDeserialize3 = transform.Find("ivBg/btnDeserialize3").GetComponent<Button>();
         btnDeserialize4 = transform.Find("ivBg/btnDeserialize4").GetComponent<Button>();
         btnDeserialize5 = transform.Find("ivBg/btnDeserialize5").GetComponent<Button>();
         btnDeserialize6 = transform.Find("ivBg/btnDeserialize6").GetComponent<Button>();
+        btnDeserialize7 = transform.Find("ivBg/btnDeserialize7").GetComponent<Button>();
         tvTime          = transform.Find("ivBg/tvTime").GetComponent<TextMeshProUGUI>();
     }
 
@@ -60,14 +64,16 @@ public class UIJsonDotnet : BaseView
         btnSerialize3.onClick.AddListener(OnClickBtnSerializeMap);
         btnSerialize4.onClick.AddListener(OnClickBtnSerializeObject2);
         btnSerialize5.onClick.AddListener(OnClickBtnSerializeToFile);
-        btnSerialize6.onClick.AddListener(OnClickBtnSerializeToFileOptimize);
+        btnSerialize6.onClick.AddListener(OnClickBtnSerializeToFileAsync);
+        btnSerialize7.onClick.AddListener(OnClickBtnSerializeObjectToFileAsync);
 
         btnDeserialize1.onClick.AddListener(OnClickBtnDeSerializeObjet);
         btnDeserialize2.onClick.AddListener(OnClickBtnDeSerializeArray);
         btnDeserialize3.onClick.AddListener(OnClickBtnDeSerializeMap);
         btnDeserialize4.onClick.AddListener(OnClickBtnDeSerializeObject2);
         btnDeserialize5.onClick.AddListener(OnClickBtnDeSerializeFromFile);
-        btnDeserialize6.onClick.AddListener(OnClickBtnDeSerializeObjetFileOptimize);
+        btnDeserialize6.onClick.AddListener(OnClickBtnDeSerializeArrayFileAsync);
+        btnDeserialize7.onClick.AddListener(OnClickBtnDeSerializeObjectFileAsync);
     }
 
     protected override void RemoveEvent()
@@ -79,14 +85,16 @@ public class UIJsonDotnet : BaseView
         btnSerialize3.onClick.RemoveListener(OnClickBtnSerializeMap);
         btnSerialize4.onClick.RemoveListener(OnClickBtnSerializeObject2);
         btnSerialize5.onClick.RemoveListener(OnClickBtnSerializeToFile);
-        btnSerialize6.onClick.RemoveListener(OnClickBtnSerializeToFileOptimize);
+        btnSerialize6.onClick.RemoveListener(OnClickBtnSerializeToFileAsync);
+        btnSerialize7.onClick.RemoveListener(OnClickBtnSerializeObjectToFileAsync);
 
         btnDeserialize1.onClick.RemoveListener(OnClickBtnDeSerializeObjet);
         btnDeserialize2.onClick.RemoveListener(OnClickBtnDeSerializeArray);
         btnDeserialize3.onClick.RemoveListener(OnClickBtnDeSerializeMap);
         btnDeserialize4.onClick.RemoveListener(OnClickBtnDeSerializeObject2);
         btnDeserialize5.onClick.RemoveListener(OnClickBtnDeSerializeFromFile);
-        btnDeserialize6.onClick.RemoveListener(OnClickBtnDeSerializeObjetFileOptimize);
+        btnDeserialize6.onClick.RemoveListener(OnClickBtnDeSerializeArrayFileAsync);
+        btnDeserialize7.onClick.RemoveListener(OnClickBtnDeSerializeObjectFileAsync);
     }
 
     private void OnClickBtnReturn()
@@ -145,18 +153,10 @@ public class UIJsonDotnet : BaseView
     private void OnClickBtnSerializeToFile()
     {
         long timeB = Tools.GetTimeStamp();
-        SerializeObjectToFile(dataModel.jsonFilePath, dataModel.jsonArray);
+        SerializeObjectToFile(dataModel.jsonArrayPath, dataModel.jsonArray);
         long     timeA = Tools.GetTimeStamp();
         DateTime time  = Tools.LongDateTimeToDateTimeString(timeA - timeB);
         Debuger.Log($"OnClickBtnSerializeToFile 花费时间:{time.Second}秒");
-    }
-
-    /// <summary>
-    /// 序列化数组到文件中
-    /// </summary>
-    private void OnClickBtnSerializeToFileOptimize()
-    {
-        StartCoroutine(SerializeObjectToFileAsync(dataModel.jsonFilePath, dataModel.jsonArray));
     }
 
     /// <summary>
@@ -177,7 +177,21 @@ public class UIJsonDotnet : BaseView
         Debuger.Log("写入Json文件成功");
     }
 
-    private IEnumerator SerializeObjectToFileAsync(string path, List<TestJsonObject> list)
+    /// <summary>
+    /// 序列化数组到文件中
+    /// </summary>
+    private void OnClickBtnSerializeToFileAsync()
+    {
+        StartCoroutine(SerializeArrayToFileAsync(dataModel.jsonArrayPath, dataModel.jsonArray));
+    }
+
+    /// <summary>
+    /// 异步序列化对象到Json文件
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    private IEnumerator SerializeArrayToFileAsync(string path, List<TestJsonObject> list)
     {
         long timeB = Tools.GetTimeStamp();
 
@@ -209,6 +223,66 @@ public class UIJsonDotnet : BaseView
             }
 
             writer.WriteEndArray();
+            Debuger.Log("写入Json文件成功");
+        }
+
+        long     timeA = Tools.GetTimeStamp();
+        DateTime time  = Tools.LongDateTimeToDateTimeString(timeA - timeB);
+        Debuger.Log($"SerializeObjectToFileAsync 花费时间:{time.Second}秒");
+    }
+
+    /// <summary>
+    /// 序列化对象到文件中
+    /// </summary>
+    private void OnClickBtnSerializeObjectToFileAsync()
+    {
+        StartCoroutine(SerializeObjectToFileAsync(dataModel.jsonObjectPath, dataModel.jsonObjects));
+    }
+
+    /// <summary>
+    /// 异步序列化对象到Json文件
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    private IEnumerator SerializeObjectToFileAsync(string path, TestJsonObjects list)
+    {
+        long timeB = Tools.GetTimeStamp();
+
+        using (FileStream fs = new FileStream(path, FileMode.Create))
+        using (StreamWriter sw = new StreamWriter(fs))
+        {
+            JsonTextWriter writer = new JsonTextWriter(sw);
+
+            writer.WriteStartObject();
+            {
+                writer.WritePropertyName("jsonArray");
+                writer.WriteStartArray();
+                {
+                    int count = 0;
+                    foreach (TestJsonObject testJsonObject in list.jsonArray)
+                    {
+                        count++;
+                        if (count >= 10000) // 每帧处理10000条数据 防止卡死
+                        {
+                            count = 0;
+                            yield return null;
+                        }
+
+                        writer.WriteStartObject();
+                        {
+                            writer.WritePropertyName("ID");
+                            writer.WriteValue(testJsonObject.ID);
+
+                            writer.WritePropertyName("Name");
+                            writer.WriteValue(testJsonObject.Name);
+                        }
+                        writer.WriteEndObject();
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
             Debuger.Log("写入Json文件成功");
         }
 
@@ -293,18 +367,10 @@ public class UIJsonDotnet : BaseView
     private void OnClickBtnDeSerializeFromFile()
     {
         long timeB = Tools.GetTimeStamp();
-        DeserializeJsonArrayFromFile<TestJsonObject>(dataModel.jsonFilePath);
+        DeserializeJsonArrayFromFile<TestJsonObject>(dataModel.jsonArrayPath);
         long     timeA = Tools.GetTimeStamp();
         DateTime time  = Tools.LongDateTimeToDateTimeString(timeA - timeB);
         Debuger.Log($"OnClickBtnDeSerializeFromFile 花费时间:{time.Second}秒");
-    }
-
-    /// <summary>
-    /// 从本地json文件中反序列化对象
-    /// </summary>
-    private void OnClickBtnDeSerializeObjetFileOptimize()
-    {
-        StartCoroutine(DeserializeJsonArrayFromFileAsync<TestJsonObject>(dataModel.jsonFilePath));
     }
 
     /// <summary>
@@ -324,6 +390,20 @@ public class UIJsonDotnet : BaseView
         }
     }
 
+    /// <summary>
+    /// 从本地json文件中反序列化列表
+    /// </summary>
+    private void OnClickBtnDeSerializeArrayFileAsync()
+    {
+        StartCoroutine(DeserializeJsonArrayFromFileAsync<TestJsonObject>(dataModel.jsonArrayPath));
+    }
+
+    /// <summary>
+    /// 异步反序列化Json文件
+    /// </summary>
+    /// <param name="path"></param>
+    /// <typeparam name="K"></typeparam>
+    /// <returns></returns>
     private IEnumerator DeserializeJsonArrayFromFileAsync<K>(string path)
     {
         long timeB = Tools.GetTimeStamp();
@@ -351,6 +431,49 @@ public class UIJsonDotnet : BaseView
         long     timeA = Tools.GetTimeStamp();
         DateTime time  = Tools.LongDateTimeToDateTimeString(timeA - timeB);
         Debuger.Log($"DeserializeJsonArrayFromFileAsync 花费时间:{time.Second}秒");
+    }
+
+    /// <summary>
+    /// 从本地json文件中反序列化对象
+    /// </summary>
+    private void OnClickBtnDeSerializeObjectFileAsync()
+    {
+        StartCoroutine(DeserializeJsonObjectFromFileAsync<TestJsonObjects,TestJsonObject>(dataModel.jsonObjectPath));
+    }
+
+    /// <summary>
+    /// 异步反序列化Json文件
+    /// </summary>
+    /// <param name="path"></param>
+    /// <typeparam name="K"></typeparam>
+    /// <returns></returns>
+    private IEnumerator DeserializeJsonObjectFromFileAsync<T,K>(string path)
+    {
+        long timeB = Tools.GetTimeStamp();
+
+        using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+        using (StreamReader sr = new StreamReader(fs))
+        {
+            List<K> datas = new List<K>();
+            int     count = 0;
+            foreach (var data in Tools.DeserializeValues<K>(sr))
+            {
+                count++;
+                if (count >= 10000) // 每帧处理10000条数据 防止卡死
+                {
+                    count = 0;
+                    yield return data;
+                }
+
+                datas.Add(data);
+            }
+
+            Debuger.Log($"从本地文件反序列Json成功 size:{datas.Count}");
+        }
+
+        long     timeA = Tools.GetTimeStamp();
+        DateTime time  = Tools.LongDateTimeToDateTimeString(timeA - timeB);
+        Debuger.Log($"DeserializeJsonObjectFromFileAsync 花费时间:{time.Second}秒");
     }
 
     #endregion

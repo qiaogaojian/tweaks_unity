@@ -8,6 +8,7 @@ namespace Game
     public class UIJsonNetModel : BaseViewModel
     {
         public TestJsonObject          jsonObject;
+        public TestJsonObjects         jsonObjects;
         public Student                 student;
         public List<TestJsonObject>    jsonArray      = new List<TestJsonObject>();
         public Dictionary<int, string> jsonDictionary = new Dictionary<int, string>();
@@ -17,7 +18,8 @@ namespace Game
         public Table2 table2;
         public Table3 table3;
 
-        public string jsonFilePath = Application.persistentDataPath + "/JsonData.json";
+        public string jsonArrayPath = Application.persistentDataPath + "/JsonArray.json";
+        public string jsonObjectPath = Application.persistentDataPath + "/JsonObject.json";
 
         public string jsonData = @"
         {
@@ -56,6 +58,9 @@ namespace Game
                 jsonArray.Add(jsonObject);
                 jsonDictionary.Add(jsonObject.ID, jsonObject.Name);
             }
+
+            jsonObjects           = new TestJsonObjects();
+            jsonObjects.jsonArray = jsonArray;
 
             student        = new Student();
             student.name   = "Michael";
