@@ -104,6 +104,9 @@ public class UIHall : BaseView
             case "JsonDotnet":
                 Framework.UI.Show<UIJsonDotnet>();
                 break;
+            case "Singleton":
+                Framework.UI.Show<UISingleton>();
+                break;
         }
     }
 }
