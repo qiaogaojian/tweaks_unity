@@ -1,5 +1,6 @@
 using Mega;
 using TMPro;
+using UnityEngine;
 
 public class UIHall : BaseView
 {
@@ -108,7 +109,7 @@ public class UIHall : BaseView
                 Framework.UI.Show<UISingleton>();
                 break;
             case "Toast":
-                Framework.UI.Show<Toast>();
+                Framework.UI.Show<Toast>().MakeText(Time.time.ToString());
                 break;
         }
     }
