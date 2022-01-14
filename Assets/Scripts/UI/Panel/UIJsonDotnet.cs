@@ -148,7 +148,7 @@ public class UIJsonDotnet : BaseView
         SerializeObjectToFile(dataModel.jsonFilePath, dataModel.jsonArray);
         long     timeA = Tools.GetTimeStamp();
         DateTime time  = Tools.LongDateTimeToDateTimeString(timeA - timeB);
-        Debuger.Log($"SerializeObjetFile 花费时间:{time.Second}秒");
+        Debuger.Log($"OnClickBtnSerializeToFile 花费时间:{time.Second}秒");
     }
 
     /// <summary>
@@ -156,7 +156,7 @@ public class UIJsonDotnet : BaseView
     /// </summary>
     private void OnClickBtnSerializeToFileOptimize()
     {
-        SerializeObjectToFile(dataModel.jsonFilePath, dataModel.jsonArray);
+        StartCoroutine(SerializeObjectToFileAsync(dataModel.jsonFilePath, dataModel.jsonArray));
     }
 
     /// <summary>
@@ -167,14 +167,54 @@ public class UIJsonDotnet : BaseView
     /// <typeparam name="T"></typeparam>
     private void SerializeObjectToFile<T>(string path, T obj)
     {
-        using (FileStream fs = new FileStream(path, FileMode.CreateNew))
+        string json = JsonConvert.SerializeObject(obj);
+        using (FileStream fs = new FileStream(path, FileMode.Create))
         using (StreamWriter sw = new StreamWriter(fs))
         {
-            string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
             sw.Write(json);
         }
 
         Debuger.Log("写入Json文件成功");
+    }
+
+    private IEnumerator SerializeObjectToFileAsync(string path, List<TestJsonObject> list)
+    {
+        long timeB = Tools.GetTimeStamp();
+
+        using (FileStream fs = new FileStream(path, FileMode.Create))
+        using (StreamWriter sw = new StreamWriter(fs))
+        {
+            JsonTextWriter writer = new JsonTextWriter(sw);
+
+            writer.WriteStartArray();
+            int count = 0;
+            foreach (TestJsonObject testJsonObject in list)
+            {
+                count++;
+                if (count >= 10000) // 每帧处理10000条数据 防止卡死
+                {
+                    count = 0;
+                    yield return null;
+                }
+
+                writer.WriteStartObject();
+                {
+                    writer.WritePropertyName("ID");
+                    writer.WriteValue(testJsonObject.ID);
+
+                    writer.WritePropertyName("Name");
+                    writer.WriteValue(testJsonObject.Name);
+                }
+                writer.WriteEndObject();
+            }
+
+            writer.WriteEndArray();
+            Debuger.Log("写入Json文件成功");
+        }
+
+        long     timeA = Tools.GetTimeStamp();
+        DateTime time  = Tools.LongDateTimeToDateTimeString(timeA - timeB);
+        Debuger.Log($"SerializeObjectToFileAsync 花费时间:{time.Second}秒");
     }
 
     #endregion
@@ -256,7 +296,7 @@ public class UIJsonDotnet : BaseView
         DeserializeJsonArrayFromFile<TestJsonObject>(dataModel.jsonFilePath);
         long     timeA = Tools.GetTimeStamp();
         DateTime time  = Tools.LongDateTimeToDateTimeString(timeA - timeB);
-        Debuger.Log($"DeSerializeObjetFile 花费时间:{time.Second}秒");
+        Debuger.Log($"OnClickBtnDeSerializeFromFile 花费时间:{time.Second}秒");
     }
 
     /// <summary>
@@ -310,7 +350,7 @@ public class UIJsonDotnet : BaseView
 
         long     timeA = Tools.GetTimeStamp();
         DateTime time  = Tools.LongDateTimeToDateTimeString(timeA - timeB);
-        Debuger.Log($"DeSerializeObjetFile 花费时间:{time.Second}秒");
+        Debuger.Log($"DeserializeJsonArrayFromFileAsync 花费时间:{time.Second}秒");
     }
 
     #endregion
