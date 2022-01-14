@@ -29,12 +29,12 @@ public class UIJsonDotnet : BaseView
     private Button          btnDeserialize7;
     private TextMeshProUGUI tvTime;
 
-    private UIJsonNetModel dataModel;
+    private UIJsonNetModel model;
 
     public override void InitView()
     {
-        dataModel = new UIJsonNetModel();
-        dataModel.Init();
+        model = new UIJsonNetModel();
+        model.Init();
 
         btnReturn       = transform.Find("btnReturn").GetComponent<Button>();
         btnSerialize1   = transform.Find("ivBg/btnSerialize1").GetComponent<Button>();
@@ -107,6 +107,12 @@ public class UIJsonDotnet : BaseView
         tvTime.text = Time.time.ToString("0.000");
     }
 
+    public override void Destroy()
+    {
+        base.Destroy();
+        model.Destroy();
+    }
+
 
     #region 序列化
 
@@ -116,7 +122,7 @@ public class UIJsonDotnet : BaseView
     private void OnClickBtnSerializeObjet()
     {
         //序列化
-        string json = JsonConvert.SerializeObject(dataModel.jsonObject);
+        string json = JsonConvert.SerializeObject(model.jsonObject);
         Debuger.Log("序列化对象 JsonObject:" + json);
     }
 
@@ -125,7 +131,7 @@ public class UIJsonDotnet : BaseView
     /// </summary>
     private void OnClickBtnSerializeArray()
     {
-        string json = JsonConvert.SerializeObject(dataModel.jsonArray);
+        string json = JsonConvert.SerializeObject(model.jsonArray);
         Debuger.Log("序列化数组 JsonArray:" + json);
     }
 
@@ -134,7 +140,7 @@ public class UIJsonDotnet : BaseView
     /// </summary>
     private void OnClickBtnSerializeMap()
     {
-        string json = JsonConvert.SerializeObject(dataModel.jsonDictionary);
+        string json = JsonConvert.SerializeObject(model.jsonDictionary);
         Debuger.Log("序列化字典 JsonDictionary:" + json);
     }
 
@@ -143,7 +149,7 @@ public class UIJsonDotnet : BaseView
     /// </summary>
     private void OnClickBtnSerializeObject2()
     {
-        string json = JsonConvert.SerializeObject(dataModel.student, Formatting.Indented); //格式化输出
+        string json = JsonConvert.SerializeObject(model.student, Formatting.Indented); //格式化输出
         Debuger.Log("序列化对象2 JsonObject:" + json);
     }
 
@@ -153,7 +159,7 @@ public class UIJsonDotnet : BaseView
     private void OnClickBtnSerializeToFile()
     {
         long timeB = Tools.GetTimeStamp();
-        SerializeObjectToFile(dataModel.jsonArrayPath, dataModel.jsonArray);
+        SerializeObjectToFile(model.jsonArrayPath, model.jsonArray);
         long     timeA = Tools.GetTimeStamp();
         DateTime time  = Tools.LongDateTimeToDateTimeString(timeA - timeB);
         Debuger.Log($"OnClickBtnSerializeToFile 花费时间:{time.Second}秒");
@@ -182,7 +188,7 @@ public class UIJsonDotnet : BaseView
     /// </summary>
     private void OnClickBtnSerializeToFileAsync()
     {
-        StartCoroutine(SerializeArrayToFileAsync(dataModel.jsonArrayPath, dataModel.jsonArray));
+        StartCoroutine(SerializeArrayToFileAsync(model.jsonArrayPath, model.jsonArray));
     }
 
     /// <summary>
@@ -236,7 +242,7 @@ public class UIJsonDotnet : BaseView
     /// </summary>
     private void OnClickBtnSerializeObjectToFileAsync()
     {
-        StartCoroutine(SerializeObjectToFileAsync(dataModel.jsonObjectPath, dataModel.jsonObjects));
+        StartCoroutine(SerializeObjectToFileAsync(model.jsonObjectPath, model.jsonObjects));
     }
 
     /// <summary>
@@ -302,7 +308,7 @@ public class UIJsonDotnet : BaseView
     private void OnClickBtnDeSerializeObjet()
     {
         //序列化
-        string json = JsonConvert.SerializeObject(dataModel.jsonObject);
+        string json = JsonConvert.SerializeObject(model.jsonObject);
 
         //反序列化
         TestJsonObject obj = JsonConvert.DeserializeObject<TestJsonObject>(json);
@@ -317,7 +323,7 @@ public class UIJsonDotnet : BaseView
     private void OnClickBtnDeSerializeArray()
     {
         //序列化
-        string json = JsonConvert.SerializeObject(dataModel.jsonArray);
+        string json = JsonConvert.SerializeObject(model.jsonArray);
 
         //反序列化数组方法1
         List<TestJsonObject> jarray = JsonConvert.DeserializeObject<List<TestJsonObject>>(json);
@@ -344,7 +350,7 @@ public class UIJsonDotnet : BaseView
     private void OnClickBtnDeSerializeMap()
     {
         //序列化
-        string json = JsonConvert.SerializeObject(dataModel.jsonDictionary);
+        string json = JsonConvert.SerializeObject(model.jsonDictionary);
 
         //反序列化
         Dictionary<int, string> jsonDic = JsonConvert.DeserializeObject<Dictionary<int, string>>(json);
@@ -357,8 +363,8 @@ public class UIJsonDotnet : BaseView
     /// </summary>
     private void OnClickBtnDeSerializeObject2()
     {
-        dataModel.table1 = JsonConvert.DeserializeObject<Table1>(dataModel.jsonData); //反序列化对象
-        Debuger.Log("反序列化对象 JsonObject:" + JsonConvert.SerializeObject(dataModel.table1));
+        model.table1 = JsonConvert.DeserializeObject<Table1>(model.jsonData); //反序列化对象
+        Debuger.Log("反序列化对象 JsonObject:" + JsonConvert.SerializeObject(model.table1));
     }
 
     /// <summary>
@@ -367,7 +373,7 @@ public class UIJsonDotnet : BaseView
     private void OnClickBtnDeSerializeFromFile()
     {
         long timeB = Tools.GetTimeStamp();
-        DeserializeJsonArrayFromFile<TestJsonObject>(dataModel.jsonArrayPath);
+        DeserializeJsonArrayFromFile<TestJsonObject>(model.jsonArrayPath);
         long     timeA = Tools.GetTimeStamp();
         DateTime time  = Tools.LongDateTimeToDateTimeString(timeA - timeB);
         Debuger.Log($"OnClickBtnDeSerializeFromFile 花费时间:{time.Second}秒");
@@ -395,7 +401,7 @@ public class UIJsonDotnet : BaseView
     /// </summary>
     private void OnClickBtnDeSerializeArrayFileAsync()
     {
-        StartCoroutine(DeserializeJsonArrayFromFileAsync<TestJsonObject>(dataModel.jsonArrayPath));
+        StartCoroutine(DeserializeJsonArrayFromFileAsync<TestJsonObject>(model.jsonArrayPath));
     }
 
     /// <summary>
@@ -438,7 +444,7 @@ public class UIJsonDotnet : BaseView
     /// </summary>
     private void OnClickBtnDeSerializeObjectFileAsync()
     {
-        StartCoroutine(DeserializeJsonObjectFromFileAsync<TestJsonObjects,TestJsonObject>(dataModel.jsonObjectPath));
+        StartCoroutine(DeserializeJsonObjectFromFileAsync<TestJsonObjects, TestJsonObject>(model.jsonObjectPath));
     }
 
     /// <summary>
@@ -447,7 +453,7 @@ public class UIJsonDotnet : BaseView
     /// <param name="path"></param>
     /// <typeparam name="K"></typeparam>
     /// <returns></returns>
-    private IEnumerator DeserializeJsonObjectFromFileAsync<T,K>(string path)
+    private IEnumerator DeserializeJsonObjectFromFileAsync<T, K>(string path)
     {
         long timeB = Tools.GetTimeStamp();
 
