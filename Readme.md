@@ -116,6 +116,8 @@ This project contains different assets from different publishers meshed up toget
 
 ##### Toast
 
+##### Toasts
+
 #### NGUI
 
 #### FGUI

@@ -111,6 +111,9 @@ public class UIHall : BaseView
             case "Toast":
                 Framework.UI.Show<Toast>().MakeText(Time.time.ToString());
                 break;
+            case "Toasts":
+                Framework.UI.Show<Toasts>().MakeText(Time.time.ToString());
+                break;
         }
     }
 }
