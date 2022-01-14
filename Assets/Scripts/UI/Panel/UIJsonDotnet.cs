@@ -236,9 +236,14 @@ public class UIJsonDotnet : BaseView
     /// <typeparam name="T"></typeparam>
     private void DeserializeJsonFromFile<T>(string path)
     {
-        string json = File.ReadAllText(path);
-        T      data = JsonConvert.DeserializeObject<T>(json);
-        Debuger.Log("从本地文件反序列Json成功 " + JsonConvert.SerializeObject(data));
+        using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+        using (StreamReader sr = new StreamReader(fs))
+        using (JsonReader reader = new JsonTextReader(sr))
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            T              data       = serializer.Deserialize<T>(reader);
+            Debuger.Log("从本地文件反序列Json成功 " + JsonConvert.SerializeObject(data));
+        }
     }
 
     #endregion
