@@ -1,24 +1,28 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Game;
 using Mega;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UIJsonDotnet : BaseView
 {
-    private Button btnReturn;
-    private Button btnSerialize1;
-    private Button btnSerialize2;
-    private Button btnSerialize3;
-    private Button btnSerialize4;
-    private Button btnSerialize5;
-    private Button btnDeserialize1;
-    private Button btnDeserialize2;
-    private Button btnDeserialize3;
-    private Button btnDeserialize4;
-    private Button btnDeserialize5;
+    private Button          btnReturn;
+    private Button          btnSerialize1;
+    private Button          btnSerialize2;
+    private Button          btnSerialize3;
+    private Button          btnSerialize4;
+    private Button          btnSerialize5;
+    private Button          btnDeserialize1;
+    private Button          btnDeserialize2;
+    private Button          btnDeserialize3;
+    private Button          btnDeserialize4;
+    private Button          btnDeserialize5;
+    private TextMeshProUGUI tvTime;
 
     private UIJsonNetModel dataModel;
 
@@ -38,6 +42,7 @@ public class UIJsonDotnet : BaseView
         btnDeserialize3 = transform.Find("ivBg/btnDeserialize3").GetComponent<Button>();
         btnDeserialize4 = transform.Find("ivBg/btnDeserialize4").GetComponent<Button>();
         btnDeserialize5 = transform.Find("ivBg/btnDeserialize5").GetComponent<Button>();
+        tvTime          = transform.Find("ivBg/tvTime").GetComponent<TextMeshProUGUI>();
     }
 
 
@@ -78,6 +83,11 @@ public class UIJsonDotnet : BaseView
     private void OnClickBtnReturn()
     {
         Framework.UI.HideCurrent();
+    }
+
+    private void Update()
+    {
+        tvTime.text = Time.time.ToString("0.000");
     }
 
 

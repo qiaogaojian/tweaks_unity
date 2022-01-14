@@ -50,13 +50,12 @@ namespace Game
 
         private void initData()
         {
-            jsonObject = new TestJsonObject(1001, "Michael");
-            jsonArray.Add(jsonObject);
-            jsonDictionary.Add(jsonObject.ID, jsonObject.Name);
-
-            jsonObject = new TestJsonObject(1002, "Michelle");
-            jsonArray.Add(jsonObject);
-            jsonDictionary.Add(jsonObject.ID, jsonObject.Name);
+            for (int i = 0; i < 1000000; i++)
+            {
+                jsonObject = new TestJsonObject(i, $"item{i}");
+                jsonArray.Add(jsonObject);
+                jsonDictionary.Add(jsonObject.ID, jsonObject.Name);
+            }
 
             student        = new Student();
             student.name   = "Michael";
