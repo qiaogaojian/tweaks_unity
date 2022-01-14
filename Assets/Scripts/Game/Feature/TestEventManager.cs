@@ -6,6 +6,7 @@
 *功能：测试事件管理器
 */
 
+using Mega;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -23,20 +24,20 @@ public class TestEventManager : MonoBehaviour
 
     void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.Alpha1))
-        // {
-        //     EventManager.Instance.SendEvent(EventId.TEST_EventNormal);
-        // }
-        //
-        // if (Input.GetKeyDown(KeyCode.Alpha2))
-        // {
-        //     EventManager.Instance.SendEvent(EventId.TEST_EventParamInt, 666);
-        // }
-        //
-        // if (Input.GetKeyDown(KeyCode.Alpha3))
-        // {
-        //     EventManager.Instance.SendEvent(EventId.TEST_EventParamObject, eventData);
-        // }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Framework.Event.SendEvent(EventId.TEST_EventNormal);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Framework.Event.SendEvent(EventId.TEST_EventParamInt, 666);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Framework.Event.SendEvent(EventId.TEST_EventParamObject, eventData);
+        }
     }
 
     //无参回调
@@ -62,16 +63,16 @@ public class TestEventManager : MonoBehaviour
 
     void RegisterEvent()
     {
-        // Framework.Event.AddEventListener(EventId.TEST_EventNormal, TEST_EventNormal);
-        // Framework.Event.AddEventListener<int>(EventId.TEST_EventParamInt, TEST_EventParamInt);
-        // Framework.Event.AddEventListener<TestEventData>(EventId.TEST_EventParamObject, TEST_EventParamObject);
+        Framework.Event.AddEventListener(EventId.TEST_EventNormal, TEST_EventNormal);
+        Framework.Event.AddEventListener<int>(EventId.TEST_EventParamInt, TEST_EventParamInt);
+        Framework.Event.AddEventListener<TestEventData>(EventId.TEST_EventParamObject, TEST_EventParamObject);
     }
 
     void UnRegisterEvent()
     {
-        // Framework.Event.RemoveEventListener(EventId.TEST_EventNormal, TEST_EventNormal);
-        // Framework.Event.RemoveEventListener<int>(EventId.TEST_EventParamInt, TEST_EventParamInt);
-        // Framework.Event.RemoveEventListener<TestEventData>(EventId.TEST_EventParamObject, TEST_EventParamObject);
+        Framework.Event.RemoveEventListener(EventId.TEST_EventNormal, TEST_EventNormal);
+        Framework.Event.RemoveEventListener<int>(EventId.TEST_EventParamInt, TEST_EventParamInt);
+        Framework.Event.RemoveEventListener<TestEventData>(EventId.TEST_EventParamObject, TEST_EventParamObject);
     }
 
     void OnDestroy()

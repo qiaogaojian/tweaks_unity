@@ -34,6 +34,9 @@
         TEST_EventNormal,
         TEST_EventParamInt,
         TEST_EventParamObject,
+
+        INVOKE_UI_TOAST_TIPS,
+        INVOKE_UI_TOAST_ERROR_TIPS
     }
 
     #endregion
