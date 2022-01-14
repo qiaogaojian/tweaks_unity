@@ -107,6 +107,9 @@ public class UIHall : BaseView
             case "Singleton":
                 Framework.UI.Show<UISingleton>();
                 break;
+            case "Toast":
+                Framework.UI.Show<Toast>();
+                break;
         }
     }
 }

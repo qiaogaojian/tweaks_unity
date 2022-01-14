@@ -114,6 +114,8 @@ This project contains different assets from different publishers meshed up toget
 
 ##### UI LayoutGroup
 
+##### Toast
+
 #### NGUI
 
 #### FGUI
