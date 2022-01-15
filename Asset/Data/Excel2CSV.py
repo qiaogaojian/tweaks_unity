@@ -63,6 +63,7 @@ def excel2CSV(fullPath):
 
 # 复制csv到SteamingAssets文件夹
 def copyCsv():
+    shutil.rmtree(csv2Path)
     shutil.copytree(csv1Path, csv2Path)
 
 # 递归查找文件
