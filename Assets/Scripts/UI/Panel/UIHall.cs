@@ -1,3 +1,4 @@
+using Game;
 using Mega;
 using TMPro;
 using UnityEngine;
@@ -113,6 +114,9 @@ public class UIHall : BaseView
                 break;
             case "Toasts":
                 Framework.UI.Show<Toasts>().MakeText(Time.time.ToString());
+                break;
+            case "Event":
+                Framework.UI.Show<UIEvent>();
                 break;
         }
     }

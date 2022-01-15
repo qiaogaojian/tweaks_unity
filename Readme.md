@@ -216,10 +216,6 @@ This project contains different assets from different publishers meshed up toget
 
 ## Frame
 
-### GF
-
-### ET
-
 ### Mega
 
 #### Manager
@@ -285,6 +281,10 @@ This project contains different assets from different publishers meshed up toget
 ##### FileUtils
 
 ##### Tools
+
+### GF
+
+### ET
 
 ## Tutorial
 
