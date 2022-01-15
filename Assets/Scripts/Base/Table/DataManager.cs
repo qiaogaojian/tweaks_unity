@@ -23,7 +23,7 @@ namespace Mega
         /// </summary>
         private void CsvLocalizationData()
         {
-             string csvPath  = Application.dataPath + "/Editor/CSV/1/localization.csv";
+             string csvPath  = Application.streamingAssetsPath + "/Csv/localization.csv";
             Dictionary<int, Localization> localizationDic = CsvDataCached.CachedCsvFile<Localization>(csvPath);
             foreach (var data in localizationDic.Values)
             {
