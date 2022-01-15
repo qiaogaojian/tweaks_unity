@@ -256,23 +256,23 @@ This project contains different assets from different publishers meshed up toget
 
 #### Libs
 
-##### EGamePlay
-
-##### SRDebugger
-
-##### SuperScrollView
-
-##### TextMesh Pro
-
 ##### AStar
+
+##### Timer
 
 ##### DoTween
 
 ##### EasyTouch
 
+##### EGamePlay
+
 ##### JsonDotnet
 
-##### Timer
+##### SRDebugger
+
+##### TextMesh Pro
+
+##### SuperScrollView
 
 #### Utility
 
