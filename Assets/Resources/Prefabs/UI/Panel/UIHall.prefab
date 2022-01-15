@@ -702,7 +702,6 @@ GameObject:
   - component: {fileID: 5528509858603296883}
   - component: {fileID: 3419536665027875676}
   - component: {fileID: 7919739930469069776}
-  - component: {fileID: 2303860017997346602}
   m_Layer: 5
   m_Name: UIHall
   m_TagString: Untagged
@@ -770,18 +769,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2303860017997346602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6872694790993299990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e38f76169b9fc4649b04e3b890052b02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6931718969744022722
 GameObject:
   m_ObjectHideFlags: 0

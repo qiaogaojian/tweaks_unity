@@ -1826,7 +1826,6 @@ GameObject:
   - component: {fileID: 5278851578630242610}
   - component: {fileID: 6202905679067963502}
   - component: {fileID: 1436839526265665009}
-  - component: {fileID: -486722747726653962}
   m_Layer: 5
   m_Name: UIFit
   m_TagString: Untagged
@@ -1893,18 +1892,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &-486722747726653962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8180022246714963325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0eb6ebd208a48ea419f9854c5816b160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8253877706041031920
 GameObject:
   m_ObjectHideFlags: 0
