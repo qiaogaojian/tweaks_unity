@@ -92,8 +92,6 @@ This project contains different assets from different publishers meshed up toget
 
 #### UGUI
 
-##### UGUI Fit
-
 ##### TreeView
 
 ###### Level_1
@@ -111,6 +109,8 @@ This project contains different assets from different publishers meshed up toget
 ############ Level_7
 
 ############# Button
+
+##### UGUI Fit
 
 ##### UI LayoutGroup
 
