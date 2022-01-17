@@ -238,9 +238,9 @@ This project contains different assets from different publishers meshed up toget
 
 ##### Singleton
 
-##### DataLoader
+##### Table
 
-##### Localizaiton
+##### Localization
 
 ##### HotUpdate
 
