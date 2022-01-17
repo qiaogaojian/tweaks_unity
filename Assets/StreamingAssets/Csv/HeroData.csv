@@ -1,4 +1,4 @@
-﻿英雄ID,英雄名称,描述,职业,种族,阶数,最大攻击力,最小攻击力,血量上限,能量,防御最大值,防御最小值,暴击率,暴击伤害,火属性攻击,冰属性攻击,毒属性攻击,光属性攻击,暗属性攻击,火属性防御,冰属性防御,毒属性防御,光属性防御,暗属性防御,幸运值,额外金币,自带被动技能,击杀值,攻击速度,特性,特性加成,特性金币,特性幸运,Spine_路径,默认皮肤
+英雄ID,英雄名称,描述,职业,种族,阶数,最大攻击力,最小攻击力,血量上限,能量,防御最大值,防御最小值,暴击率,暴击伤害,火属性攻击,冰属性攻击,毒属性攻击,光属性攻击,暗属性攻击,火属性防御,冰属性防御,毒属性防御,光属性防御,暗属性防御,幸运值,额外金币,自带被动技能,击杀值,攻击速度,特性,特性加成,特性金币,特性幸运,Spine_路径,默认皮肤
 id,name,desc,job_name,race,level,attack_max_value,attack_min_value,hp,mp,def_max_value,def_min_value,crit,critdamage,fire_attack_value,ice_attack_value,poison_attack_value,light_attack_value,dark_attack_value,fire_def_value,ice_def_value,poison_def_value,light_def_value,dark_def_value,lucky,extra_gold,skill,killsvalue,attackSpeed,specialty,specialtyAddRate,specialtyGold,specialtylucky,Spine_path,default_skine
 int,string,string,string,string,int,int,int,int,int,int,int,float,float,int,int,int,int,int,int,int,int,int,int,int,int,int[],int,int,string,float,int,float,string,int[]
 10000,安杜因,人类王国边境领主的儿子，在一次巧合下，登上了开往前线的马车。,平民,人族,1,14,8,1300,100,0,0,0,1.5,0,0,1,2,0,0,0,0,0,0,0,0,1025|1026,0,100,贪婪|额外产出金币100,0.1,5,0,Model/Player/Actor,40014|40013|40016|40015|40017|40012|40019|40020|40018
