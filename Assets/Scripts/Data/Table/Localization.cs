@@ -11,8 +11,10 @@ public class Localization
 	public string KEY{ get;set; }
 	//中文 
 	public string CN{ get;set; }
-	//英语 
+	//英文 
 	public string EN{ get;set; }
+	//日语 
+	public string JP{ get;set; }
 
 	public Localization(Localization data) 
 	{
@@ -20,6 +22,7 @@ public class Localization
 		KEY= data.KEY;
 		CN= data.CN;
 		EN= data.EN;
+		JP= data.JP;
 	}
 
 	public Localization( ) 

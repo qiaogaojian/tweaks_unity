@@ -1,4 +1,5 @@
-id,语言,中文,英语
-id,KEY,CN,EN
-int,string,string,string
-0,姓名,姓名|HanZhenGuangBiao,name
+id,语言,中文,英文,日语
+id,KEY,CN,EN,JP
+int,string,string,string,string
+0,语言,中文,English,日本語
+1,请选择语言,请选择语言,Please Select Language,言葉を選ぶ

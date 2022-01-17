@@ -4129,6 +4129,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1265798083}
     m_Modifications:
+    - target: {fileID: 4326796810933816817, guid: 0e95cc95f4128bb4289482269f3d39d3, type: 3}
+      propertyPath: m_Name
+      value: seleLanguage
+      objectReference: {fileID: 0}
     - target: {fileID: 8996521820937180604, guid: 0e95cc95f4128bb4289482269f3d39d3, type: 3}
       propertyPath: m_Name
       value: UILocalization
