@@ -118,6 +118,12 @@ public class UIHall : BaseView
             case "Event":
                 Framework.UI.Show<UIEvent>();
                 break;
+            case "Localization":
+                Framework.UI.Show<UILocalization>();
+                break;
+            case "Table":
+                Framework.UI.Show<UITable>();
+                break;
         }
     }
 }

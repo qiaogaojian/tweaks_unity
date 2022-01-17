@@ -25,7 +25,7 @@ namespace Mega
 #endif
             StartCoroutine(LoadCommonResAsync(callback));
         }
-        
+
         public IEnumerator LoadCommonResAsync(Action callback)
         {
             yield return this.LoadData();
@@ -39,12 +39,13 @@ namespace Mega
 
         public void LoadGameRes()
         {
-            
         }
 
         IEnumerator LoadData()
         {
-            Framework.Data.LoadCsvData();
+            Framework.Table.GetTable<HeroData>();
+            yield return new WaitForEndOfFrame();
+            Framework.Table.GetTable<Localization>();
             yield return new WaitForEndOfFrame();
         }
 
@@ -89,12 +90,11 @@ namespace Mega
         #endregion
 
         #region 卸载资源
-        
+
         public void UnLoadRes(SceneType scene)
         {
             dicUI.Clear();
 
-            Framework.Data.clearData();
             Framework.Pool.UnLoadResource();
 
             Resources.UnloadUnusedAssets();
