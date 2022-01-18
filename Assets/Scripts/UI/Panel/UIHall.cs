@@ -124,6 +124,12 @@ public class UIHall : BaseView
             case "Table":
                 Framework.UI.Show<UITable>();
                 break;
+            case "SRDebugger":
+                Framework.UI.Show<Toast>().MakeText("右下角三连击打开Debug控制台");
+                break;
+            case "TextMeshPro":
+                Framework.UI.Show<Toast>().MakeText("文本尽量使用TMPro,TMPro文字放大不会失真,且更容易做文字效果");
+                break;
         }
     }
 }

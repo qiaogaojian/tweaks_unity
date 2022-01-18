@@ -12,7 +12,12 @@ namespace Game
 
         public override void Init(Action onFinish = null)
         {
-            // tableL18N = Framework.Table.GetTable<Localization>();
+            Dictionary<int, Localization> table = Framework.Table.GetTable<Localization>();
+            foreach (KeyValuePair<int, Localization> keyValuePair in table)
+            {
+                tableL18N[keyValuePair.Value.KEY] = keyValuePair.Value;
+            }
+            onFinish.Invoke();
         }
 
         private List<Dropdown.OptionData> GetLanguageDropdownData()
@@ -72,7 +77,6 @@ namespace Game
 
         public override void Destroy()
         {
-            throw new NotImplementedException();
         }
     }
 }
