@@ -8,7 +8,7 @@ namespace Game
 {
     public class UILocalizationModel : BaseViewModel
     {
-        private Dictionary<string, Localization> tableL18N;
+        private Dictionary<string, Localization> tableL18N = new Dictionary<string, Localization>();
 
         public override void Init(Action onFinish = null)
         {

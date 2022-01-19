@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Mega;
+using TMPro;
 using UnityEngine.UI;
 
 namespace Game
@@ -10,7 +11,7 @@ namespace Game
         private Button   btnChinese;
         private Button   btnEnglish;
         private Button   btnJapanese;
-        private Dropdown seleLanguage;
+        private TMP_Dropdown seleLanguage;
 
         private UILocalizationModel dataModel;
 
@@ -20,7 +21,7 @@ namespace Game
             btnChinese   = transform.Find("ivBg/btnChinese").GetComponent<Button>();
             btnEnglish   = transform.Find("ivBg/btnEnglish").GetComponent<Button>();
             btnJapanese  = transform.Find("ivBg/btnJapanese").GetComponent<Button>();
-            seleLanguage = transform.Find("ivBg/seleLanguage").GetComponent<Dropdown>();
+            seleLanguage = transform.Find("ivBg/seleLanguage").GetComponent<TMP_Dropdown>();
 
             dataModel = new UILocalizationModel();
             dataModel.Init(() =>
@@ -84,7 +85,7 @@ namespace Game
         /// 添加一个列表下拉数据
         /// </summary>
         /// <param name="listOptions"></param>
-        void AddDropDownOptionsData(List<Dropdown.OptionData> listOptions)
+        void AddDropDownOptionsData(List<TMP_Dropdown.OptionData> listOptions)
         {
             seleLanguage.AddOptions(listOptions);
         }
@@ -96,7 +97,7 @@ namespace Game
         void AddDropDownOptionsData(string itemText)
         {
             //添加一个下拉选项
-            Dropdown.OptionData data = new Dropdown.OptionData();
+            TMP_Dropdown.OptionData data = new TMP_Dropdown.OptionData();
             data.text = itemText;
             //data.image = "指定一个图片做背景不指定则使用默认"；
             seleLanguage.options.Add(data);
