@@ -384,6 +384,23 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4260790695816859351, guid: 031105b580045284ea7c063abd662e8c, type: 3}
   m_PrefabInstance: {fileID: 6176819999690415429}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &752599865 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1324839455448390, guid: b1a0c400237214049999eaf07eef08d0, type: 3}
+  m_PrefabInstance: {fileID: 2111715403}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &752599867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752599865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99d81137252ea6548ba5c285d78c838f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &798858222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1314,6 +1331,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1324839455448390, guid: b1a0c400237214049999eaf07eef08d0, type: 3}
+      propertyPath: m_Name
+      value: L18n
+      objectReference: {fileID: 0}
     - target: {fileID: 1359884058409794, guid: b1a0c400237214049999eaf07eef08d0, type: 3}
       propertyPath: m_Name
       value: Framework
@@ -4129,10 +4150,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1265798083}
     m_Modifications:
-    - target: {fileID: 4326796810933816817, guid: 0e95cc95f4128bb4289482269f3d39d3, type: 3}
-      propertyPath: m_Name
-      value: seleLanguage
-      objectReference: {fileID: 0}
     - target: {fileID: 8996521820937180604, guid: 0e95cc95f4128bb4289482269f3d39d3, type: 3}
       propertyPath: m_Name
       value: UILocalization

@@ -45,7 +45,7 @@ namespace Mega
         {
             Framework.Table.GetTable<HeroData>();
             yield return new WaitForEndOfFrame();
-            Framework.Table.GetTable<Localization>();
+            Framework.Table.GetTable<L18nManager>();
             yield return new WaitForEndOfFrame();
         }
 

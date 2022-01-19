@@ -8,72 +8,30 @@ namespace Game
 {
     public class UILocalizationModel : BaseViewModel
     {
-        private Dictionary<string, Localization> tableL18N = new Dictionary<string, Localization>();
+        private List<Dropdown.OptionData> optionList = new List<Dropdown.OptionData>();
 
         public override void Init(Action onFinish = null)
         {
-            Dictionary<int, Localization> table = Framework.Table.GetTable<Localization>();
-            foreach (KeyValuePair<int, Localization> keyValuePair in table)
-            {
-                tableL18N[keyValuePair.Value.KEY] = keyValuePair.Value;
-            }
+            initData();
             onFinish.Invoke();
         }
 
-        private List<Dropdown.OptionData> GetLanguageDropdownData()
+        private void initData()
         {
-            List<Dropdown.OptionData> optionList = new List<Dropdown.OptionData>();
-            List<string>              langList   = GetSupportLanguages();
+            List<string> langList = Framework.L18N.GetSupportLanguages();
             for (int i = 0; i < langList.Count; i++)
             {
                 Dropdown.OptionData option = new Dropdown.OptionData();
                 option.text = langList[i];
                 optionList.Add(option);
             }
+        }
 
+        private List<Dropdown.OptionData> GetLanguageDropdownData()
+        {
             return optionList;
         }
 
-        private List<string> GetSupportLanguages()
-        {
-            List<string> list = new List<string>();
-            list.Add(getString("语言", SystemLanguage.Chinese));
-            list.Add(getString("语言", SystemLanguage.Japanese));
-            list.Add(getString("语言", SystemLanguage.English));
-            return list;
-        }
-
-        private string getString(string key, SystemLanguage language)
-        {
-            switch (language)
-            {
-                case SystemLanguage.Chinese:
-                    return tableL18N[key].CN;
-                case SystemLanguage.Japanese:
-                    return tableL18N[key].JP;
-                default:
-                    return tableL18N[key].EN;
-            }
-        }
-
-        private Sprite getImage(string key, SystemLanguage language)
-        {
-            string imgPath;
-            switch (language)
-            {
-                case SystemLanguage.Chinese:
-                    imgPath = $"Chinese/Sprite/{tableL18N[key].CN}";
-                    break;
-                case SystemLanguage.Japanese:
-                    imgPath = $"Japanese/Sprite/{tableL18N[key].JP}";
-                    break;
-                default:
-                    imgPath = $"English/Sprite/{tableL18N[key].EN}";
-                    break;
-            }
-
-            return Resources.Load<Sprite>(imgPath);
-        }
 
         public override void Destroy()
         {
