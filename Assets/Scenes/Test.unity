@@ -401,23 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d81137252ea6548ba5c285d78c838f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &759992214 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4326796809989898917, guid: 0e95cc95f4128bb4289482269f3d39d3, type: 3}
-  m_PrefabInstance: {fileID: 7569128958319208020}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &759992215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 759992214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ad40fca6ed91464f883a38f1110ee43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  curLang: 10
 --- !u!1 &798858222
 GameObject:
   m_ObjectHideFlags: 0
@@ -4175,9 +4159,17 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 6870321016925204610, guid: 50693c002dd6830459305478e3a2e113, type: 2}
-    - target: {fileID: 4326796809989898971, guid: 0e95cc95f4128bb4289482269f3d39d3, type: 3}
+    - target: {fileID: 4326796809621552134, guid: 0e95cc95f4128bb4289482269f3d39d3, type: 3}
       propertyPath: m_text
       value: "\u8BED\u8A00"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4326796809989898971, guid: 0e95cc95f4128bb4289482269f3d39d3, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4326796810933816817, guid: 0e95cc95f4128bb4289482269f3d39d3, type: 3}
+      propertyPath: m_Name
+      value: ddlLanguage
       objectReference: {fileID: 0}
     - target: {fileID: 4326796810933816823, guid: 0e95cc95f4128bb4289482269f3d39d3, type: 3}
       propertyPath: m_Options.m_Options.Array.data[0].m_Text

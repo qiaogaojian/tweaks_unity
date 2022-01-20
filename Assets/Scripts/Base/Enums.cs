@@ -31,6 +31,9 @@
 
     public enum EventId
     {
+        ChangeLanguage,
+
+
         TEST_EventNormal,
         TEST_EventParamInt,
         TEST_EventParamObject,
