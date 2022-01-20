@@ -1,8 +1,11 @@
 id,语言,中文,英文,日语
 id,KEY,CN,EN,JP
 int,string,string,string,string
-0,[Font],Lang/Chinese/Font/Chinese,Lang/English/Font/English,Lang/Japanese/Font/Janpanese
+0,[Font],Lang/Chinese/Font/Chinese,Lang/English/Font/English,Lang/Japanese/Font/Japanese
 1,[FontAsset],Lang/Chinese/Font/zh SDF,Lang/English/Font/en SDF,Lang/Japanese/Font/ja SDF
 2,语言,中文,English,日本語
 3,请选择语言,请选择语言,Please Select Language,言葉を選ぶ
-4,ivFlag,Lang/Chinese/Sprite/Chinese,Lang/English/Sprite/English,Lang/Japanese/Sprite/Janpanese
+4,ivFlag,Lang/Chinese/Sprite/Chinese,Lang/English/Sprite/English,Lang/Japanese/Sprite/Japanese
+5,中文,中文1,中文2,中文3
+6,English,English1,English2,English3
+7,日本語,日本語1,日本語2,日本語3
