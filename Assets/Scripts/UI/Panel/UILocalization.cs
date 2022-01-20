@@ -3,33 +3,36 @@ using System.Collections.Generic;
 using Mega;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Game
 {
     public class UILocalization : BaseView
     {
-        private Button       btnReturn;
-        private Button       btnChinese;
-        private Button       btnEnglish;
-        private Button       btnJapanese;
-        private TMP_Dropdown seleLanguage;
+        private Button btnReturn;
+        private Button btnChinese;
+        private Button btnEnglish;
+        private Button btnJapanese;
 
+        private TMP_Dropdown        ddlLanguage;
+        private TextMeshProUGUI     ddlLabel;
         private UILocalizationModel viewModel;
 
         public override void InitView()
         {
-            btnReturn    = transform.Find("btnReturn").GetComponent<Button>();
-            btnChinese   = transform.Find("ivBg/btnChinese").GetComponent<Button>();
-            btnEnglish   = transform.Find("ivBg/btnEnglish").GetComponent<Button>();
-            btnJapanese  = transform.Find("ivBg/btnJapanese").GetComponent<Button>();
-            seleLanguage = transform.Find("ivBg/seleLanguage").GetComponent<TMP_Dropdown>();
+            btnReturn   = transform.Find("btnReturn").GetComponent<Button>();
+            btnChinese  = transform.Find("ivBg/btnChinese").GetComponent<Button>();
+            btnEnglish  = transform.Find("ivBg/btnEnglish").GetComponent<Button>();
+            btnJapanese = transform.Find("ivBg/btnJapanese").GetComponent<Button>();
+            ddlLanguage = transform.Find("ivBg/ddlLanguage").GetComponent<TMP_Dropdown>();
+            ddlLabel    = transform.Find("ivBg/ddlLanguage/Label").GetComponent<TextMeshProUGUI>();
 
 
             viewModel = new UILocalizationModel();
             viewModel.Init(() =>
             {
-                seleLanguage.options.Clear();
+                ddlLanguage.options.Clear();
                 AddDropDownOptionsData(viewModel.GetLanguageDropdownData());
                 SetDropDownItemValue(0);
             });
@@ -51,7 +54,7 @@ namespace Game
             btnChinese.onClick.AddListener(OnClickBtnChinese);
             btnEnglish.onClick.AddListener(OnClickBtnEnglish);
             btnJapanese.onClick.AddListener(OnClickBtnJapanese);
-            seleLanguage.onValueChanged.AddListener(OnSelectLanguage);
+            ddlLanguage.onValueChanged.AddListener(OnSelectLanguage);
         }
 
         protected override void RemoveEvent()
@@ -60,7 +63,7 @@ namespace Game
             btnChinese.onClick.RemoveListener(OnClickBtnChinese);
             btnEnglish.onClick.RemoveListener(OnClickBtnEnglish);
             btnJapanese.onClick.RemoveListener(OnClickBtnJapanese);
-            seleLanguage.onValueChanged.RemoveListener(OnSelectLanguage);
+            ddlLanguage.onValueChanged.RemoveListener(OnSelectLanguage);
         }
 
         private void OnClickBtnReturn()
@@ -89,8 +92,8 @@ namespace Game
         private void OnSelectLanguage(int index)
         {
             Debuger.Log($"Language Index {index}");
-            SystemLanguage lang = viewModel.GetLanguage(index);
-            switch (lang)
+            LocalizeData lang = viewModel.GetLanguage(index);
+            switch (lang.lang)
             {
                 case SystemLanguage.Chinese:
                     Framework.L18N.ChangeLanguage(SystemLanguage.Chinese);
@@ -102,6 +105,9 @@ namespace Game
                     Framework.L18N.ChangeLanguage(SystemLanguage.Japanese);
                     break;
             }
+
+            TMP_FontAsset fontAsset = Framework.L18N.GetLangFontAsset(lang.langText);
+            ddlLabel.font = fontAsset;
         }
 
 
@@ -111,7 +117,7 @@ namespace Game
         /// <param name="listOptions"></param>
         void AddDropDownOptionsData(List<TMP_Dropdown.OptionData> listOptions)
         {
-            seleLanguage.AddOptions(listOptions);
+            ddlLanguage.AddOptions(listOptions);
         }
 
         /// <summary>
@@ -124,7 +130,7 @@ namespace Game
             TMP_Dropdown.OptionData data = new TMP_Dropdown.OptionData();
             data.text = itemText;
             //data.image = "指定一个图片做背景不指定则使用默认"；
-            seleLanguage.options.Add(data);
+            ddlLanguage.options.Add(data);
         }
 
         /// <summary>
@@ -133,15 +139,15 @@ namespace Game
         /// <param name="ItemIndex"></param>
         void SetDropDownItemValue(int ItemIndex)
         {
-            if (seleLanguage.options == null)
+            if (ddlLanguage.options == null)
             {
                 Debuger.Log(GetType() + "/SetDropDownItemValue()/下拉列表为空，请检查");
                 return;
             }
 
-            if (ItemIndex >= seleLanguage.options.Count)
+            if (ItemIndex >= ddlLanguage.options.Count)
             {
-                ItemIndex = seleLanguage.options.Count - 1;
+                ItemIndex = ddlLanguage.options.Count - 1;
             }
 
             if (ItemIndex < 0)
@@ -149,7 +155,7 @@ namespace Game
                 ItemIndex = 0;
             }
 
-            seleLanguage.value = ItemIndex;
+            ddlLanguage.value = ItemIndex;
         }
     }
 }

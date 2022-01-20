@@ -30,14 +30,14 @@ namespace Game
             }
         }
 
-        public SystemLanguage GetLanguage(int index)
+        public LocalizeData GetLanguage(int index)
         {
             if (langList == null)
             {
                 initData();
             }
 
-            return langList[index].lang;
+            return langList[index];
         }
 
         public List<TMP_Dropdown.OptionData> GetLanguageDropdownData()
