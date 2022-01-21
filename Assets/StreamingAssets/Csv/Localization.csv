@@ -6,3 +6,8 @@ int,string,string,string,string
 2,语言,中文,English,日本語
 3,请选择语言,请选择语言,Please Select Language,言葉を選ぶ
 4,ivFlag,Lang/Chinese/Sprite/Chinese,Lang/English/Sprite/English,Lang/Japanese/Sprite/Japanese
+5,基础,基础,Base,基础
+6,引擎,引擎,Engine,引擎
+7,特性,特性,Feature,特性
+8,框架,框架,Frame,框架
+9,教程,教程,Tutorial,教程

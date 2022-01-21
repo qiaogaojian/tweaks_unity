@@ -49,6 +49,8 @@ public class ItemTreeView : TreeListViewItem
         rt.offsetMin = new Vector2(margin + indent * itemModel.Level, rt.offsetMin.y);
         ivBg.color   = GetItemColor(itemModel.IsTree(), itemModel.Level);
         SetExpandTag(itemModel.IsExpand);
+        // 对于文本内容不断变动的UI组件, 每当文本更新后, 就要重置本地化Key
+        Framework.L18N.ResetLocalizeUI(transform);
     }
 
     private Color GetItemColor(bool isTree, int level)

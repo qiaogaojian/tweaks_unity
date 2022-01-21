@@ -4,11 +4,11 @@
 
     public enum ViewType
     {
-        Normal = 0,
-        Dialog = 100,
-        Hint   = 200,
-        Top    = 300,
-        Effect = 400
+        Normal = 0,   // 一般全屏UI
+        Dialog = 100, // 弹窗UI
+        Hint   = 200, // Toast 飘字UI
+        Top    = 300, // 必须放在最上层的UI
+        Effect = 400  // 特效
     }
 
     #endregion
@@ -32,7 +32,7 @@
     public enum EventId
     {
         ChangeLanguage,
-
+        RestLanguageKey,
 
         TEST_EventNormal,
         TEST_EventParamInt,
