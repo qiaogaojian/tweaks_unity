@@ -15,7 +15,7 @@ namespace Game
         private Button btnEnglish;
         private Button btnJapanese;
 
-        private TMP_Dropdown        ddlLanguage;
+        private TMP_DropdownEx      ddlLanguage;
         private TextMeshProUGUI     ddlLabel;
         private UILocalizationModel viewModel;
 
@@ -25,7 +25,7 @@ namespace Game
             btnChinese  = transform.Find("ivBg/btnChinese").GetComponent<Button>();
             btnEnglish  = transform.Find("ivBg/btnEnglish").GetComponent<Button>();
             btnJapanese = transform.Find("ivBg/btnJapanese").GetComponent<Button>();
-            ddlLanguage = transform.Find("ivBg/ddlLanguage").GetComponent<TMP_Dropdown>();
+            ddlLanguage = transform.Find("ivBg/ddlLanguage").GetComponent<TMP_DropdownEx>();
             ddlLabel    = transform.Find("ivBg/ddlLanguage/Label").GetComponent<TextMeshProUGUI>();
 
 
@@ -55,6 +55,10 @@ namespace Game
             btnEnglish.onClick.AddListener(OnClickBtnEnglish);
             btnJapanese.onClick.AddListener(OnClickBtnJapanese);
             ddlLanguage.onValueChanged.AddListener(OnSelectLanguage);
+            ddlLanguage.SetOnClick(() =>
+            {
+                RefreshLocalizaUI();
+            });
         }
 
         protected override void RemoveEvent()
@@ -91,8 +95,8 @@ namespace Game
 
         private void OnSelectLanguage(int index)
         {
-            Debuger.Log($"Language Index {index}");
             LocalizeData lang = viewModel.GetLanguage(index);
+            Debuger.Log($"Language {lang.langText}");
             switch (lang.lang)
             {
                 case SystemLanguage.Chinese:
