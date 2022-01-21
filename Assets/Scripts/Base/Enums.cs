@@ -32,7 +32,7 @@
     public enum EventId
     {
         ChangeLanguage,
-        RestLanguageKey,
+        ResetLanguageKey,
 
         TEST_EventNormal,
         TEST_EventParamInt,

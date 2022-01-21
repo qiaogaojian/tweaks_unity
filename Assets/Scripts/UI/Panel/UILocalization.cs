@@ -34,18 +34,8 @@ namespace Game
             {
                 ddlLanguage.options.Clear();
                 AddDropDownOptionsData(viewModel.GetLanguageDropdownData());
-                SetDropDownItemValue(0);
+                SetDropDownItemValue(viewModel.GetCurLangIndex());
             });
-        }
-
-        private void initDropDown(List<Localization> languageData)
-        {
-            List<TMP_Dropdown.OptionData> optionList = new List<TMP_Dropdown.OptionData>();
-            for (int i = 0; i < languageData.Count; i++)
-            {
-                TMP_Dropdown.OptionData data = new TMP_Dropdown.OptionData();
-                data.text = languageData[i].KEY;
-            }
         }
 
         protected override void AddEvent()
@@ -54,10 +44,10 @@ namespace Game
             btnChinese.onClick.AddListener(OnClickBtnChinese);
             btnEnglish.onClick.AddListener(OnClickBtnEnglish);
             btnJapanese.onClick.AddListener(OnClickBtnJapanese);
-            ddlLanguage.onValueChanged.AddListener(OnSelectLanguage);
+            ddlLanguage.OnValueSet.AddListener(OnSelectLanguage);
             ddlLanguage.SetOnClick(() =>
             {
-                RefreshLocalizaUI();
+                Framework.L18N.ResetLocalizeUI(ddlLanguage.transform);
             });
         }
 
@@ -72,7 +62,7 @@ namespace Game
 
         private void OnClickBtnReturn()
         {
-            Framework.UI.HideCurrent();
+            Framework.UI.DestroyCurrent();
         }
 
         private void OnClickBtnChinese()
@@ -159,7 +149,7 @@ namespace Game
                 ItemIndex = 0;
             }
 
-            ddlLanguage.value = ItemIndex;
+            ddlLanguage.Value = ItemIndex;
         }
     }
 }

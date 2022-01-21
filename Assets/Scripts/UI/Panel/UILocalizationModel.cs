@@ -50,6 +50,19 @@ namespace Game
             return optionList;
         }
 
+        public int GetCurLangIndex()
+        {
+            for (int i = 0; i < langList.Count; i++)
+            {
+                if (langList[i].lang==Framework.L18N.CurLang)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
 
         public override void Destroy()
         {
