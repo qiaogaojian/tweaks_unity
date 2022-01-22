@@ -132,6 +132,9 @@ namespace Game
                 case "TextMeshPro":
                     Framework.UI.Show<Toast>().MakeText("文本尽量使用TMPro,TMPro文字放大不会失真,且更容易做文字效果");
                     break;
+                case "Pool":
+                    Framework.UI.Show<UIPool>();
+                    break;
             }
         }
     }
