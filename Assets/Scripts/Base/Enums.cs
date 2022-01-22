@@ -1,5 +1,14 @@
 ﻿namespace Mega
 {
+    #region Pool
+
+    public enum PoolID
+    {
+        Effect,
+    }
+
+    #endregion
+
     #region UI
 
     public enum ViewType

@@ -94,9 +94,6 @@ namespace Mega
         public void UnLoadRes(SceneType scene)
         {
             dicUI.Clear();
-
-            Framework.Pool.UnLoadResource();
-
             Resources.UnloadUnusedAssets();
             GC.Collect();
         }
