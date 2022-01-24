@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Mega;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,10 @@ public class UIPool : BaseView
     private string pool_btnGetPool           = "btnGet";
     private string pool_btnCreatePersistPool = "btnCreatePersist";
     private string pool_btnCreatePrefabPool  = "btnCreatePrefab";
+
+    private List<Transform> pool1Item = new List<Transform>();
+    private List<Transform> pool2Item = new List<Transform>();
+    private List<Transform> pool3Item = new List<Transform>();
 
     private GameObject effectPrefab;
 
@@ -76,15 +81,27 @@ public class UIPool : BaseView
     {
         SpawnPool pool      = Framework.Pool.GetPool(pool_btnGetPool);
         Transform curEffect = pool.Spawn(effectPrefab.transform, transform.position, transform.rotation, Framework.UI.GetEffectRoot());
-        Framework.Pool.GetPool(pool_btnGetPool).Despawn(curEffect, 1);
+
+        pool1Item.Add(curEffect);
     }
 
     private void OnClickbtnDespawn()
     {
+        if (pool1Item.Count<=0)
+        {
+            return;
+        }
+
+        SpawnPool pool = Framework.Pool.GetPool(pool_btnGetPool);
+        pool.Despawn(pool1Item[Random.Range(0, pool1Item.Count)], 1);  // 延迟1秒后回收
     }
 
     private void OnClickbtnDestroyPool()
     {
+        SpawnPool pool = Framework.Pool.GetPool(pool_btnGetPool);
+        Framework.Pool.DestroyPool(pool);
+
+        pool1Item.Clear();
     }
 
     private void OnClickbtnSpawnPersist()
