@@ -81,9 +81,9 @@ public class UIPool : BaseView
 
     private void OnClickbtnSpawn()
     {
-        SpawnPool pool = Framework.Pool.GetPool(pool_btnGetPool);
+        SpawnPool pool = Framework.Pool.CreatePool(pool_btnGetPool, Framework.UI.GetEffectRoot());
         // 生成在UI节点下时, 也会持久存在
-        Transform curEffect = pool.Spawn(effectPrefab.transform, transform.position, transform.rotation, Framework.UI.GetEffectRoot());
+        Transform curEffect = pool.Spawn(effectPrefab.transform, transform.position, transform.rotation);
 
         pool1Item.Add(curEffect);
     }
@@ -146,8 +146,8 @@ public class UIPool : BaseView
 
     private void OnClickbtnSpawnPrefab()
     {
-        SpawnPool pool      = Framework.Pool.CreatePrefabPool(pool_btnCreatePrefabPool, effectPrefab.transform);
-        Transform curEffect = pool.Spawn(effectPrefab.transform, transform.position, transform.rotation, Framework.UI.GetEffectRoot());
+        SpawnPool pool      = Framework.Pool.CreatePrefabPool(pool_btnCreatePrefabPool, effectPrefab.transform, Framework.UI.GetEffectRoot());
+        Transform curEffect = pool.Spawn(effectPrefab.transform, transform.position, transform.rotation);
 
         pool3Item.Add(curEffect);
     }
