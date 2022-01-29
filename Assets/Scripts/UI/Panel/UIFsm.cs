@@ -9,19 +9,24 @@ public class UIFsm : BaseView
 {
     private Button btnReturn;
 
-    private Enemy1          ivEnemy;
+    private Enemy1          ivEnemy1;
+    private Enemy2          ivEnemy2;
     private RectTransform   ivPlayer;
-    private TextMeshProUGUI tvState;
+    private TextMeshProUGUI tvState1;
+    private TextMeshProUGUI tvState2;
 
     public override void InitView()
     {
         btnReturn = transform.Find("btnReturn").GetComponent<Button>();
 
-        ivEnemy  = transform.Find("ivBg/ivEnemy").GetComponent<Enemy1>();
+        ivEnemy1 = transform.Find("ivBg/ivEnemy1").GetComponent<Enemy1>();
+        ivEnemy2 = transform.Find("ivBg/ivEnemy2").GetComponent<Enemy2>();
         ivPlayer = transform.Find("ivBg/ivPlayer").GetComponent<RectTransform>();
-        tvState  = transform.Find("ivBg/tvState").GetComponent<TextMeshProUGUI>();
+        tvState1 = transform.Find("ivBg/tvState1").GetComponent<TextMeshProUGUI>();
+        tvState2 = transform.Find("ivBg/tvState2").GetComponent<TextMeshProUGUI>();
 
-        ivEnemy.SetTarget(ivPlayer);
+        ivEnemy1.SetTarget(ivPlayer);
+        ivEnemy2.SetTarget(ivPlayer);
     }
 
     protected override void AddEvent()
@@ -41,7 +46,8 @@ public class UIFsm : BaseView
 
     private void Update()
     {
-        tvState.text = $"State: {ivEnemy.GetCurState()}";
+        tvState1.text = $"State1: {ivEnemy1.GetCurState()}";
+        tvState2.text = $"State2: {ivEnemy2.GetCurState()}";
     }
 }
 

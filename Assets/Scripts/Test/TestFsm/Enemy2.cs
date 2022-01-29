@@ -4,7 +4,7 @@ using DG.Tweening;
 using Mega;
 using UnityEngine;
 
-public class Enemy1 : MonoBehaviour
+public class Enemy2 : MonoBehaviour
 {
     private float      speed = 3f;
     private AIState    state;
