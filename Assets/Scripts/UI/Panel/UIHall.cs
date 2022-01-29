@@ -135,6 +135,9 @@ namespace Game
                 case "Pool":
                     Framework.UI.Show<UIPool>();
                     break;
+                case "FSM":
+                    Framework.UI.Show<UIFsm>();
+                    break;
             }
         }
     }
