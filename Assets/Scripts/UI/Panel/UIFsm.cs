@@ -70,7 +70,7 @@ public class UIFsm : BaseView
         {
             case AIState.Idle:
                 RtEnemy.transform.rotation = orinRot;
-                RtEnemy.position = Vector2.zero;
+                RtEnemy.anchoredPosition   = Vector2.zero;
                 if (distance <= 500)
                 {
                     state = AIState.Chase;
