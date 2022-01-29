@@ -45,7 +45,7 @@ public class Enemy1 : MonoBehaviour
         Vector3       mousePos   = Tools.WorldToScreenPoint(Framework.UI.GetUICamera(), playerPosW);
         float         distance   = Vector2.Distance(enemyPos, mousePos);
 
-        Debuger.Log($"State:{state} EnemyPosition:{enemyPos} MousePosition:{mousePos} Distance:{distance} Angle:{GetAngle(enemyPos, mousePos)} HomePos:{homePos}");
+        // Debuger.Log($"State:{state} EnemyPosition:{enemyPos} MousePosition:{mousePos} Distance:{distance} Angle:{GetAngle(enemyPos, mousePos)} HomePos:{homePos}");
 
         switch (state)
         {
