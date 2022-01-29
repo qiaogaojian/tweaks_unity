@@ -60,8 +60,7 @@ public class UIFsm : BaseView
     {
         Vector2 enemyPosW = RtEnemy.transform.position;
         Vector2 enemyPos  = Tools.WorldToScreenPoint(Framework.UI.GetUICamera(), enemyPosW);
-        Vector3 mousePos  = new Vector3();
-        Tools.ScreenPointToWorldPointInRectangle(RtEnemy, Input.mousePosition, null, out mousePos);
+        Vector3 mousePos  = Input.mousePosition;
         float distance = Vector2.Distance(enemyPos, mousePos);
 
         Debuger.Log($"State:{state} EnemyPosition:{enemyPos} MousePosition:{mousePos} Distance:{distance} Angle:{GetAngle(enemyPos, mousePos)} HomePos:{homePos}");
