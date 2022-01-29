@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using Mega;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,13 +9,17 @@ public class UIFsm : BaseView
 {
     private Button btnReturn;
 
-    private RectTransform RtEnemy;
+    private RectTransform   ivEnemy;
+    private RectTransform   ivPlayer;
+    private TextMeshProUGUI tvState;
 
     public override void InitView()
     {
         btnReturn = transform.Find("btnReturn").GetComponent<Button>();
 
-        RtEnemy = transform.Find("ivBg/ivEnemy").GetComponent<RectTransform>();
+        ivEnemy  = transform.Find("ivBg/ivEnemy").GetComponent<RectTransform>();
+        ivPlayer = transform.Find("ivBg/ivPlayer").GetComponent<RectTransform>();
+        tvState  = transform.Find("ivBg/tvState").GetComponent<TextMeshProUGUI>();
     }
 
     protected override void AddEvent()
@@ -51,25 +56,26 @@ public class UIFsm : BaseView
     private void Start()
     {
         state   = AIState.Idle;
-        orinRot = RtEnemy.transform.rotation;
-        Vector2 enemyPosW = RtEnemy.transform.position;
+        orinRot = ivEnemy.transform.rotation;
+        Vector2 enemyPosW = ivEnemy.transform.position;
         homePos = Tools.WorldToScreenPoint(Framework.UI.GetUICamera(), enemyPosW);
     }
 
     private void Update()
     {
-        Vector2 enemyPosW = RtEnemy.transform.position;
-        Vector2 enemyPos  = Tools.WorldToScreenPoint(Framework.UI.GetUICamera(), enemyPosW);
-        Vector3 mousePos  = Input.mousePosition;
-        float distance = Vector2.Distance(enemyPos, mousePos);
+        Vector2 enemyPosW  = ivEnemy.transform.position;
+        Vector2 playerPosW = ivPlayer.transform.position;
+        Vector2 enemyPos   = Tools.WorldToScreenPoint(Framework.UI.GetUICamera(), enemyPosW);
+        Vector3 mousePos   = Tools.WorldToScreenPoint(Framework.UI.GetUICamera(), playerPosW);
+        float   distance   = Vector2.Distance(enemyPos, mousePos);
 
         Debuger.Log($"State:{state} EnemyPosition:{enemyPos} MousePosition:{mousePos} Distance:{distance} Angle:{GetAngle(enemyPos, mousePos)} HomePos:{homePos}");
 
         switch (state)
         {
             case AIState.Idle:
-                RtEnemy.transform.rotation = orinRot;
-                RtEnemy.anchoredPosition   = Vector2.zero;
+                ivEnemy.transform.rotation = orinRot;
+                ivEnemy.anchoredPosition   = Vector2.zero;
                 if (distance <= 500)
                 {
                     state = AIState.Chase;
@@ -77,7 +83,7 @@ public class UIFsm : BaseView
 
                 break;
             case AIState.Chase:
-                RtEnemy.eulerAngles = new Vector3(RtEnemy.rotation.x, RtEnemy.rotation.y, -GetAngle(enemyPos, mousePos));
+                ivEnemy.eulerAngles = new Vector3(ivEnemy.rotation.x, ivEnemy.rotation.y, -GetAngle(enemyPos, mousePos));
 
                 if (distance <= 100)
                 {
@@ -88,7 +94,7 @@ public class UIFsm : BaseView
                     state = AIState.Back;
                 }
 
-                RtEnemy.Translate(-1 * transform.up * Time.deltaTime * speed);
+                ivEnemy.Translate(-1 * transform.up * Time.deltaTime * speed);
                 break;
             case AIState.Attack:
                 if (distance > 500)
@@ -100,16 +106,16 @@ public class UIFsm : BaseView
                     state = AIState.Chase;
                 }
 
-                RtEnemy.DOLocalMove((RtEnemy.up * 30 + RtEnemy.localPosition), 0.2f).Play();
+                ivEnemy.DOLocalMove((ivEnemy.up * 30 + ivEnemy.localPosition), 0.2f).Play();
                 break;
             case AIState.Back:
-                RtEnemy.transform.eulerAngles = new Vector3(RtEnemy.rotation.x, RtEnemy.rotation.y, -GetAngle(enemyPos, homePos));
+                ivEnemy.transform.eulerAngles = new Vector3(ivEnemy.rotation.x, ivEnemy.rotation.y, -GetAngle(enemyPos, homePos));
                 if (distance <= 500)
                 {
                     state = AIState.Chase;
                 }
 
-                RtEnemy.Translate(-1 * transform.up * Time.deltaTime * speed);
+                ivEnemy.Translate(-1 * transform.up * Time.deltaTime * speed);
                 float distanceOri = Vector2.Distance(enemyPos, homePos);
                 if (distanceOri < 10)
                 {
@@ -118,6 +124,8 @@ public class UIFsm : BaseView
 
                 break;
         }
+
+        tvState.text = $"State: {state}";
     }
 
     public float GetAngle(Vector2 from, Vector2 to)
