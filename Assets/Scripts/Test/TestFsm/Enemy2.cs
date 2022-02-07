@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using Mega;
-using MonsterLove.StateMachine;
 using UnityEngine;
 
 public class Enemy2 : MonoBehaviour
 {
     private float      speed = 3f;
-    private AIState    state;
     private Transform  ivPlayer;
     private Vector2    homePosW;
     private Vector2    homePos;
     private Quaternion orinRot;
+
+    private RectTransform ivEnemy;
+    private Vector2       enemyPosW;
+    private Vector2       playerPosW;
+    private Vector2       enemyPos;
+    private Vector3       mousePos;
+    private float         distance;
 
     private StateMachine<AIState, StateDriverUnity> fsm;
 
@@ -23,12 +26,11 @@ public class Enemy2 : MonoBehaviour
 
     public AIState GetCurState()
     {
-        return state;
+        return fsm.State;
     }
 
-    private void Awake()
+    private void Start()
     {
-        state    = AIState.Idle;
         orinRot  = transform.rotation;
         homePosW = transform.position;
         homePos  = Tools.WorldToScreenPoint(Framework.UI.GetUICamera(), homePosW);
@@ -39,6 +41,26 @@ public class Enemy2 : MonoBehaviour
         ivEnemy = transform.GetComponent<RectTransform>();
     }
 
+    private void Update()
+    {
+        if (ivPlayer == null)
+        {
+            return;
+        }
+
+        enemyPosW  = transform.position;
+        playerPosW = ivPlayer.transform.position;
+        enemyPos   = Tools.WorldToScreenPoint(Framework.UI.GetUICamera(), enemyPosW);
+        mousePos   = Tools.WorldToScreenPoint(Framework.UI.GetUICamera(), playerPosW);
+        distance   = Vector2.Distance(enemyPos, mousePos);
+
+        Debuger.Log($"State:{fsm.State} EnemyPosition:{enemyPos} MousePosition:{mousePos} Distance:{distance} Angle:{GetAngle(enemyPos, mousePos)} HomePos:{homePos}");
+
+        fsm.Driver.Update.Invoke();
+    }
+
+    #region FSM回调
+
     void Idle_Enter()
     {
         Debuger.LogError("Idle_Enter");
@@ -46,13 +68,11 @@ public class Enemy2 : MonoBehaviour
 
     void Idle_Update()
     {
-        Debuger.LogError("Idle_Update");
-
         transform.rotation         = orinRot;
         ivEnemy.transform.position = homePosW;
         if (distance <= 500)
         {
-            state = AIState.Chase;
+            fsm.ChangeState(AIState.Chase);
         }
     }
 
@@ -68,17 +88,15 @@ public class Enemy2 : MonoBehaviour
 
     void Chase_Update()
     {
-        Debuger.LogError("Chase_Update");
-
         ivEnemy.transform.eulerAngles = new Vector3(ivEnemy.rotation.x, ivEnemy.rotation.y, -GetAngle(enemyPos, mousePos));
 
         if (distance <= 100)
         {
-            state = AIState.Attack;
+            fsm.ChangeState(AIState.Attack);
         }
         else if (distance > 500)
         {
-            state = AIState.Back;
+            fsm.ChangeState(AIState.Back);
         }
 
         ivEnemy.Translate(-1 * Vector3.up * Time.deltaTime * speed);
@@ -96,15 +114,13 @@ public class Enemy2 : MonoBehaviour
 
     void Attack_Update()
     {
-        Debuger.LogError("Attack_Update");
-
         if (distance > 500)
         {
-            state = AIState.Back;
+            fsm.ChangeState(AIState.Back);
         }
         else if (distance > 100)
         {
-            state = AIState.Chase;
+            fsm.ChangeState(AIState.Chase);
         }
 
         ivEnemy.DOLocalMove((ivEnemy.up * 30 + ivEnemy.localPosition), 0.2f).Play();
@@ -122,19 +138,17 @@ public class Enemy2 : MonoBehaviour
 
     void Back_Update()
     {
-        Debuger.LogError("Back_Update");
-
         transform.eulerAngles = new Vector3(0, 0, -GetAngle(enemyPos, homePos));
         if (distance <= 500)
         {
-            state = AIState.Chase;
+            fsm.ChangeState(AIState.Chase);
         }
 
         transform.Translate(-1 * Vector3.up * Time.deltaTime * speed);
         float distanceOri = Vector2.Distance(enemyPos, homePos);
         if (distanceOri < 10)
         {
-            state = AIState.Idle;
+            fsm.ChangeState(AIState.Idle);
         }
     }
 
@@ -143,30 +157,7 @@ public class Enemy2 : MonoBehaviour
         Debuger.LogError("Back_Exit");
     }
 
-    RectTransform ivEnemy;
-    Vector2       enemyPosW;
-    Vector2       playerPosW;
-    Vector2       enemyPos;
-    Vector3       mousePos;
-    float         distance;
-
-    private void Update()
-    {
-        if (ivPlayer == null)
-        {
-            return;
-        }
-
-        enemyPosW  = transform.position;
-        playerPosW = ivPlayer.transform.position;
-        enemyPos   = Tools.WorldToScreenPoint(Framework.UI.GetUICamera(), enemyPosW);
-        mousePos   = Tools.WorldToScreenPoint(Framework.UI.GetUICamera(), playerPosW);
-        distance   = Vector2.Distance(enemyPos, mousePos);
-
-        Debuger.Log($"State:{state} EnemyPosition:{enemyPos} MousePosition:{mousePos} Distance:{distance} Angle:{GetAngle(enemyPos, mousePos)} HomePos:{homePos}");
-
-        fsm.Driver.Update.Invoke();
-    }
+    #endregion
 
     public float GetAngle(Vector2 from, Vector2 to)
     {
