@@ -138,6 +138,13 @@ namespace Game
                 case "FSM":
                     Framework.UI.Show<UIFsm>();
                     break;
+                case "AssetBundle":
+                    if (btnModel.parent.Name == "Assets") // Button命名重复的处理方法
+                    {
+                        Framework.UI.Show<UIAssetBundle>();
+                    }
+
+                    break;
             }
         }
     }
