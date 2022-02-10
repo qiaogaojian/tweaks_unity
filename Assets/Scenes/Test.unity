@@ -8610,10 +8610,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIAssetBundle
       objectReference: {fileID: 0}
-    - target: {fileID: 2483411760891987889, guid: 09c30d12b8031ad4990aa1890601fc66, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2483411760891987890, guid: 09c30d12b8031ad4990aa1890601fc66, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
