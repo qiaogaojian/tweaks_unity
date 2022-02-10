@@ -11,6 +11,7 @@ public class UIAssetBundle : BaseView
     private Button btnReturn;
     private Button btnInsantiate;
     private Button btnInsantiateAsync;
+    private Button btnInsantiateWeb;
 
     private Transform root;
 
@@ -21,6 +22,7 @@ public class UIAssetBundle : BaseView
 
         btnInsantiate      = root.Find("btnInsantiate").GetComponent<Button>();
         btnInsantiateAsync = root.Find("btnInsantiateAsync").GetComponent<Button>();
+        btnInsantiateWeb   = root.Find("btnInsantiateWeb").GetComponent<Button>();
     }
 
     protected override void AddEvent()
@@ -28,6 +30,7 @@ public class UIAssetBundle : BaseView
         btnReturn.onClick.AddListener(OnClickBtnReturn);
         btnInsantiate.onClick.AddListener(OnClickBtnInsantiate);
         btnInsantiateAsync.onClick.AddListener(OnClickBtnInsantiateAsync);
+        btnInsantiateWeb.onClick.AddListener(OnClickBtnInsantiateWeb);
     }
 
     protected override void RemoveEvent()
@@ -35,6 +38,7 @@ public class UIAssetBundle : BaseView
         btnReturn.onClick.RemoveListener(OnClickBtnReturn);
         btnInsantiate.onClick.RemoveListener(OnClickBtnInsantiate);
         btnInsantiateAsync.onClick.RemoveListener(OnClickBtnInsantiateAsync);
+        btnInsantiateWeb.onClick.RemoveListener(OnClickBtnInsantiateWeb);
     }
 
     private void OnClickBtnReturn()
@@ -52,8 +56,14 @@ public class UIAssetBundle : BaseView
         StartCoroutine(InsantiateAssetAsync());
     }
 
+    private void OnClickBtnInsantiateWeb()
+    {
+        StartCoroutine(InsantiateAssetWeb());
+    }
+
     private string assetName  = "BundledSpriteObject";
     private string bundleName = "testbundle";
+    private string bundleUrl  = "http://localhost/assetbundles/testbundle";
 
     private void InsantiateAsset()
     {
@@ -66,7 +76,7 @@ public class UIAssetBundle : BaseView
         }
 
         GameObject asset = localAssetBundle.LoadAsset<GameObject>(assetName);
-        Instantiate(asset, root).transform.DOMoveX(-1,0.1f);
+        Instantiate(asset, root).transform.DOMoveX(-1, 0.1f);
         localAssetBundle.Unload(false);
     }
 
@@ -86,7 +96,25 @@ public class UIAssetBundle : BaseView
         yield return assetRequest;
 
         GameObject prefab = assetRequest.asset as GameObject;
-        Instantiate(prefab, root).transform.DOMoveX(1,0.1f);
+        Instantiate(prefab, root).transform.DOMoveX(1, 0.1f);
         localAssetBundle.Unload(false);
+    }
+
+    IEnumerator InsantiateAssetWeb()
+    {
+        using (WWW web = new WWW(bundleUrl))
+        {
+            yield return web;
+            AssetBundle remoteAssetBundle = web.assetBundle;
+            if (remoteAssetBundle == null)
+            {
+                Debuger.LogError("Failed to download AssetBundle!");
+                yield break;
+            }
+
+            GameObject prefab = remoteAssetBundle.LoadAsset(assetName) as GameObject;
+            Instantiate(prefab, root).transform.DOMoveY(-1, 0.1f);
+            remoteAssetBundle.Unload(false);
+        }
     }
 }
