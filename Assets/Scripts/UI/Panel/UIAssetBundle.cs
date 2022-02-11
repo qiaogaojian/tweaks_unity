@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using DG.Tweening;
 using Mega;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -108,6 +109,7 @@ public class UIAssetBundle : BaseView
             AssetBundle remoteAssetBundle = web.assetBundle;
             if (remoteAssetBundle == null)
             {
+                Framework.UI.MakeToasts("Failed to download AssetBundle!");
                 Debuger.LogError("Failed to download AssetBundle!");
                 yield break;
             }
