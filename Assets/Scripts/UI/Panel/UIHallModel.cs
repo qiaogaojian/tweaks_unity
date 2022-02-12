@@ -67,6 +67,10 @@ public class UIHallModel : BaseViewModel
         ItemTreeViewModel curNode = root;
         foreach (string curLine in lines)
         {
+            if (!curLine.StartsWith("#"))  // 跳过不是标题的内容
+            {
+                return;
+            }
             int curLevel = curLine.Count(c => c == '#');
             if (curLevel == 1)
             {
