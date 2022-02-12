@@ -260,6 +260,8 @@ This project contains different assets from different publishers meshed up toget
 
 ##### AssetManager
 
+[资源管理](https://www.cnblogs.com/wang-jin-fu/p/11189323.html)
+
 #### Libs
 
 ##### AStar
