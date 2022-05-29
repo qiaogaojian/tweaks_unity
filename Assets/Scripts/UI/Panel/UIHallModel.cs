@@ -69,7 +69,7 @@ public class UIHallModel : BaseViewModel
         {
             if (!curLine.StartsWith("#"))  // 跳过不是标题的内容
             {
-                return;
+                continue;
             }
             int curLevel = curLine.Count(c => c == '#');
             if (curLevel == 1)

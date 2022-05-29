@@ -12,7 +12,10 @@ namespace Game
 
         void OnLoadFramework(LoadEvent loadEvent)
         {
-            Framework.Scene.Load(SceneType.Hall, () => { Framework.UI.Show<UIHall>(); });
+            Framework.Scene.Load(SceneType.Hall, () =>
+            {
+                Framework.UI.Show<UIHall>();
+            });
         }
     }
 }
